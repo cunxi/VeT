@@ -1,0 +1,394 @@
+﻿@using System.Data;
+@model DataSet
+
+@{
+    ViewBag.Title = "Landing";
+}
+
+<div class="main-search-container" data-background-image="https://listeo.pro/wp-content/uploads/2019/02/listeo_background-1.jpg">
+
+    <div class="main-search-inner">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2>
+                        ¿Qué buscas?...
+                        <!-- Typed words can be configured in script settings at the bottom of this HTML file -->
+                        <span class="typed-words"></span>
+                    </h2>
+                    <h4>Busca éstos y muchos más servicios disponibles</h4>
+
+                    <div class="main-search-input">
+
+                        <div class="main-search-input-item">
+                            <input type="text" placeholder="¿Qué necesitas?" value="" />
+                        </div>
+
+                        <div class="main-search-input-item location">
+                            <div id="autocomplete-container">
+                                <input id="autocomplete-input" type="text" placeholder="Ubicación">
+                            </div>
+                            <a href="#"><i class="fa fa-map-marker"></i></a>
+                        </div>
+
+                        <div class="main-search-input-item">
+                            <select data-placeholder="Categorias" class="chosen-select">
+                                <option>Todas las categorias</option>
+                                @foreach (DataRow row in Model.Tables[0].Rows)
+                                {
+                                    <option value="@row["tpo_ID_TipoGeneral"]">@row["tpo_Nombre"]</option>
+                                }
+                            </select>
+                        </div>
+
+                        <button class="button" onclick="window.location.href='/Menu/Busqueda'">Buscar</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<!-- Content
+================================================== -->
+<div class="container">
+    <div class="row">
+
+        <div class="col-md-12">
+            <h3 class="headline centered margin-top-75">
+                <strong class="headline-with-separator">Categorías disponibles</strong>
+            </h3>
+        </div>
+
+        <div class="col-md-12">
+            <div class="categories-boxes-container margin-top-5 margin-bottom-30">
+
+                <!-- Box -->
+                <a href="/Menu/Busqueda" class="category-small-box">
+                    <i class="im im-icon-ID-2"></i>
+                    <h4>Consulta, hospitalizaciones y exámenes</h4>
+                    <span class="category-box-counter">12</span>
+                </a>
+
+                <!-- Box -->
+                <a href="/Menu/Busqueda" class="category-small-box">
+                    <i class="im im-icon-Bone"></i>
+                    <h4>Radiografía y ecografía</h4>
+                    <span class="category-box-counter">11</span>
+                </a>
+
+                <!-- Box -->
+                <a href="/Menu/Busqueda" class="category-small-box">
+                    <i class="im im-icon-Cat"></i>
+                    <h4>Etología</h4>
+                    <span class="category-box-counter">28</span>
+                </a>
+
+                <a href="/Menu/Busqueda" class="category-small-box">
+                    <i class="im im-icon-Scissor"></i>
+                    <h4>Guardería y peluquería</h4>
+                    <span class="category-box-counter">28</span>
+                </a>
+
+                <!-- Box -->
+                <a href="/Menu/Busqueda" class="category-small-box">
+                    <i class="im im-icon-First-Aid"></i>
+                    <h4>Urgencia</h4>
+                    <span class="category-box-counter">28</span>
+                </a>
+                <!-- Box -->
+                <a href="/Menu/Busqueda" class="category-small-box">
+                    <i class="im im-icon-Home-5"></i>
+                    <h4>Servicio a domicilio</h4>
+                    <span class="category-box-counter">28</span>
+                </a>
+                <a href="/Menu/Busqueda" class="category-small-box">
+                    <i class="im im-icon-Full-Cart"></i>
+                    <h4>Productos</h4>
+                    <span class="category-box-counter">100</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Category Boxes / End -->
+<!-- Fullwidth Section -->
+<section class="fullwidth margin-top-65 padding-top-75 padding-bottom-70" data-background-color="#f8f8f8">
+
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-12">
+                <h3 class="headline centered margin-bottom-45">
+                    Clínicas más visitadas
+                    <span>Descubre los centros con mejor valoración</span>
+                </h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- Carousel / Start -->
+    <div class="simple-fw-slick-carousel dots-nav">
+
+        <!-- Listing Item -->
+        <div class="fw-carousel-item">
+            <a href="/Menu/Centro" class="listing-item-container compact">
+                <div class="listing-item">
+                    <img src="/Content/images/listing-item-01.jpg" alt="">
+
+                    <div class="listing-badge now-open">Now Open</div>
+
+                    <div class="listing-item-content">
+                        <div class="numerical-rating" data-rating="3.5"></div>
+                        <h3>Tom's Restaurant</h3>
+                        <span>964 School Street, New York</span>
+                    </div>
+                    <span class="like-icon"></span>
+                </div>
+            </a>
+        </div>
+        <!-- Listing Item / End -->
+        <!-- Listing Item -->
+        <div class="fw-carousel-item">
+            <a href="/Menu/Centro" class="listing-item-container compact">
+                <div class="listing-item">
+                    <img src="/Content/images/listing-item-02.jpg" alt="">
+                    <div class="listing-item-details">
+                        <ul>
+                            <li>Friday, August 10</li>
+                        </ul>
+                    </div>
+                    <div class="listing-item-content">
+                        <div class="numerical-rating" data-rating="5.0"></div>
+                        <h3>Sticky Band</h3>
+                        <span>Bishop Avenue, New York</span>
+                    </div>
+                    <span class="like-icon"></span>
+                </div>
+            </a>
+        </div>
+        <!-- Listing Item / End -->
+        <!-- Listing Item -->
+        <div class="fw-carousel-item">
+            <a href="/Menu/Centro" class="listing-item-container compact">
+                <div class="listing-item">
+                    <img src="/Content/images/listing-item-03.jpg" alt="">
+                    <div class="listing-item-details">
+                        <ul>
+                            <li>Starting from $59 per night</li>
+                        </ul>
+                    </div>
+                    <div class="listing-item-content">
+                        <div class="numerical-rating" data-rating="2.0"></div>
+                        <h3>Hotel Govendor</h3>
+                        <span>778 Country Street, New York</span>
+                    </div>
+                    <span class="like-icon"></span>
+                </div>
+
+            </a>
+        </div>
+        <!-- Listing Item / End -->
+        <!-- Listing Item -->
+        <div class="fw-carousel-item">
+            <a href="/Menu/Centro" class="listing-item-container compact">
+                <div class="listing-item">
+                    <img src="/Content/images/listing-item-04.jpg" alt="">
+
+                    <div class="listing-badge now-open">Now Open</div>
+
+                    <div class="listing-item-content">
+                        <div class="numerical-rating" data-rating="5.0"></div>
+                        <h3>Burger House</h3>
+                        <span>2726 Shinn Street, New York</span>
+                    </div>
+                    <span class="like-icon"></span>
+                </div>
+            </a>
+        </div>
+        <!-- Listing Item / End -->
+        <!-- Listing Item -->
+        <div class="fw-carousel-item">
+            <a href="/Menu/Centro" class="listing-item-container compact">
+                <div class="listing-item">
+                    <img src="/Content/images/listing-item-05.jpg" alt="">
+                    <div class="listing-item-content">
+                        <div class="numerical-rating" data-rating="3.5"></div>
+                        <h3>Airport</h3>
+                        <span>1512 Duncan Avenue, New York</span>
+                    </div>
+                    <span class="like-icon"></span>
+                </div>
+            </a>
+        </div>
+        <!-- Listing Item / End -->
+        <!-- Listing Item -->
+        <div class="fw-carousel-item">
+            <a href="/Menu/Centro" class="listing-item-container compact">
+                <div class="listing-item">
+                    <img src="/Content/images/listing-item-06.jpg" alt="">
+
+                    <div class="listing-badge now-closed">Now Closed</div>
+
+                    <div class="listing-item-content">
+                        <div class="numerical-rating" data-rating="4.5"></div>
+                        <h3>Think Coffee</h3>
+                        <span>215 Terry Lane, New York</span>
+                    </div>
+                    <span class="like-icon"></span>
+                </div>
+            </a>
+        </div>
+        <!-- Listing Item / End -->
+
+    </div>
+    <!-- Carousel / End -->
+
+
+</section>
+
+<!-- Info Section / End -->
+<!-- Fullwidth Section -->
+<section class="fullwidth margin-top-65 padding-top-75 padding-bottom-70">
+
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-12">
+                <h3 class="headline centered margin-bottom-45">
+                    Últimas clínicas
+                    <span>¡Descubre los nuevos centros disponibles!</span>
+                </h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- Carousel / Start -->
+    <div class="simple-fw-slick-carousel dots-nav">
+
+        <!-- Listing Item -->
+        <div class="fw-carousel-item">
+            <a href="listings-single-page.html" class="listing-item-container compact">
+                <div class="listing-item">
+                    <img src="/Content/images/listing-item-01.jpg" alt="">
+
+                    <div class="listing-badge now-open">Now Open</div>
+
+                    <div class="listing-item-content">
+                        <div class="numerical-rating" data-rating="3.5"></div>
+                        <h3>Tom's Restaurant</h3>
+                        <span>964 School Street, New York</span>
+                    </div>
+                    <span class="like-icon"></span>
+                </div>
+            </a>
+        </div>
+        <!-- Listing Item / End -->
+        <!-- Listing Item -->
+        <div class="fw-carousel-item">
+            <a href="listings-single-page.html" class="listing-item-container compact">
+                <div class="listing-item">
+                    <img src="/Content/images/listing-item-02.jpg" alt="">
+                    <div class="listing-item-details">
+                        <ul>
+                            <li>Friday, August 10</li>
+                        </ul>
+                    </div>
+                    <div class="listing-item-content">
+                        <div class="numerical-rating" data-rating="5.0"></div>
+                        <h3>Sticky Band</h3>
+                        <span>Bishop Avenue, New York</span>
+                    </div>
+                    <span class="like-icon"></span>
+                </div>
+            </a>
+        </div>
+        <!-- Listing Item / End -->
+        <!-- Listing Item -->
+        <div class="fw-carousel-item">
+            <a href="listings-single-page.html" class="listing-item-container compact">
+                <div class="listing-item">
+                    <img src="/Content/images/listing-item-03.jpg" alt="">
+                    <div class="listing-item-details">
+                        <ul>
+                            <li>Starting from $59 per night</li>
+                        </ul>
+                    </div>
+                    <div class="listing-item-content">
+                        <div class="numerical-rating" data-rating="2.0"></div>
+                        <h3>Hotel Govendor</h3>
+                        <span>778 Country Street, New York</span>
+                    </div>
+                    <span class="like-icon"></span>
+                </div>
+
+            </a>
+        </div>
+        <!-- Listing Item / End -->
+        <!-- Listing Item -->
+        <div class="fw-carousel-item">
+            <a href="listings-single-page.html" class="listing-item-container compact">
+                <div class="listing-item">
+                    <img src="/Content/images/listing-item-04.jpg" alt="">
+
+                    <div class="listing-badge now-open">Now Open</div>
+
+                    <div class="listing-item-content">
+                        <div class="numerical-rating" data-rating="5.0"></div>
+                        <h3>Burger House</h3>
+                        <span>2726 Shinn Street, New York</span>
+                    </div>
+                    <span class="like-icon"></span>
+                </div>
+            </a>
+        </div>
+        <!-- Listing Item / End -->
+        <!-- Listing Item -->
+        <div class="fw-carousel-item">
+            <a href="listings-single-page.html" class="listing-item-container compact">
+                <div class="listing-item">
+                    <img src="/Content/images/listing-item-05.jpg" alt="">
+                    <div class="listing-item-content">
+                        <div class="numerical-rating" data-rating="3.5"></div>
+                        <h3>Airport</h3>
+                        <span>1512 Duncan Avenue, New York</span>
+                    </div>
+                    <span class="like-icon"></span>
+                </div>
+            </a>
+        </div>
+        <!-- Listing Item / End -->
+        <!-- Listing Item -->
+        <div class="fw-carousel-item">
+            <a href="listings-single-page.html" class="listing-item-container compact">
+                <div class="listing-item">
+                    <img src="/Content/images/listing-item-06.jpg" alt="">
+
+                    <div class="listing-badge now-closed">Now Closed</div>
+
+                    <div class="listing-item-content">
+                        <div class="numerical-rating" data-rating="4.5"></div>
+                        <h3>Think Coffee</h3>
+                        <span>215 Terry Lane, New York</span>
+                    </div>
+                    <span class="like-icon"></span>
+                </div>
+            </a>
+        </div>
+        <!-- Listing Item / End -->
+
+    </div>
+    <!-- Carousel / End -->
+
+
+</section>
+<!-- Fullwidth Section / End -->
+<!-- Container -->
+<!-- Container / End -->
+<!-- Footer
+
+================================================== -->
