@@ -1,17 +1,40 @@
-﻿
+﻿@using System.Data;
+@model DataSet
 <div id="wrapper">
+
+    @{ 
+        string RazonSocial = Model.Tables[0].Rows[0]["cen_RazonS"].ToString();
+        string Direccion = Model.Tables[0].Rows[0]["cen_Direccion"].ToString();
+        string Comuna = Model.Tables[0].Rows[0]["com_Nombre"].ToString();
+        string Telefono = Model.Tables[0].Rows[0]["cen_Telefono"].ToString();
+        string Email = Model.Tables[0].Rows[0]["cen_Email"].ToString();
+        string Informacion = Model.Tables[0].Rows[0]["per_Informacion"].ToString();
+        string linkWeb = Model.Tables[0].Rows[0]["per_LinkWeb"].ToString();
+        string linkFacebook = Model.Tables[0].Rows[0]["per_LinkFacebook"].ToString();
+        string linkYoutube = Model.Tables[0].Rows[0]["per_LinkYoutube"].ToString();
+        string linkInstagram = Model.Tables[0].Rows[0]["per_LinkInstagram"].ToString();
+        string linkTwitter = Model.Tables[0].Rows[0]["per_LinkTwitter"].ToString();
+        string GeoLocation = Model.Tables[0].Rows[0]["per_GeoLocation"].ToString();
+        ViewBag.Title = RazonSocial;
+
+    }
+
 
     <div class="clearfix"></div>
     <!-- Header Container / End -->
     <!-- Slider
     ================================================== -->
-    <div class="listing-slider mfp-gallery-container margin-bottom-0">
-        <a href="/Content/images/cli/1.jpg" data-background-image="/Content/images/cli/1.jpg" class="item mfp-gallery" title="Title 1"></a>
-        <a href="/Content/images/cli/2.jpg" data-background-image="/Content/images/cli/2.jpg" class="item mfp-gallery" title="Title 2"></a>
-        <a href="/Content/images/cli/3.jpg" data-background-image="/Content/images/cli/3.jpg" class="item mfp-gallery" title="Title 3"></a>
-        <a href="/Content/images/cli/4.jpg" data-background-image="/Content/images/cli/4.jpg" class="item mfp-gallery" title="Title 4"></a>
-        <a href="/Content/images/cli/5.jpg" data-background-image="/Content/images/cli/5.jpg" class="item mfp-gallery" title="Title 5"></a>
-        <a href="/Content/images/cli/6.jpg" data-background-image="/Content/images/cli/6.jpg" class="item mfp-gallery" title="Title 6"></a>
+    <div class="listing-slider mfp-gallery-container margin-bottom-0">    
+
+        <a href="@Model.Tables[0].Rows[0]["cen_Img2"].ToString()" data-background-image="@Model.Tables[0].Rows[0]["cen_Img2"].ToString()" class="item mfp-gallery" title="Title 1"></a>
+        <a href="@Model.Tables[0].Rows[0]["cen_Img3"].ToString()" data-background-image="@Model.Tables[0].Rows[0]["cen_Img3"].ToString()" class="item mfp-gallery" title="Title 1"></a>
+        <a href="@Model.Tables[0].Rows[0]["cen_Img4"].ToString()" data-background-image="@Model.Tables[0].Rows[0]["cen_Img4"].ToString()" class="item mfp-gallery" title="Title 1"></a>
+        <a href="@Model.Tables[0].Rows[0]["cen_Img5"].ToString()" data-background-image="@Model.Tables[0].Rows[0]["cen_Img5"].ToString()" class="item mfp-gallery" title="Title 1"></a>
+        <a href="@Model.Tables[0].Rows[0]["cen_Img6"].ToString()" data-background-image="@Model.Tables[0].Rows[0]["cen_Img6"].ToString()" class="item mfp-gallery" title="Title 1"></a>
+        <a href="@Model.Tables[0].Rows[0]["cen_Img7"].ToString()" data-background-image="@Model.Tables[0].Rows[0]["cen_Img7"].ToString()" class="item mfp-gallery" title="Title 1"></a>
+        <a href="@Model.Tables[0].Rows[0]["cen_Img8"].ToString()" data-background-image="@Model.Tables[0].Rows[0]["cen_Img8"].ToString()" class="item mfp-gallery" title="Title 1"></a>
+        <a href="@Model.Tables[0].Rows[0]["cen_Img9"].ToString()" data-background-image="@Model.Tables[0].Rows[0]["cen_Img9"].ToString()" class="item mfp-gallery" title="Title 1"></a>
+        <a href="@Model.Tables[0].Rows[0]["cen_Img10"].ToString()" data-background-image="@Model.Tables[0].Rows[0]["cen_Img10"].ToString()" class="item mfp-gallery" title="Title 1"></a>
     </div>
 
 
@@ -24,14 +47,14 @@
                 <!-- Titlebar -->
                 <div id="titlebar" class="listing-titlebar">
                     <div class="listing-titlebar-title">
-                        <h2>Veterinaria Villa Alemana</h2>
+                        <h2>@RazonSocial</h2>
                         <span>
                             <a href="#listing-location" class="listing-address">
                                 <i class="fa fa-map-marker"></i>
-                                2726 Av. Valparaiso, Villa Alemana
+                                @Direccion ,@Comuna
                             </a>
                         </span>
-                        <div class="star-rating" data-rating="5">
+                        <div class="star-rating" data-rating="4.75">
                             <div class="rating-counter"><a href="#listing-reviews">(31 reviews)</a></div>
                         </div>
                     </div>
@@ -42,64 +65,50 @@
                     <ul class="listing-nav">
                         <li><a href="#nosotros" class="active">Nosotros</a></li>
                         <li><a href="#listing-pricing-list">Servicios y precios</a></li>
+                        @if (GeoLocation != "") {
                         <li><a href="#listing-location">Ubicación</a></li>
-                        <li><a href="#listing-reviews">Nuestro equipo</a></li>
+                        }
                         <li><a href="#listing-reviews">Opiniones y calificaciones</a></li>
-
                     </ul>
                 </div>
 
                 <!-- Overview -->
                 <div id="nosotros" class="listing-section">
-                    <p>
-                        En Veterinaria Villa Alemana nos dedicamos a fomentar la tenencia responsable, educando y asesorando a los dueños de nuestras mascotas, estableciendo una relación cercana, cordial, cálida y personalizada, enfocándonos principalmente en la medicina preventiva.
-                    </p>
-
-                    <p>
-                        En Veterinaria Villa Alemana nos dedicamos a fomentar la tenencia responsable, educando y asesorando a los dueños de nuestras mascotas, estableciendo una relación cercana, cordial, cálida y personalizada, enfocándonos principalmente en la medicina preventiva.
-                    </p>
+                   <p>@Informacion</p>               
 
 
                     <!-- Listing Contacts -->
                     <div class="listing-links-container">
 
                         <ul class="listing-links contact-links">
-                            <li><a href="tel:12-345-678" class="listing-links"><i class="fa fa-phone"></i> +12 345 6578</a></li>
-                            <li>
-                                <a href="mailto:mail@example.com" class="listing-links"><i class="fa fa-envelope-o"></i> contacto@clinicavillaalemana.cl</a>
-                            </li>
-                            <li><a href="#" target="_blank" class="listing-links"><i class="fa fa-link"></i> www.cvillaalemana.cl</a></li>
+                            @if (Telefono != "")
+                            {
+                                <li><a href="tel:@Telefono" class="listing-links"><i class="fa fa-phone"></i> @Telefono</a></li>}
+                            @if (Email != "")
+                            {
+                                <li><a href="mailto:@Email" class="listing-links"><i class="fa fa-envelope-o"></i> @Email</a></li>}
+                            @if (linkWeb != "")
+                            {
+                            <li><a href="@linkWeb" target="_blank" class="listing-links"><i class="fa fa-link"></i> @linkWeb.Replace("https://","").Replace("http://","")</a></li>}
                         </ul>
                         <div class="clearfix"></div>
 
                         <ul class="listing-links">
-                            <li><a href="#" target="_blank" class="listing-links-fb"><i class="fa fa-facebook-square"></i> Facebook</a></li>
-                            <li><a href="#" target="_blank" class="listing-links-yt"><i class="fa fa-youtube-play"></i> YouTube</a></li>
-                            <li><a href="#" target="_blank" class="listing-links-ig"><i class="fa fa-instagram"></i> Instagram</a></li>
-                            <li><a href="#" target="_blank" class="listing-links-tt"><i class="fa fa-twitter"></i> Twitter</a></li>
+                            @if (linkFacebook != "") {<li><a href="#" target="_blank" class="listing-links-fb"><i class="fa fa-facebook-square"></i> Facebook</a></li>}
+                            @if (linkYoutube != "") {<li><a href="#" target="_blank" class="listing-links-yt"><i class="fa fa-youtube-play"></i> YouTube</a></li>}
+                            @if (linkInstagram != "") {<li><a href="#" target="_blank" class="listing-links-ig"><i class="fa fa-instagram"></i> Instagram</a></li>}
+                            @if (linkInstagram != "") {<li><a href="#" target="_blank" class="listing-links-tt"><i class="fa fa-twitter"></i> Twitter</a></li>}
                         </ul>
                         <div class="clearfix"></div>
 
                     </div>
                     <div class="clearfix"></div>
-
-
-                    <!-- Amenities -->
-                    <h3 class="listing-desc-headline">Amenities</h3>
-                    <ul class="listing-features checkboxes margin-top-0">
-                        <li>Elevator in building</li>
-                        <li>Friendly workspace</li>
-                        <li>Instant Book</li>
-                        <li>Wireless Internet</li>
-                        <li>Free parking on premises</li>
-                        <li>Free parking on street</li>
-                    </ul>
                 </div>
 
 
                 <!-- Food Menu -->
                 <div id="listing-pricing-list" class="listing-section">
-                    <h3 class="listing-desc-headline margin-top-70 margin-bottom-30">Servicios y Precios</h3>
+                    <h3 class="listing-desc-headline margin-top-50 margin-bottom-10">Servicios y Precios</h3>
 
                     <div class="show-more">
                         <div class="pricing-list-container">
@@ -107,47 +116,36 @@
                             <!-- Food List -->
                             <h4>Servicios Disponibles</h4>
                             <ul>
-                                <li>
-                                    <h5>Consulta médica</h5>
-                                    <p>Consulta estado de salud, peso, tamaño,etc</p>
-                                    <span>$4000</span>
-                                </li>
-                                <li>
-                                    <h5>Cuadruple,Octuple</h5>
-                                    <p>Vacuna más revisión</p>
-                                    <span>$6000</span>
-                                </li>
-                                <li>
-                                    <h5>Desparacitación</h5>
-                                    <p>Receta de pastilla ..</p>
-                                    <span>$4000</span>
-                                </li>
-                                <li>
-                                    <h5>Radiografía</h5>
-                                    <p>Sistema bla bla bla</p>
-                                    <span>$45000</span>
-                                </li>
-                                <li>
-                                    <h5>Ecografía</h5>
-                                    <p>Sistema bla bla bla</p>
-                                    <span>$60000</span>
-                                </li>
+                                @foreach (DataRow row in Model.Tables[1].Rows)
+                                {
+                                    <li>
+                                        <h5>@row["ser_Nombre_Servicio"]</h5>
+                                        <p>@row["ser_Descripcion"]</p>
+                                        <span>$@row["ser_Valor"]</span>
+                                    </li>
+                                }
+
                             </ul>
 
                         </div>
                     </div>
-                    <a href="#" class="show-more-button" data-more-title="Ver más" data-less-title="Ver menos"><i class="fa fa-angle-down"></i></a>
+                    @if (Model.Tables[1].Rows.Count > 4) {<a href="#" class="show-more-button" data-more-title="Ver más" data-less-title="Ver menos"><i class="fa fa-angle-down"></i></a>}
                 </div>
                 <!-- Food Menu / End -->
                 <!-- Location -->
+                @if (GeoLocation != "") {
+
+                            string[] location = GeoLocation.Split(',');
+
                 <div id="listing-location" class="listing-section">
                     <h3 class="listing-desc-headline margin-top-60 margin-bottom-30">Location</h3>
 
                     <div id="singleListingMap-container">
-                        <div id="singleListingMap" data-latitude="-33.042496" data-longitude="71.374390" data-map-icon="im im-icon-Hamburger"></div>
+                        <div id="singleListingMap" data-latitude="@location[0].ToString()" data-longitude="@location[1].ToString()" data-map-icon="fa fa-paw"></div>
                         <a href="#" id="streetView">Street View</a>
                     </div>
                 </div>
+                }
 
                 <!-- Reviews -->
                 <div id="listing-reviews" class="listing-section">
@@ -640,53 +638,53 @@
 </div>
 <script src="scripts/daterangepicker.js"></script>
 <script>
-// Calendar Init
-$(function() {
-	$('#date-picker').daterangepicker({
-		"opens": "left",
-		singleDatePicker: true,
+    // Calendar Init
+    $(function () {
+        $('#date-picker').daterangepicker({
+            "opens": "left",
+            singleDatePicker: true,
 
-		// Disabling Date Ranges
-		isInvalidDate: function(date) {
-		// Disabling Date Range
-		var disabled_start = moment('09/02/2018', 'MM/DD/YYYY');
-		var disabled_end = moment('09/06/2018', 'MM/DD/YYYY');
-		return date.isAfter(disabled_start) && date.isBefore(disabled_end);
+            // Disabling Date Ranges
+            isInvalidDate: function (date) {
+                // Disabling Date Range
+                var disabled_start = moment('09/02/2018', 'MM/DD/YYYY');
+                var disabled_end = moment('09/06/2018', 'MM/DD/YYYY');
+                return date.isAfter(disabled_start) && date.isBefore(disabled_end);
 
-		// Disabling Single Day
-		// if (date.format('MM/DD/YYYY') == '08/08/2018') {
-		//     return true;
-		// }
-		}
-	});
-});
+                // Disabling Single Day
+                // if (date.format('MM/DD/YYYY') == '08/08/2018') {
+                //     return true;
+                // }
+            }
+        });
+    });
 
-// Calendar animation
-$('#date-picker').on('showCalendar.daterangepicker', function(ev, picker) {
-	$('.daterangepicker').addClass('calendar-animated');
-});
-$('#date-picker').on('show.daterangepicker', function(ev, picker) {
-	$('.daterangepicker').addClass('calendar-visible');
-	$('.daterangepicker').removeClass('calendar-hidden');
-});
-$('#date-picker').on('hide.daterangepicker', function(ev, picker) {
-	$('.daterangepicker').removeClass('calendar-visible');
-	$('.daterangepicker').addClass('calendar-hidden');
-});
+    // Calendar animation
+    $('#date-picker').on('showCalendar.daterangepicker', function (ev, picker) {
+        $('.daterangepicker').addClass('calendar-animated');
+    });
+    $('#date-picker').on('show.daterangepicker', function (ev, picker) {
+        $('.daterangepicker').addClass('calendar-visible');
+        $('.daterangepicker').removeClass('calendar-hidden');
+    });
+    $('#date-picker').on('hide.daterangepicker', function (ev, picker) {
+        $('.daterangepicker').removeClass('calendar-visible');
+        $('.daterangepicker').addClass('calendar-hidden');
+    });
 </script>
 
 
 <!-- Replacing dropdown placeholder with selected time slot -->
 <script>
-$(".time-slot").each(function() {
-	var timeSlot = $(this);
-	$(this).find('input').on('change',function() {
-		var timeSlotVal = timeSlot.find('strong').text();
+    $(".time-slot").each(function () {
+        var timeSlot = $(this);
+        $(this).find('input').on('change', function () {
+            var timeSlotVal = timeSlot.find('strong').text();
 
-		$('.panel-dropdown.time-slots-dropdown a').html(timeSlotVal);
-		$('.panel-dropdown').removeClass('active');
-	});
-});
+            $('.panel-dropdown.time-slots-dropdown a').html(timeSlotVal);
+            $('.panel-dropdown').removeClass('active');
+        });
+    });
 </script>
 
 

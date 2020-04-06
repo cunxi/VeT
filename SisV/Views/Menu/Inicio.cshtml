@@ -66,51 +66,16 @@
 
         <div class="col-md-12">
             <div class="categories-boxes-container margin-top-5 margin-bottom-30">
+                @foreach (DataRow row in Model.Tables[0].Rows)
+                {
+                    <!-- Box -->
+                    <a href="/Menu/Busqueda" class="category-small-box">
+                        <i class="@row["tpo_Icono_Html"]"></i>
+                        <h4>@row["tpo_Nombre"]</h4>
+                        <span class="category-box-counter">12</span>
+                    </a>
+                }
 
-                <!-- Box -->
-                <a href="/Menu/Busqueda" class="category-small-box">
-                    <i class="im im-icon-ID-2"></i>
-                    <h4>Consulta, hospitalizaciones y exámenes</h4>
-                    <span class="category-box-counter">12</span>
-                </a>
-
-                <!-- Box -->
-                <a href="/Menu/Busqueda" class="category-small-box">
-                    <i class="im im-icon-Bone"></i>
-                    <h4>Radiografía y ecografía</h4>
-                    <span class="category-box-counter">11</span>
-                </a>
-
-                <!-- Box -->
-                <a href="/Menu/Busqueda" class="category-small-box">
-                    <i class="im im-icon-Cat"></i>
-                    <h4>Etología</h4>
-                    <span class="category-box-counter">28</span>
-                </a>
-
-                <a href="/Menu/Busqueda" class="category-small-box">
-                    <i class="im im-icon-Scissor"></i>
-                    <h4>Guardería y peluquería</h4>
-                    <span class="category-box-counter">28</span>
-                </a>
-
-                <!-- Box -->
-                <a href="/Menu/Busqueda" class="category-small-box">
-                    <i class="im im-icon-First-Aid"></i>
-                    <h4>Urgencia</h4>
-                    <span class="category-box-counter">28</span>
-                </a>
-                <!-- Box -->
-                <a href="/Menu/Busqueda" class="category-small-box">
-                    <i class="im im-icon-Home-5"></i>
-                    <h4>Servicio a domicilio</h4>
-                    <span class="category-box-counter">28</span>
-                </a>
-                <a href="/Menu/Busqueda" class="category-small-box">
-                    <i class="im im-icon-Full-Cart"></i>
-                    <h4>Productos</h4>
-                    <span class="category-box-counter">100</span>
-                </a>
             </div>
         </div>
     </div>
@@ -129,125 +94,43 @@
                 </h3>
             </div>
         </div>
-    </div>
 
-    <!-- Carousel / Start -->
-    <div class="simple-fw-slick-carousel dots-nav">
+        <div class="row">
 
-        <!-- Listing Item -->
-        <div class="fw-carousel-item">
-            <a href="/Menu/Centro" class="listing-item-container compact">
-                <div class="listing-item">
-                    <img src="/Content/images/listing-item-01.jpg" alt="">
+            <div class="col-12">
+                <!-- Carousel / Start -->
+                <div class="simple-slick-carousel dots-nav">
 
-                    <div class="listing-badge now-open">Now Open</div>
+                    @foreach (DataRow row in Model.Tables[1].Rows)
+                    {
+                        <!-- Listing Item -->
+                        <div class="carousel-item">
+                            <a href="@Url.Action("Centro","Menu", new { ID_Centro = row["cen_ID_Centro"] })"  class="listing-item-container">
+                                <div class="listing-item">
+                                    <img src="@row["cen_Img1"]" alt="">
 
-                    <div class="listing-item-content">
-                        <div class="numerical-rating" data-rating="3.5"></div>
-                        <h3>Tom's Restaurant</h3>
-                        <span>964 School Street, New York</span>
-                    </div>
-                    <span class="like-icon"></span>
+                                    <div class="listing-item-content">
+                                        <h3>@row["cen_RazonS"]</h3>
+                                        <span>@row["cen_Direccion"], @row["com_Nombre"]</span>
+                                    </div>
+                                    <span class="like-icon"></span>
+                                </div>
+
+                                @{
+                                    string Valor = Utils.CalcularVolorizacion(row["opi_Valor"].ToString(), Convert.ToInt32(row["cant_Opinion"])).ToString();
+                                }
+
+                                <div class="star-rating" data-rating="@Valor.Replace(",",".")">
+                                    <div class="rating-counter">(@row["cant_Opinion"] Comentarios)</div>
+                                </div>
+                            </a>
+                        </div>
+                                    }
+
                 </div>
-            </a>
+            </div>
         </div>
-        <!-- Listing Item / End -->
-        <!-- Listing Item -->
-        <div class="fw-carousel-item">
-            <a href="/Menu/Centro" class="listing-item-container compact">
-                <div class="listing-item">
-                    <img src="/Content/images/listing-item-02.jpg" alt="">
-                    <div class="listing-item-details">
-                        <ul>
-                            <li>Friday, August 10</li>
-                        </ul>
-                    </div>
-                    <div class="listing-item-content">
-                        <div class="numerical-rating" data-rating="5.0"></div>
-                        <h3>Sticky Band</h3>
-                        <span>Bishop Avenue, New York</span>
-                    </div>
-                    <span class="like-icon"></span>
-                </div>
-            </a>
-        </div>
-        <!-- Listing Item / End -->
-        <!-- Listing Item -->
-        <div class="fw-carousel-item">
-            <a href="/Menu/Centro" class="listing-item-container compact">
-                <div class="listing-item">
-                    <img src="/Content/images/listing-item-03.jpg" alt="">
-                    <div class="listing-item-details">
-                        <ul>
-                            <li>Starting from $59 per night</li>
-                        </ul>
-                    </div>
-                    <div class="listing-item-content">
-                        <div class="numerical-rating" data-rating="2.0"></div>
-                        <h3>Hotel Govendor</h3>
-                        <span>778 Country Street, New York</span>
-                    </div>
-                    <span class="like-icon"></span>
-                </div>
-
-            </a>
-        </div>
-        <!-- Listing Item / End -->
-        <!-- Listing Item -->
-        <div class="fw-carousel-item">
-            <a href="/Menu/Centro" class="listing-item-container compact">
-                <div class="listing-item">
-                    <img src="/Content/images/listing-item-04.jpg" alt="">
-
-                    <div class="listing-badge now-open">Now Open</div>
-
-                    <div class="listing-item-content">
-                        <div class="numerical-rating" data-rating="5.0"></div>
-                        <h3>Burger House</h3>
-                        <span>2726 Shinn Street, New York</span>
-                    </div>
-                    <span class="like-icon"></span>
-                </div>
-            </a>
-        </div>
-        <!-- Listing Item / End -->
-        <!-- Listing Item -->
-        <div class="fw-carousel-item">
-            <a href="/Menu/Centro" class="listing-item-container compact">
-                <div class="listing-item">
-                    <img src="/Content/images/listing-item-05.jpg" alt="">
-                    <div class="listing-item-content">
-                        <div class="numerical-rating" data-rating="3.5"></div>
-                        <h3>Airport</h3>
-                        <span>1512 Duncan Avenue, New York</span>
-                    </div>
-                    <span class="like-icon"></span>
-                </div>
-            </a>
-        </div>
-        <!-- Listing Item / End -->
-        <!-- Listing Item -->
-        <div class="fw-carousel-item">
-            <a href="/Menu/Centro" class="listing-item-container compact">
-                <div class="listing-item">
-                    <img src="/Content/images/listing-item-06.jpg" alt="">
-
-                    <div class="listing-badge now-closed">Now Closed</div>
-
-                    <div class="listing-item-content">
-                        <div class="numerical-rating" data-rating="4.5"></div>
-                        <h3>Think Coffee</h3>
-                        <span>215 Terry Lane, New York</span>
-                    </div>
-                    <span class="like-icon"></span>
-                </div>
-            </a>
-        </div>
-        <!-- Listing Item / End -->
-
-    </div>
-    <!-- Carousel / End -->
-
+    </div>    
 
 </section>
 
@@ -269,118 +152,26 @@
 
     <!-- Carousel / Start -->
     <div class="simple-fw-slick-carousel dots-nav">
+        @foreach (DataRow row in Model.Tables[2].Rows)
+        {
+            <!-- Listing Item -->
+            <div class="fw-carousel-item">
+                <a href="listings-single-page.html" class="listing-item-container compact">
+                    <div class="listing-item">
+                        <img src="@row["cen_Img1"]" alt="">
 
-        <!-- Listing Item -->
-        <div class="fw-carousel-item">
-            <a href="listings-single-page.html" class="listing-item-container compact">
-                <div class="listing-item">
-                    <img src="/Content/images/listing-item-01.jpg" alt="">
+                        <div class="listing-badge now-open">Now Open</div>
 
-                    <div class="listing-badge now-open">Now Open</div>
-
-                    <div class="listing-item-content">
-                        <div class="numerical-rating" data-rating="3.5"></div>
-                        <h3>Tom's Restaurant</h3>
-                        <span>964 School Street, New York</span>
+                        <div class="listing-item-content">                            
+                            <h3>@row["cen_RazonS"]</h3>
+                            <span>@row["cen_Direccion"]</span>
+                        </div>
+                        <span class="like-icon"></span>
                     </div>
-                    <span class="like-icon"></span>
-                </div>
-            </a>
-        </div>
-        <!-- Listing Item / End -->
-        <!-- Listing Item -->
-        <div class="fw-carousel-item">
-            <a href="listings-single-page.html" class="listing-item-container compact">
-                <div class="listing-item">
-                    <img src="/Content/images/listing-item-02.jpg" alt="">
-                    <div class="listing-item-details">
-                        <ul>
-                            <li>Friday, August 10</li>
-                        </ul>
-                    </div>
-                    <div class="listing-item-content">
-                        <div class="numerical-rating" data-rating="5.0"></div>
-                        <h3>Sticky Band</h3>
-                        <span>Bishop Avenue, New York</span>
-                    </div>
-                    <span class="like-icon"></span>
-                </div>
-            </a>
-        </div>
-        <!-- Listing Item / End -->
-        <!-- Listing Item -->
-        <div class="fw-carousel-item">
-            <a href="listings-single-page.html" class="listing-item-container compact">
-                <div class="listing-item">
-                    <img src="/Content/images/listing-item-03.jpg" alt="">
-                    <div class="listing-item-details">
-                        <ul>
-                            <li>Starting from $59 per night</li>
-                        </ul>
-                    </div>
-                    <div class="listing-item-content">
-                        <div class="numerical-rating" data-rating="2.0"></div>
-                        <h3>Hotel Govendor</h3>
-                        <span>778 Country Street, New York</span>
-                    </div>
-                    <span class="like-icon"></span>
-                </div>
+                </a>
+            </div>
 
-            </a>
-        </div>
-        <!-- Listing Item / End -->
-        <!-- Listing Item -->
-        <div class="fw-carousel-item">
-            <a href="listings-single-page.html" class="listing-item-container compact">
-                <div class="listing-item">
-                    <img src="/Content/images/listing-item-04.jpg" alt="">
-
-                    <div class="listing-badge now-open">Now Open</div>
-
-                    <div class="listing-item-content">
-                        <div class="numerical-rating" data-rating="5.0"></div>
-                        <h3>Burger House</h3>
-                        <span>2726 Shinn Street, New York</span>
-                    </div>
-                    <span class="like-icon"></span>
-                </div>
-            </a>
-        </div>
-        <!-- Listing Item / End -->
-        <!-- Listing Item -->
-        <div class="fw-carousel-item">
-            <a href="listings-single-page.html" class="listing-item-container compact">
-                <div class="listing-item">
-                    <img src="/Content/images/listing-item-05.jpg" alt="">
-                    <div class="listing-item-content">
-                        <div class="numerical-rating" data-rating="3.5"></div>
-                        <h3>Airport</h3>
-                        <span>1512 Duncan Avenue, New York</span>
-                    </div>
-                    <span class="like-icon"></span>
-                </div>
-            </a>
-        </div>
-        <!-- Listing Item / End -->
-        <!-- Listing Item -->
-        <div class="fw-carousel-item">
-            <a href="listings-single-page.html" class="listing-item-container compact">
-                <div class="listing-item">
-                    <img src="/Content/images/listing-item-06.jpg" alt="">
-
-                    <div class="listing-badge now-closed">Now Closed</div>
-
-                    <div class="listing-item-content">
-                        <div class="numerical-rating" data-rating="4.5"></div>
-                        <h3>Think Coffee</h3>
-                        <span>215 Terry Lane, New York</span>
-                    </div>
-                    <span class="like-icon"></span>
-                </div>
-            </a>
-        </div>
-        <!-- Listing Item / End -->
-
+        }
     </div>
     <!-- Carousel / End -->
 

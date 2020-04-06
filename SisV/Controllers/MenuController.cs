@@ -9,12 +9,12 @@ namespace SisV.Controllers
 {
     public class MenuController : Controller
     {
-
+        Models.Crud crud = new Models.Crud();
+        
         // GET: Menu
         public ActionResult Inicio()
         {
-            Models.Crud crud = new Models.Crud();
-            DataSet ds = new DataSet();
+            DataSet ds = new DataSet();       
             string Mensaje = "";
             crud.Inicio(ref ds, ref Mensaje);
             return View(ds);
@@ -24,9 +24,19 @@ namespace SisV.Controllers
         {
             return View();
         }
-        public ActionResult Centro()
+        public ActionResult Centro(string ID_Centro)
         {
-            return View();
+            DataSet ds = new DataSet();
+            string Mensaje = "";
+
+            if (ID_Centro != null && ID_Centro != "") {
+                crud.Centro(ID_Centro, ref ds, ref Mensaje);
+                return View(ds);
+            }
+            else
+            {
+                return RedirectToAction("Inicio", "Menu");
+            }
         }
      
     }
