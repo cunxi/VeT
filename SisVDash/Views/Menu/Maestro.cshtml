@@ -1,8 +1,8 @@
 ﻿@using System.Data;
-@model DataSet
+
 <style>
     .btn22 {
-        background-color: #01A9AC;
+        background-color: #007072;
         border: none;
         color: white;
         padding: 6px 11px;
@@ -11,12 +11,12 @@
     }
 
         .btn22:hover {
-            background-color: #01DBDF;
+            background-color: #01A9AC;
         }
 </style>
 <style>
     .btn33 {
-        background-color: #FE5D70;
+        background-color: #A93E4A;
         border: none;
         color: white;
         padding: 6px 11px;
@@ -25,7 +25,7 @@
     }
 
         .btn33:hover {
-            background-color: #FE909D;
+            background-color: #FE5D70;
         }
 </style>
 
@@ -36,13 +36,20 @@
 <link rel="stylesheet" type="text/css" href="~/Content/assets/icon/feather/css/feather.css">
 <link rel="stylesheet" type="text/css" href="~/Content/assets/css/style.css">
 
+<link rel="stylesheet" type="text/css" href="~/Content/bower_components/pnotify/css/pnotify.css">
+<link rel="stylesheet" type="text/css" href="~/Content/bower_components/pnotify/css/pnotify.brighttheme.css">
+<link rel="stylesheet" type="text/css" href="~/Content/bower_components/pnotify/css/pnotify.buttons.css">
+<link rel="stylesheet" type="text/css" href="~/Content/bower_components/pnotify/css/pnotify.history.css">
 
+<link href="https:/fonts.googleapis.com/css?family=Open+Sans:400,600,800" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="~/Content/assets/css/style.css">
+<link rel="stylesheet" type="text/css" href="~/Content/assets/css/jquery.mCustomScrollbar.css">
 
 <body>
 
     <div class="col-sm-12">
         <div class="page-body toolbar-page">
-            <div class="card-header" style="background-color:#01A9AC;color:#fff">
+            <div class="card-header" style="color:#fff;background-image: linear-gradient(to right, rgba(98,125,77,1) 0%, rgba(85,123,82,1) 13%, rgba(0,112,114,1) 100%);">
                 <h6 class="my-1">Mantenedor de @ViewBag.Nombre <i style="color:#fff;" tabindex="0"></i></h6>
 
             </div>
@@ -52,9 +59,27 @@
                         <div class="row">
                             <div class="col-md-10">
                                 <div class="d-flex flex-wrap" id="inventario_header">
-                                    <button class="btn btn-primary btn-outline-primary" onclick="OpenModMan('COL|I|0~0')" data-toggle="tooltip" data-placement="top" title="Agregar @ViewBag.Nombre"><i class="icofont icofont-ui-add"></i>Agregar @ViewBag.Nombre</button>
-                                    <button class="btn btn-primary btn-outline-primary" data-toggle="tooltip" data-placement="top" title="Exportar a Excel"><i class="icofont icofont-file-excel"></i>Xls</button>
-                                    <button class="btn btn-primary btn-outline-primary" data-toggle="tooltip" data-placement="top" title="Exportar a Pdf"><i class="icofont icofont-file-pdf"></i>Pdf</button>
+
+                                    @if (@ViewBag.Nombre == "color")
+                                    {
+                                        <button class="btn btn-primary btn-outline-primary" id="btnAddColor" onclick="OpenModMan('COL|I|0~0')" data-toggle="tooltip" data-placement="top" title="Agregar @ViewBag.Nombre"><i class="icofont icofont-ui-add"></i>Agregar @ViewBag.Nombre</button>
+                                    }
+                                    else if (@ViewBag.Nombre == "especie")
+                                    {
+                                        <button class="btn btn-primary btn-outline-primary" id="btnAddEspecie" onclick="OpenModMan('ESP|I|0~0')" data-toggle="tooltip" data-placement="top" title="Agregar @ViewBag.Nombre"><i class="icofont icofont-ui-add"></i>Agregar @ViewBag.Nombre</button>
+                                    }
+                                    else if (@ViewBag.Nombre == "patron")
+                                    {
+                                        <button class="btn btn-primary btn-outline-primary" id="btnAddEspecie" onclick="OpenModMan('PAT|I|0~0')" data-toggle="tooltip" data-placement="top" title="Agregar @ViewBag.Nombre"><i class="icofont icofont-ui-add"></i>Agregar @ViewBag.Nombre</button>
+                                    }
+
+                                    else if (@ViewBag.Nombre == "raza")
+                                    {
+                                        <button class="btn btn-primary btn-outline-primary" id="btnAddEspecie" onclick="OpenModMan('RAZ|I|0~0~0')" data-toggle="tooltip" data-placement="top" title="Agregar @ViewBag.Nombre"><i class="icofont icofont-ui-add"></i>Agregar @ViewBag.Nombre</button>
+                                    }
+
+                                    &nbsp;<button class="btn btn-primary btn-outline-primary" data-toggle="tooltip" data-placement="top" title="Exportar a Excel"><i class="icofont icofont-file-excel"></i>Xls</button>
+                                    &nbsp;<button class="btn btn-primary btn-outline-primary" data-toggle="tooltip" data-placement="top" title="Exportar a Pdf"><i class="icofont icofont-file-pdf"></i>Pdf</button>
                                 </div>
                             </div>
                         </div>
@@ -68,7 +93,6 @@
                                         <tr>
                                             <th>Código</th>
                                             <th>Nombre</th>
-                                            <th>DatosLog</th>
                                             <th>Acciones</th>
                                         </tr>
                                     </thead>
@@ -78,7 +102,6 @@
                                             <tr id="@row["col_Codigo"]">
                                                 <td>@row["col_Codigo"]</td>
                                                 <td>@row["col_Nombre"]</td>
-                                                <td>@row["Log"]</td>
                                                 <td>
                                                     <button class="btn22" onclick="OpenModMan('COL|U|@row["col_Codigo"]~@row["col_Nombre"]')"><i class="icofont icofont-ui-edit"></i> Modificar</button>
                                                     <button class="btn33" onclick="Save('COL|D|@row["col_Codigo"]~@row["col_Nombre"]')"><i class="icofont icofont-ui-delete"></i> Eliminar</button>
@@ -90,7 +113,105 @@
                                         <tr>
                                             <th>Código</th>
                                             <th>Nombre</th>
-                                            <th>DatosLog</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            }
+                            @if (@ViewBag.Nombre == "especie")
+                            {
+                                <table id="simpletable" class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Código</th>
+                                            <th>Nombre</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (DataRow row in Model.Tables[0].Rows)
+                                        {
+                                            <tr id="@row["esp_Codigo"]">
+                                                <td>@row["esp_Codigo"]</td>
+                                                <td>@row["esp_Nombre"]</td>
+                                                <td>
+                                                    <button class="btn22" onclick="OpenModMan('ESP|U|@row["esp_Codigo"]~@row["esp_Nombre"]')"><i class="icofont icofont-ui-edit"></i> Modificar</button>
+                                                    <button class="btn33" onclick="Save('ESP|D|@row["esp_Codigo"]~@row["esp_Nombre"]')"><i class="icofont icofont-ui-delete"></i> Eliminar</button>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Código</th>
+                                            <th>Nombre</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            }
+                            @if (@ViewBag.Nombre == "patron")
+                            {
+                                <table id="simpletable" class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Código</th>
+                                            <th>Nombre</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (DataRow row in Model.Tables[0].Rows)
+                                        {
+                                            <tr id="@row["pat_Codigo"]">
+                                                <td>@row["pat_Codigo"]</td>
+                                                <td>@row["pat_Nombre"]</td>
+                                                <td>
+                                                    <button class="btn22" onclick="OpenModMan('PAT|U|@row["pat_Codigo"]~@row["pat_Nombre"]')"><i class="icofont icofont-ui-edit"></i> Modificar</button>
+                                                    <button class="btn33" onclick="Save('PAT|D|@row["pat_Codigo"]~@row["pat_Nombre"]')"><i class="icofont icofont-ui-delete"></i> Eliminar</button>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Código</th>
+                                            <th>Nombre</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            }
+                            @if (@ViewBag.Nombre == "raza")
+                            {
+                                <table id="simpletable" class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Código</th>
+                                            <th>Nombre</th>
+                                            <th>Especie</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (DataRow row in Model.Tables[0].Rows)
+                                        {
+                                            <tr id="@row["raz_Codigo"]">
+                                                <td>@row["raz_Codigo"]</td>
+                                                <td>@row["raz_Nombre"]</td>
+                                                <td>@row["esp_Nombre"]</td>
+                                                <td>
+                                                    <button class="btn22" onclick="OpenModMan('RAZ|U|@row["raz_Codigo"]~@row["raz_Nombre"]~@row["esp_Codigo"]')"><i class="icofont icofont-ui-edit"></i> Modificar</button>
+                                                    <button class="btn33" onclick="Save('RAZ|D|@row["raz_Codigo"]~@row["raz_Nombre"]~@row["esp_Codigo"]')"><i class="icofont icofont-ui-delete"></i> Eliminar</button>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Código</th>
+                                            <th>Nombre</th>
+                                            <th>Especie</th>
                                             <th>Acciones</th>
                                         </tr>
                                     </tfoot>
@@ -98,11 +219,7 @@
                             }
                         </div>
                     </div>
-
                 </div>
-
-
-
             </div>
         </div>
     </div>
@@ -111,30 +228,135 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="TitulMod">Mantenedor de Color</h4>
+                    <h4 class="modal-title" id="TitulModColor">Mantenedor de Color</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">ID color</label>
+                        <label class="col-sm-2 col-form-label">Código *</label>
                         <div class="col-sm-10">
-                            <input name="codColor" id="codColor" maxlength="3" type="text" class="form-control" placeholder="Código color">
+                            <input name="codColor" id="codColor" onkeypress="return check(event)" maxlength="3" type="text" class="form-control" placeholder="Código color" pattern="[A-Za-z0-9]{5,40}">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Nombre color</label>
+                        <label class="col-sm-2 col-form-label">Nombre *</label>
                         <div class="col-sm-10">
-                            <input name="nomColor" id="nomColor" type="text" maxlength="50" class="form-control" placeholder="Nombre color">
+                            <input name="nomColor" id="nomColor" onkeypress="return check(event)" type="text" maxlength="50" class="form-control" placeholder="Nombre color" pattern="[A-Za-z0-9]{5,40}">
                         </div>
                     </div>
 
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Cerrar</button>
-                    <button type="button" id="btnInsert"  class="btn btn-primary waves-effect waves-light" onclick="Save('COL|I')">Guardar</button>
-                    <button type="button" id="btnUpdate" class="btn btn-primary waves-effect waves-light" onclick="Save('COL|U')">Guardar</button>
+                    <button type="button" id="btnUpdateCol" class="btn btn-primary waves-effect waves-light" onclick="Save('COL|U'+ '|' + document.getElementById('codColor').value + '~' + document.getElementById('nomColor').value)">Guardar</button>
+                    <button type="button" id="btnGuardarCol" class="btn btn-primary waves-effect waves-light" onclick="Save('COL|I'+ '|' + document.getElementById('codColor').value + '~' + document.getElementById('nomColor').value)">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- MODAL ESPECIE -->
+    <div class="modal fade" id="ModEspecie" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="TitulModEspecie">Mantenedor de Especie</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Código *</label>
+                        <div class="col-sm-10">
+                            <input name="codEspecie" id="codEspecie" onkeypress="return check(event)" maxlength="3" type="text" class="form-control" placeholder="Código especie" pattern="[A-Za-z0-9]{5,40}">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Nombre *</label>
+                        <div class="col-sm-10">
+                            <input name="nomEspecie" id="nomEspecie" onkeypress="return check(event)" type="text" maxlength="50" class="form-control" placeholder="Nombre especie" pattern="[A-Za-z0-9]{5,40}">
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Cerrar</button>
+                    <button type="button" id="btnUpdateEsp" class="btn btn-primary waves-effect waves-light" onclick="Save('ESP|U'+ '|' + document.getElementById('codEspecie').value + '~' + document.getElementById('nomEspecie').value)">Guardar</button>
+                    <button type="button" id="btnGuardarEsp" class="btn btn-primary waves-effect waves-light" onclick="Save('ESP|I'+ '|' + document.getElementById('codEspecie').value + '~' + document.getElementById('nomEspecie').value)">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- MODAL PATRON -->
+    <div class="modal fade" id="ModPatron" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="TitulModPatron">Mantenedor de Patron</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Código *</label>
+                        <div class="col-sm-10">
+                            <input name="codPatron" id="codPatron" onkeypress="return check(event)" maxlength="3" type="text" class="form-control" placeholder="Código patrón" pattern="[A-Za-z0-9]{5,40}">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Nombre *</label>
+                        <div class="col-sm-10">
+                            <input name="nomPatron" id="nomPatron" onkeypress="return check(event)" type="text" maxlength="50" class="form-control" placeholder="Nombre patrón" pattern="[A-Za-z0-9]{5,40}">
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Cerrar</button>
+                    <button type="button" id="btnUpdatePat" class="btn btn-primary waves-effect waves-light" onclick="Save('PAT|U'+ '|' + document.getElementById('codPatron').value + '~' + document.getElementById('nomPatron').value)">Guardar</button>
+                    <button type="button" id="btnGuardarPat" class="btn btn-primary waves-effect waves-light" onclick="Save('PAT|I'+ '|' + document.getElementById('codPatron').value + '~' + document.getElementById('nomPatron').value)">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- MODAL RAZA -->
+    <div class="modal fade" id="ModRaza" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="TitulModRaza">Mantenedor de Raza</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Código *</label>
+                        <div class="col-sm-10">
+                            <input name="codRaza" id="codRaza" onkeypress="return check(event)" maxlength="3" type="text" class="form-control" placeholder="Código raza" pattern="[A-Za-z0-9]{5,40}">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Nombre *</label>
+                        <div class="col-sm-10">
+                            <input name="nomRaza" id="nomRaza" onkeypress="return check(event)" type="text" maxlength="50" class="form-control" placeholder="Nombre raza" pattern="[A-Za-z0-9]{5,40}">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Nombre *</label>
+                        <div class="col-sm-10">
+                            <input name="nomRaza" id="nomRaza" onkeypress="return check(event)" type="text" maxlength="50" class="form-control" placeholder="Nombre raza" pattern="[A-Za-z0-9]{5,40}">
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Cerrar</button>
+                    <button type="button" id="btnUpdateRaz" class="btn btn-primary waves-effect waves-light" onclick="Save('RAZ|U'+ '|' + document.getElementById('codRaza').value + '~' + document.getElementById('nomRaza').value + '~' + document.getElementById('codEspecie').value)">Guardar</button>
+                    <button type="button" id="btnGuardarRaz" class="btn btn-primary waves-effect waves-light" onclick="Save('RAZ|I'+ '|' + document.getElementById('codRaza').value + '~' + document.getElementById('nomRaza').value + '~' + document.getElementById('codEspecie').value)">Guardar</button>
                 </div>
             </div>
         </div>
@@ -143,6 +365,7 @@
     <!-- SCRIPTS -->
     <script>
         function OpenModMan(dat) {
+
             var datInt;
             var valores = dat.split("|");
             var man = valores[0];
@@ -155,59 +378,330 @@
                 var nom = datInt[1];
 
                 if (acc == "I") {
-                $('#TitulMod').text("Ingresar Color");
-                $('#codColor').val("");
+                    $("#codColor").prop('disabled', false);
+                    $('#TitulModColor').text("Ingresar color");
+                    $('#codColor').val("");
                     $('#nomColor').val("");
+                    document.getElementById("btnUpdateCol").style.display = "none";
+                    document.getElementById("btnGuardarCol").style.display = "block";
                 }
                 else {
-                $('#TitulMod').text("Modificación Color");
-                $('#codColor').val(cod);
+                    $("#codColor").prop('disabled', true);
+                    $('#TitulModColor').text("Modificar color");
+                    $('#codColor').val(cod);
                     $('#nomColor').val(nom);
+                    document.getElementById("btnGuardarCol").style.display = "none";
+                    document.getElementById("btnUpdateCol").style.display = "block";
                 }
 
                 $('#ModColor').modal('show');
             }
+            if (man == "ESP") {
+                datInt = Datos.split("~");
+                var cod = datInt[0];
+                var nom = datInt[1];
+
+                if (acc == "I") {
+                    $("#codEspecie").prop('disabled', false);
+                    $('#TitulModEspecie').text("Ingresar especie");
+                    $('#codEspecie').val("");
+                    $('#nomEspecie').val("");
+                    document.getElementById("btnUpdateEsp").style.display = "none";
+                    document.getElementById("btnGuardarEsp").style.display = "block";
+                }
+                else {
+                    $("#codEspecie").prop('disabled', true);
+                    $('#TitulModEspecie').text("Modificar especie");
+                    $('#codEspecie').val(cod);
+                    $('#nomEspecie').val(nom);
+                    document.getElementById("btnGuardarEsp").style.display = "none";
+                    document.getElementById("btnUpdateEsp").style.display = "block";
+                }
+
+                $('#ModEspecie').modal('show');
+            }
+            if (man == "PAT") {
+                datInt = Datos.split("~");
+                var cod = datInt[0];
+                var nom = datInt[1];
+
+                if (acc == "I") {
+                    $("#codPatron").prop('disabled', false);
+                    $('#TitulModPatron').text("Ingresar patrón");
+                    $('#codPatron').val("");
+                    $('#nomPatron').val("");
+                    document.getElementById("btnUpdatePat").style.display = "none";
+                    document.getElementById("btnGuardarPat").style.display = "block";
+                }
+                else {
+                    $("#codPatron").prop('disabled', true);
+                    $('#TitulModPatron').text("Modificar patrón");
+                    $('#codPatron').val(cod);
+                    $('#nomPatron').val(nom);
+                    document.getElementById("btnGuardarPat").style.display = "none";
+                    document.getElementById("btnUpdatePat").style.display = "block";
+                }
+
+                $('#ModPatron').modal('show');
+            }
+            if (man == "RAZ") {
+                datInt = Datos.split("~");
+                var cod = datInt[0];
+                var nom = datInt[1];
+                var esp = datInt[1];
+
+                if (acc == "I") {
+                    $("#codRaza").prop('disabled', false);
+                    $('#TitulModRaza').text("Ingresar raza");
+                    $('#codRaza').val("");
+                    $('#nomRaza').val("");
+                    document.getElementById("btnUpdateRaz").style.display = "none";
+                    document.getElementById("btnGuardarRaz").style.display = "block";
+                }
+                else {
+                    $("#codRaza").prop('disabled', true);
+                    $('#TitulModRaza').text("Modificar raza");
+                    $('#codRaza').val(cod);
+                    $('#nomRaza').val(nom);
+                    document.getElementById("btnGuardarRaz").style.display = "none";
+                    document.getElementById("btnUpdateRaz").style.display = "block";
+                }
+
+                $('#ModRaza').modal('show');
+            }
+
         };
     </script>
     <script>
         function Save(data) {
-         
-            var valores = data.split("|");
-            var man = valores[0];
-            var acc = valores[1];
-           
-            if (man == "COL")
-            {
-                alert("entramos");
-                var a = data + "|" +  $('#codColor').val() + "~" + $('#nomColor').val();
-                                
-            }            
-            alert(a);
-                $.ajax({
-                    url: "/Menu/Accionar",
-                    data: { a: a },
-                    success: function (response) {
-                        $('#ModColor').modal('hide')
+            var recibido = data.split("|");
+            var man = recibido[0];
+            var acc = recibido[1];
+            var dat = recibido[2];
+
+
+            validaCampos(acc, man, data)
+
+        }
+        function validaCampos(acc, man, data) {
+
+            if (man == "COL") {
+                var recibido = data.split("~");
+                var codCol = recibido[0];
+                var nomCol = recibido[1];
+                if (codCol == "" || nomCol == "") {
+                    new PNotify({
+                        title: 'Información',
+                        text: "Debe completar campos requeridos (*)",
+                        icon: 'icofont icofont-info-square',
+                        type: "error"
+                    });
+
+                }
+                else {
+                    Confirmacion(acc, data)
+                }
+            }
+            if (man == "ESP") {
+                var recibido = data.split("~");
+                var codEsp = recibido[0];
+                var nomEsp = recibido[1];
+                if (codEsp == "" || nomEsp == "") {
+                    new PNotify({
+                        title: 'Información',
+                        text: "Debe completar campos requeridos (*)",
+                        icon: 'icofont icofont-info-square',
+                        type: "error"
+                    });
+
+                }
+                else {
+                    Confirmacion(acc, data)
+                }
+            }
+            if (man == "PAT") {
+                var recibido = data.split("~");
+                var codPat = recibido[0];
+                var nomPat = recibido[1];
+                if (codPat == "" || nomPat == "") {
+                    new PNotify({
+                        title: 'Información',
+                        text: "Debe completar campos requeridos (*)",
+                        icon: 'icofont icofont-info-square',
+                        type: "error"
+                    });
+
+                }
+                else {
+                    Confirmacion(acc, data)
+                }
+            }
+
+        }
+
+        function Confirmacion(acc, data) {
+            if (acc == "D") {
+                var notice = new PNotify({
+                    title: 'Confirmación',
+                    text: '<p>Está seguro(a) de eliminar el registro?</p>',
+                    hide: false,
+                    type: 'warning',
+                    confirm: {
+                        confirm: true,
+                        buttons: [
+                            {
+                                text: 'Si',
+                                addClass: 'btn btn-sm btn-primary'
+                            },
+                            {
+                                addClass: 'btn btn-sm btn-link'
+                            }
+                        ]
+                    },
+                    buttons: {
+                        closer: false,
+                        sticker: false
+                    },
+                    history: {
+                        history: false
+                    }
+                })
+
+                / Si es positivo
+                notice.get().on('pnotify.confirm', function () {
+                    Save2(data);
+                })
+
+                / Si es negativo
+                notice.get().on('pnotify.cancel', function () {
+
+                });
+            }
+            else {
+                Save2(data);
+            }
+        }
+
+        function Save2(data) {
+            var recibido = data.split("|");
+            var man = recibido[0];
+            var acc = recibido[1];
+            var dat = recibido[2];
+
+            var a = "";
+            var NombreModal = "";
+
+            if (man == "COL") {
+                NombreModal = "#ModColor"
+                var datosInt = dat.split("~");
+                var cod = datosInt[0];
+                var nom = datosInt[1];
+                a = data;
+            }
+
+            if (man == "ESP") {
+                NombreModal = "#ModEspecie"
+                var datosInt = dat.split("~");
+                var cod = datosInt[0];
+                var nom = datosInt[1];
+                a = data;
+            }
+            if (man == "PAT") {
+                NombreModal = "#ModPatron"
+                var datosInt = dat.split("~");
+                var cod = datosInt[0];
+                var nom = datosInt[1];
+                a = data;
+            }
+
+            $.ajax({
+
+                url: "/Menu/Accionar",
+                data: { a: a },
+                success: function (response) {
+                    var tipoNotify = "info";
+                    var dRespuesta = response.split("|");
+                    var codigoRespuesta = dRespuesta[0];
+                    var mensajeRespuesta = dRespuesta[1];
+
+                    if (codigoRespuesta == "0") {
+
+                        tipoNotify = "info";
+                        $(NombreModal).modal('hide')
 
                         if (acc == "D") {
                             var drow = $('#simpletable').DataTable();
                             drow.row('#' + cod).remove().draw(!1);
                         }
+                        if (acc == "I") {
+                            var drow = $('#simpletable').DataTable();
 
-                        new PNotify({
-                            title: 'Información',
-                            text: response + " exitosamente",
-                            icon: 'icofont icofont-info-square',
-                            type: 'info'
-                        });
+                            drow.row.add([cod, nom, '<button class="btn22" onclick="OpenModMan(\'' + man + '|U|' + dat + '\')" ><i class=\"icofont icofont-ui-edit\"></i> Modificar</button>&nbsp;<button class="btn33" onclick="Save(\'' + man + '|D|' + dat + '\')" ><i class=\"icofont icofont-ui-delete\"></i> Eliminar</button>']).node().id = cod;
+                            drow.draw();
+                        }
+                        if (acc == "U") {
+                            var drow = $('#simpletable').DataTable();
+                            drow.row('#' + cod).remove().draw(!1);
+                            drow.row.add([cod, nom, '<button class="btn22" onclick="OpenModMan(\'' + man + '|U|' + dat + '\')" ><i class=\"icofont icofont-ui-edit\"></i> Modificar</button>&nbsp;<button class="btn33" onclick="Save(\'' + man + '|D|' + dat + '\')" ><i class=\"icofont icofont-ui-delete\"></i> Eliminar</button>']).node().id = cod;
+                            drow.draw();
+                        }
+                    }
+                    else {
+                        tipoNotify = "error";
+                    }
 
-                    },
-                });
+                    new PNotify({
+                        title: 'Información',
+                        text: mensajeRespuesta,
+                        icon: 'icofont icofont-info-square',
+                        type: tipoNotify
+                    });
+
+
+                },
+            });
+
+
         }
+
     </script>
     <script>
         $(function () {
             $('[data-toggle="tooltip"]').tooltip()
         })
     </script>
+    <script>
+        function check(e) {
+            tecla = (document.all) ? e.keyCode : e.which;
+
+            /Tecla de retroceso para borrar, siempre la permite
+            if (tecla == 8) {
+                return true;
+            }
+
+            / Patron de entrada, en este caso solo acepta numeros y letras
+            patron = /[A-Za-z0-9]/;
+            tecla_final = String.fromCharCode(tecla);
+            return patron.test(tecla_final);
+        }
+    </script>
 </body>
+
+<script type="text/javascript" src="~/Content/bower_components/jquery/js/jquery.min.js"></script>
+<script type="text/javascript" src="~/Content/bower_components/jquery-ui/js/jquery-ui.min.js"></script>
+<script type="text/javascript" src="~/Content/bower_components/popper.js/js/popper.min.js"></script>
+<script type="text/javascript" src="~/Content/bower_components/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="~/Content/bower_components/jquery-slimscroll/js/jquery.slimscroll.js"></script>
+<script type="text/javascript" src="~/Content/bower_components/modernizr/js/modernizr.js"></script>
+<script type="text/javascript" src="~/Content/bower_components/modernizr/js/css-scrollbars.js"></script>
+<script type="text/javascript" src="~/Content/bower_components/pnotify/js/pnotify.js"></script>
+<script type="text/javascript" src="~/Content/bower_components/pnotify/js/pnotify.desktop.js"></script>
+<script type="text/javascript" src="~/Content/bower_components/pnotify/js/pnotify.buttons.js"></script>
+<script type="text/javascript" src="~/Content/bower_components/pnotify/js/pnotify.confirm.js"></script>
+<script type="text/javascript" src="~/Content/bower_components/pnotify/js/pnotify.callbacks.js"></script>
+<script type="text/javascript" src="~/Content/bower_components/pnotify/js/pnotify.animate.js"></script>
+<script type="text/javascript" src="~/Content/bower_components/pnotify/js/pnotify.history.js"></script>
+<script type="text/javascript" src="~/Content/bower_components/pnotify/js/pnotify.mobile.js"></script>
+<script type="text/javascript" src="~/Content/bower_components/pnotify/js/pnotify.nonblock.js"></script>
+<script type="text/javascript" src="~/Content/assets/pages/pnotify/notify.js"></script>
+<script type="text/javascript" src="~/Content/assets/js/script.js"></script>

@@ -21,58 +21,67 @@ namespace SisVDash.Controllers
         {
             ViewBag.Title = "Mantenedor de " + nomMaestro;
             DataSet ds = new DataSet();
-
+            var DataData="";
+            string sError = "";
 
             switch (nomMaestro)
             {
                 case "Color":
                     ViewBag.message = "Lista de colores proporcionados por el centro";
-                    ViewBag.Nombre = "color";
-                    var DataColor = "";
-                    string Error = "";
-                    crud.cColorMascota("4", "", "", "", "", ref ds, ref Error);
+                    ViewBag.Nombre = "color";                                        
+                    crud.cColorMascota("4", "", "", "", "", ref ds, ref sError);
                     {
                         if (ds.Tables.Count > 0)
                         {
-                            DataColor = ds.ToString();
+                            DataData = ds.ToString();
                         }
                     }
 
                     break;
 
-                case "Mascota":
-                    ViewBag.message = "Lista de mascotas proporcionados por el centro";
-                    ViewBag.Nombre = "mascota";
-                    break;
-
-
-                case "Servicio":
-                    ViewBag.message = "Lista de servicios proporcionados por el centro";
-                    ViewBag.Nombre = "servicio";
-                    break;
-
-                case "Producto":
-                    ViewBag.message = "Lista de productos proporcionados por el centro";
-                    ViewBag.Nombre = "producto";
-                    break;
-
-
                 case "Especie":
                     ViewBag.message = "Lista de especies proporcionados por el centro";
                     ViewBag.Nombre = "especie";
+                                      
+                    crud.cEspecieMascota("4", "", "", "", "", ref ds, ref sError);
+                    {
+                        if (ds.Tables.Count > 0)
+                        {
+                            DataData = ds.ToString();
+                        }
+                    }
+                    break;
+
+                case "Patrón":
+                    ViewBag.message = "Lista de patrones proporcionados por el centro";
+                    ViewBag.Nombre = "patron";
+
+                    crud.cPatronMascota("4", "", "", "", "", ref ds, ref sError);
+                    {
+                        if (ds.Tables.Count > 0)
+                        {
+                            DataData = ds.ToString();
+                        }
+                    }
                     break;
 
                 case "Raza":
                     ViewBag.message = "Lista de razas proporcionados por el centro";
                     ViewBag.Nombre = "raza";
+
+                    crud.cRazaMascota("4","", "", "", "", "", ref ds, ref sError);
+                    {
+                        if (ds.Tables.Count > 0)
+                        {
+                            DataData = ds.ToString();
+                        }
+                    }
                     break;
 
-
-
-                case "Patrón":
-                    ViewBag.message = "Lista de patrones proporcionados por el centro";
-                    ViewBag.Nombre = "patrón";
-                    break;
+                case "Producto":
+                    ViewBag.message = "Lista de productos proporcionados por el centro";
+                    ViewBag.Nombre = "producto";
+                    break;               
 
                 default:
                     break;
@@ -120,18 +129,24 @@ namespace SisVDash.Controllers
 
         }
 
-        public ActionResult Accionar(string a)
-        {
-            string R = "";
-            string Log_Update = "JCRetamal";
-            string Log_Maquina = "NT-JC";
+        [HttpGet]
+        public JsonResult Accionar(string a)
+        {            
+            string log_Update = "JCRetamal";
+            string log_Maquina = "NT-JC";
+            string resultado = "";
+            string codigoResultado = "";
+
             DataSet ds = new DataSet();
             string Error = "";
+            try
+            {
+                string datos;
             //Split
-            string[] datos = a.Split('|');
-            string Mantenedor = datos[0];
-            string Accion = datos[1];
-            string Regis = datos[2];
+            string[] datosRecibidoss = a.Split('|');
+            string Mantenedor = datosRecibidoss[0];
+            string Accion = datosRecibidoss[1];
+            string Regis = datosRecibidoss[2];
 
             switch (Accion)
             {
@@ -153,20 +168,66 @@ namespace SisVDash.Controllers
                 string CodigoColor = DatosColor[0];
                 string NombreColor = DatosColor[1];
 
-                crud.cColorMascota(Accion, CodigoColor, NombreColor,Log_Update, Log_Maquina, ref ds, ref Error);
+                crud.cColorMascota(Accion, CodigoColor.Trim(), NombreColor,log_Update, log_Maquina, ref ds, ref Error);
                 {
                     if (ds.Tables.Count > 0)
-                    {                       
-                       R = ds.Tables[0].Rows[0]["R"].ToString();
+                    {                           
+                            resultado = ds.Tables[0].Rows[0]["Codigo"].ToString() + "|" + ds.Tables[0].Rows[0]["Resultado"].ToString();                      
                     }
-                   
-                   
+                    }                   
                 }
+                if (Mantenedor == "ESP")
+                {
+                    string[] DatosEspecie= Regis.Split('~');
+                    string CodigoEspecie = DatosEspecie[0];
+                    string NombreEspecie = DatosEspecie[1];
+
+                    crud.cEspecieMascota(Accion, CodigoEspecie.Trim(), NombreEspecie, log_Update, log_Maquina, ref ds, ref Error);
+                    {
+                        if (ds.Tables.Count > 0)
+                        {
+                            resultado = ds.Tables[0].Rows[0]["Codigo"].ToString() + "|" + ds.Tables[0].Rows[0]["Resultado"].ToString();
+                        }
+                    }
+                }
+                if (Mantenedor == "PAT")
+                {
+                    string[] DatosPatron = Regis.Split('~');
+                    string CodigoPatron = DatosPatron[0];
+                    string NombrePatron = DatosPatron[1];
+
+                    crud.cPatronMascota(Accion, CodigoPatron.Trim(), NombrePatron, log_Update, log_Maquina, ref ds, ref Error);
+                    {
+                        if (ds.Tables.Count > 0)
+                        {
+                            resultado = ds.Tables[0].Rows[0]["Codigo"].ToString() + "|" + ds.Tables[0].Rows[0]["Resultado"].ToString();
+                        }
+                    }
+                }
+                if (Mantenedor == "RAZ")
+                {
+                    string[] DatosRaza = Regis.Split('~');
+                    string CodigoRaza = DatosRaza[0];
+                    string NombreRaza= DatosRaza[1];
+                    string CodigoEspecie = DatosRaza[2];
+
+                    crud.cRazaMascota(Accion, CodigoRaza.Trim(), NombreRaza, CodigoEspecie.Trim(), log_Update, log_Maquina, ref ds, ref Error);
+                    {
+                        if (ds.Tables.Count > 0)
+                        {
+                            resultado = ds.Tables[0].Rows[0]["Codigo"].ToString() + "|" + ds.Tables[0].Rows[0]["Resultado"].ToString();
+                        }
+                    }
+                }
+
             }
-            return Json(R, JsonRequestBehavior.AllowGet);
+            catch (Exception ex)
+            {
+                resultado ="99" +"|"+ ex.Message;
+                
+            }
+            return Json(resultado, JsonRequestBehavior.AllowGet);
 
-        }
-
-
+        }       
     }
 }
