@@ -14,7 +14,7 @@ namespace SisV.Models
         public static List<SelectListItem> ListaComuna { get; set; }
         public static List<SelectListItem> ListaPaises { get; set; }
         public static List<Region> ListRegion { get; set; }
-        public static List<Comuna> ListComuna { get; set; }
+        public static List<Comuna> ListComuna { get; set; } 
 
         public static void PaisesRegComAdd(DataSet ds)
         {
