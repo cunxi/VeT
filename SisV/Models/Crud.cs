@@ -169,5 +169,50 @@ namespace SisV.Models
             return breturn;
         }
         #endregion
+
+        #region SPU_PAISES REGION COMUNA
+
+        public bool PaisesRegionComuna(ref DataSet ds, ref string sError)
+        {
+            Cnx.Data.cConexion data;
+            Cnx.Data.cParamDictionary param;
+            Cnx.Data.cParam paramv;
+            System.IO.StringReader CargaData;
+            string sNomsp;
+            string sDic;
+            string sXmlErr = "";
+            string sXmlOutput = "";
+            bool breturn = false;
+
+            try
+            {
+                sNomsp = "SPU_PaisesRegionComuna";
+                sDic = "Consulta";
+                data = new Cnx.Data.cConexion();
+                data.sCon = sconexion;
+                param = new Cnx.Data.cParamDictionary();
+                paramv = new Cnx.Data.cParam(sDb, sNomsp);
+                param.Add(sDic, paramv);
+                if (!data.ExecSP(sNomsp, sDic, param, EoCType.TYPE_TRAN, ref sXmlErr, ref sXmlOutput))
+                    throw new Exception(sXmlErr);
+                CargaData = new System.IO.StringReader(sXmlOutput);
+                ds = new System.Data.DataSet();
+                ds.ReadXml(CargaData);
+                breturn = true;
+            }
+            catch (Exception ex)
+            {
+                sError = ex.Message;
+            }
+            finally
+            {
+                data = null;
+                param = null;
+
+            }
+            return breturn;
+        }
+
+        #endregion
     }
 }

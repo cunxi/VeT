@@ -38,6 +38,24 @@ namespace SisV.Controllers
                 return RedirectToAction("Inicio", "Menu");
             }
         }
+
+        public ActionResult Paises()
+        {
+            DataSet ds = new DataSet();
+            string mensaje = "";
+            crud.PaisesRegionComuna(ref ds, ref mensaje);
+            Models.ListDropdownList.PaisesRegComAdd(ds);
+            return View();
+        }
+
+
+        //JSON
+
+        public JsonResult GetRegion(string pai_Codigo)
+        {
+            var result = Models.ListDropdownList.ListRegion.Where(x=> x.pai_CodigoPais == pai_Codigo).OrderBy(x => x.reg_Codigo).ToList();
+            return Json(result);
+        }
      
     }
 }

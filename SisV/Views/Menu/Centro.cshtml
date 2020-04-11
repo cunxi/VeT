@@ -1,8 +1,9 @@
 ﻿@using System.Data;
+@using System.Globalization;
 @model DataSet
 <div id="wrapper">
 
-    @{ 
+    @{
         string RazonSocial = Model.Tables[0].Rows[0]["cen_RazonS"].ToString();
         string Direccion = Model.Tables[0].Rows[0]["cen_Direccion"].ToString();
         string Comuna = Model.Tables[0].Rows[0]["com_Nombre"].ToString();
@@ -17,6 +18,25 @@
         string GeoLocation = Model.Tables[0].Rows[0]["per_GeoLocation"].ToString();
         ViewBag.Title = RazonSocial;
 
+        string CantidadOpiniones = "0";
+        string Estrella = "0";
+        string PromedioServicio = "0";
+        string PromedioHigiene = "0";
+        string PromedioCostos = "0";
+        string PromedioAtencion = "0";
+
+
+        if (Model.Tables.Count > 2)
+        {
+            CantidadOpiniones = Model.Tables[2].Rows.Count.ToString();
+            Estrella = Model.Tables[3].Rows[0]["opi_Valor"].ToString();
+            PromedioAtencion = Model.Tables[3].Rows[0]["opi_Atencion"].ToString();
+            PromedioServicio = Model.Tables[3].Rows[0]["opi_Servicio"].ToString();
+            PromedioHigiene = Model.Tables[3].Rows[0]["opi_Higiene"].ToString();
+            PromedioCostos = Model.Tables[3].Rows[0]["opi_Costos"].ToString();
+        }
+
+
     }
 
 
@@ -24,17 +44,17 @@
     <!-- Header Container / End -->
     <!-- Slider
     ================================================== -->
-    <div class="listing-slider mfp-gallery-container margin-bottom-0">    
+    <div class="listing-slider mfp-gallery-container margin-bottom-0">
 
-        <a href="@Model.Tables[0].Rows[0]["cen_Img2"].ToString()" data-background-image="@Model.Tables[0].Rows[0]["cen_Img2"].ToString()" class="item mfp-gallery" title="Title 1"></a>
-        <a href="@Model.Tables[0].Rows[0]["cen_Img3"].ToString()" data-background-image="@Model.Tables[0].Rows[0]["cen_Img3"].ToString()" class="item mfp-gallery" title="Title 1"></a>
-        <a href="@Model.Tables[0].Rows[0]["cen_Img4"].ToString()" data-background-image="@Model.Tables[0].Rows[0]["cen_Img4"].ToString()" class="item mfp-gallery" title="Title 1"></a>
-        <a href="@Model.Tables[0].Rows[0]["cen_Img5"].ToString()" data-background-image="@Model.Tables[0].Rows[0]["cen_Img5"].ToString()" class="item mfp-gallery" title="Title 1"></a>
-        <a href="@Model.Tables[0].Rows[0]["cen_Img6"].ToString()" data-background-image="@Model.Tables[0].Rows[0]["cen_Img6"].ToString()" class="item mfp-gallery" title="Title 1"></a>
-        <a href="@Model.Tables[0].Rows[0]["cen_Img7"].ToString()" data-background-image="@Model.Tables[0].Rows[0]["cen_Img7"].ToString()" class="item mfp-gallery" title="Title 1"></a>
-        <a href="@Model.Tables[0].Rows[0]["cen_Img8"].ToString()" data-background-image="@Model.Tables[0].Rows[0]["cen_Img8"].ToString()" class="item mfp-gallery" title="Title 1"></a>
-        <a href="@Model.Tables[0].Rows[0]["cen_Img9"].ToString()" data-background-image="@Model.Tables[0].Rows[0]["cen_Img9"].ToString()" class="item mfp-gallery" title="Title 1"></a>
-        <a href="@Model.Tables[0].Rows[0]["cen_Img10"].ToString()" data-background-image="@Model.Tables[0].Rows[0]["cen_Img10"].ToString()" class="item mfp-gallery" title="Title 1"></a>
+        <a href="@Model.Tables[0].Rows[0]["cen_Img2"].ToString()" data-background-image="@Model.Tables[0].Rows[0]["cen_Img2"].ToString()" class="item mfp-gallery" title="@RazonSocial"></a>
+        <a href="@Model.Tables[0].Rows[0]["cen_Img3"].ToString()" data-background-image="@Model.Tables[0].Rows[0]["cen_Img3"].ToString()" class="item mfp-gallery" title="@RazonSocial"></a>
+        <a href="@Model.Tables[0].Rows[0]["cen_Img4"].ToString()" data-background-image="@Model.Tables[0].Rows[0]["cen_Img4"].ToString()" class="item mfp-gallery" title="@RazonSocial"></a>
+        <a href="@Model.Tables[0].Rows[0]["cen_Img5"].ToString()" data-background-image="@Model.Tables[0].Rows[0]["cen_Img5"].ToString()" class="item mfp-gallery" title="@RazonSocial"></a>
+        <a href="@Model.Tables[0].Rows[0]["cen_Img6"].ToString()" data-background-image="@Model.Tables[0].Rows[0]["cen_Img6"].ToString()" class="item mfp-gallery" title="@RazonSocial"></a>
+        <a href="@Model.Tables[0].Rows[0]["cen_Img7"].ToString()" data-background-image="@Model.Tables[0].Rows[0]["cen_Img7"].ToString()" class="item mfp-gallery" title="@RazonSocial"></a>
+        <a href="@Model.Tables[0].Rows[0]["cen_Img8"].ToString()" data-background-image="@Model.Tables[0].Rows[0]["cen_Img8"].ToString()" class="item mfp-gallery" title="@RazonSocial"></a>
+        <a href="@Model.Tables[0].Rows[0]["cen_Img9"].ToString()" data-background-image="@Model.Tables[0].Rows[0]["cen_Img9"].ToString()" class="item mfp-gallery" title="@RazonSocial"></a>
+        <a href="@Model.Tables[0].Rows[0]["cen_Img10"].ToString()" data-background-image="@Model.Tables[0].Rows[0]["cen_Img10"].ToString()" class="item mfp-gallery" title="@RazonSocial"></a>
     </div>
 
 
@@ -54,8 +74,8 @@
                                 @Direccion ,@Comuna
                             </a>
                         </span>
-                        <div class="star-rating" data-rating="4.75">
-                            <div class="rating-counter"><a href="#listing-reviews">(31 reviews)</a></div>
+                        <div class="star-rating" data-rating="@Estrella">
+                            <div class="rating-counter"><a href="#listing-reviews">(@CantidadOpiniones Opiniones)</a></div>
                         </div>
                     </div>
                 </div>
@@ -65,8 +85,9 @@
                     <ul class="listing-nav">
                         <li><a href="#nosotros" class="active">Nosotros</a></li>
                         <li><a href="#listing-pricing-list">Servicios y precios</a></li>
-                        @if (GeoLocation != "") {
-                        <li><a href="#listing-location">Ubicación</a></li>
+                        @if (GeoLocation != "")
+                        {
+                            <li><a href="#listing-location">Ubicación</a></li>
                         }
                         <li><a href="#listing-reviews">Opiniones y calificaciones</a></li>
                     </ul>
@@ -74,7 +95,7 @@
 
                 <!-- Overview -->
                 <div id="nosotros" class="listing-section">
-                   <p>@Informacion</p>               
+                    <p>@Informacion</p>
 
 
                     <!-- Listing Contacts -->
@@ -89,15 +110,23 @@
                                 <li><a href="mailto:@Email" class="listing-links"><i class="fa fa-envelope-o"></i> @Email</a></li>}
                             @if (linkWeb != "")
                             {
-                            <li><a href="@linkWeb" target="_blank" class="listing-links"><i class="fa fa-link"></i> @linkWeb.Replace("https://","").Replace("http://","")</a></li>}
+                                <li><a href="@linkWeb" target="_blank" class="listing-links"><i class="fa fa-link"></i> @linkWeb.Replace("https://", "").Replace("http://", "")</a></li>}
                         </ul>
                         <div class="clearfix"></div>
 
                         <ul class="listing-links">
-                            @if (linkFacebook != "") {<li><a href="#" target="_blank" class="listing-links-fb"><i class="fa fa-facebook-square"></i> Facebook</a></li>}
-                            @if (linkYoutube != "") {<li><a href="#" target="_blank" class="listing-links-yt"><i class="fa fa-youtube-play"></i> YouTube</a></li>}
-                            @if (linkInstagram != "") {<li><a href="#" target="_blank" class="listing-links-ig"><i class="fa fa-instagram"></i> Instagram</a></li>}
-                            @if (linkInstagram != "") {<li><a href="#" target="_blank" class="listing-links-tt"><i class="fa fa-twitter"></i> Twitter</a></li>}
+                            @if (linkFacebook != "")
+                            {
+                                <li><a href="#" target="_blank" class="listing-links-fb"><i class="fa fa-facebook-square"></i> Facebook</a></li>}
+                            @if (linkYoutube != "")
+                            {
+                                <li><a href="#" target="_blank" class="listing-links-yt"><i class="fa fa-youtube-play"></i> YouTube</a></li>}
+                            @if (linkInstagram != "")
+                            {
+                                <li><a href="#" target="_blank" class="listing-links-ig"><i class="fa fa-instagram"></i> Instagram</a></li>}
+                            @if (linkInstagram != "")
+                            {
+                                <li><a href="#" target="_blank" class="listing-links-tt"><i class="fa fa-twitter"></i> Twitter</a></li>}
                         </ul>
                         <div class="clearfix"></div>
 
@@ -129,71 +158,73 @@
 
                         </div>
                     </div>
-                    @if (Model.Tables[1].Rows.Count > 4) {<a href="#" class="show-more-button" data-more-title="Ver más" data-less-title="Ver menos"><i class="fa fa-angle-down"></i></a>}
+                    @if (Model.Tables[1].Rows.Count > 4)
+                    {<a href="#" class="show-more-button" data-more-title="Ver más" data-less-title="Ver menos"><i class="fa fa-angle-down"></i></a>}
                 </div>
                 <!-- Food Menu / End -->
                 <!-- Location -->
-                @if (GeoLocation != "") {
+                @if (GeoLocation != "")
+                {
 
-                            string[] location = GeoLocation.Split(','); 
+                    string[] location = GeoLocation.Split(',');
 
-                <div id="listing-location" class="listing-section">
-                    <h3 class="listing-desc-headline margin-top-60 margin-bottom-30">Location</h3>
+                    <div id="listing-location" class="listing-section">
+                        <h3 class="listing-desc-headline margin-top-60 margin-bottom-30">Location</h3>
 
-                    <div id="singleListingMap-container">
-                        <div id="singleListingMap" data-latitude="@location[0].ToString()" data-longitude="@location[1].ToString()" data-map-icon="fa fa-paw"></div>
-                        <a href="#" id="streetView">Street View</a>
+                        <div id="singleListingMap-container">
+                            <div id="singleListingMap" data-latitude="@location[0].ToString()" data-longitude="@location[1].ToString()" data-map-icon="fa fa-paw"></div>
+                            <a href="#" id="streetView">Street View</a>
+                        </div>
                     </div>
-                </div>
                 }
 
                 <!-- Reviews -->
                 <div id="listing-reviews" class="listing-section">
-                    <h3 class="listing-desc-headline margin-top-75 margin-bottom-20">Reviews <span>(12)</span></h3>
+                    <h3 class="listing-desc-headline margin-top-75 margin-bottom-20">Opiniones <span>(@CantidadOpiniones)</span></h3>
 
                     <!-- Rating Overview -->
                     <div class="rating-overview">
                         <div class="rating-overview-box">
-                            <span class="rating-overview-box-total">4.2</span>
-                            <span class="rating-overview-box-percent">out of 5.0</span>
-                            <div class="star-rating" data-rating="5"></div>
+                            <span class="rating-overview-box-total">@Estrella</span>
+                            <span class="rating-overview-box-percent">de 5.0</span>
+                            <div class="star-rating" data-rating="@Estrella"></div>
                         </div>
 
                         <div class="rating-bars">
                             <div class="rating-bars-item">
-                                <span class="rating-bars-name">Service <i class="tip" data-tip-content="Quality of customer service and attitude to work with you"></i></span>
+                                <span class="rating-bars-name">Servicio <i class="tip" data-tip-content="Calidad y Variedad de servicios entregados"></i></span>
                                 <span class="rating-bars-inner">
-                                    <span class="rating-bars-rating" data-rating="4.2">
+                                    <span class="rating-bars-rating" data-rating="@PromedioServicio">
                                         <span class="rating-bars-rating-inner"></span>
                                     </span>
-                                    <strong>4.2</strong>
+                                    <strong>@PromedioServicio</strong>
                                 </span>
                             </div>
                             <div class="rating-bars-item">
-                                <span class="rating-bars-name">Value for Money <i class="tip" data-tip-content="Overall experience received for the amount spent"></i></span>
+                                <span class="rating-bars-name">Costos <i class="tip" data-tip-content="Costo de los servicios"></i></span>
                                 <span class="rating-bars-inner">
-                                    <span class="rating-bars-rating" data-rating="4.8">
+                                    <span class="rating-bars-rating" data-rating="@PromedioCostos">
                                         <span class="rating-bars-rating-inner"></span>
                                     </span>
-                                    <strong>4.8</strong>
+                                    <strong>@PromedioCostos</strong>
                                 </span>
                             </div>
                             <div class="rating-bars-item">
-                                <span class="rating-bars-name">Location <i class="tip" data-tip-content="Visibility, commute or nearby parking spots"></i></span>
+                                <span class="rating-bars-name">Higiene <i class="tip" data-tip-content="Que tan higienico es el lugar de atención"></i></span>
                                 <span class="rating-bars-inner">
-                                    <span class="rating-bars-rating" data-rating="3.7">
+                                    <span class="rating-bars-rating" data-rating="@PromedioHigiene">
                                         <span class="rating-bars-rating-inner"></span>
                                     </span>
-                                    <strong>3.7</strong>
+                                    <strong>@PromedioHigiene</strong>
                                 </span>
                             </div>
                             <div class="rating-bars-item">
-                                <span class="rating-bars-name">Cleanliness <i class="tip" data-tip-content="The physical condition of the business"></i></span>
+                                <span class="rating-bars-name">Atención <i class="tip" data-tip-content="Que tal la atención del local"></i></span>
                                 <span class="rating-bars-inner">
-                                    <span class="rating-bars-rating" data-rating="4.0">
+                                    <span class="rating-bars-rating" data-rating="@PromedioAtencion">
                                         <span class="rating-bars-rating-inner"></span>
                                     </span>
-                                    <strong>4.0</strong>
+                                    <strong>@PromedioAtencion</strong>
                                 </span>
                             </div>
                         </div>
@@ -203,72 +234,35 @@
 
                     <div class="clearfix"></div>
 
+
                     <!-- Reviews -->
-                    <section class="comments listing-reviews">
-                        <ul>
-                            <li>
-                                <div class="avatar"><img src="http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&amp;s=70" alt="" /></div>
-                                <div class="comment-content">
-                                    <div class="arrow-comment"></div>
-                                    <div class="comment-by">
-                                        Kathy Brown <i class="tip" data-tip-content="Person who left this review actually was a customer"></i> <span class="date">June 2019</span>
-                                        <div class="star-rating" data-rating="5"></div>
-                                    </div>
-                                    <p>Morbi velit eros, sagittis in facilisis non, rhoncus et erat. Nam posuere tristique sem, eu ultricies tortor imperdiet vitae. Curabitur lacinia neque non metus</p>
+                    @if (Model.Tables.Count > 2)
+                    {
+                        <section class="comments listing-reviews">
+                            <ul>
+                                @foreach (DataRow row in Model.Tables[2].Rows) {
+                                <li>
+                                    <div class="avatar"><img src="http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&amp;s=70" alt="" /></div>
+                                    <div class="comment-content">
+                                        <div class="arrow-comment"></div>
+                                        <div class="comment-by">
+                                            @row["cli_NombreCompleto"].ToString() <i class="tip" data-tip-content="Person who left this review actually was a customer"></i> <span class="date">@Convert.ToDateTime(row["opi_Fecha"].ToString(), new CultureInfo("es-ES")).ToString("MMMM-yyyy")</span>
+                                            <div class="star-rating" data-rating="@row["opi_Valor"]"></div>
+                                        </div>
+                                        <p>@row["opi_Descripcion"]</p>
 
-                                    <div class="review-images mfp-gallery-container">
-                                        <a href="images/review-image-01.jpg" class="mfp-gallery"><img src="images/review-image-01.jpg" alt=""></a>
+                                        @if (row["opi_Imagen1"].ToString() != "") {
+                                        <div class="review-images mfp-gallery-container">
+                                            <a href="images/review-image-01.jpg" class="mfp-gallery"><img src="images/review-image-01.jpg" alt=""></a>
+                                        </div>
+                                        }
+                                        <a href="#" class="rate-review"><i class="sl sl-icon-like"></i> Helpful Review <span>12</span></a>
                                     </div>
-                                    <a href="#" class="rate-review"><i class="sl sl-icon-like"></i> Helpful Review <span>12</span></a>
-                                </div>
-                            </li>
-
-                            <li>
-                                <div class="avatar"><img src="http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&amp;s=70" alt="" /> </div>
-                                <div class="comment-content">
-                                    <div class="arrow-comment"></div>
-                                    <div class="comment-by">
-                                        John Doe<span class="date">May 2019</span>
-                                        <div class="star-rating" data-rating="4"></div>
-                                    </div>
-                                    <p>Commodo est luctus eget. Proin in nunc laoreet justo volutpat blandit enim. Sem felis, ullamcorper vel aliquam non, varius eget justo. Duis quis nunc tellus sollicitudin mauris.</p>
-                                    <a href="#" class="rate-review"><i class="sl sl-icon-like"></i> Helpful Review <span>2</span></a>
-                                </div>
-                            </li>
-
-                            <li>
-                                <div class="avatar"><img src="http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&amp;s=70" alt="" /></div>
-                                <div class="comment-content">
-                                    <div class="arrow-comment"></div>
-                                    <div class="comment-by">
-                                        Kathy Brown<span class="date">June 2019</span>
-                                        <div class="star-rating" data-rating="5"></div>
-                                    </div>
-                                    <p>Morbi velit eros, sagittis in facilisis non, rhoncus et erat. Nam posuere tristique sem, eu ultricies tortor imperdiet vitae. Curabitur lacinia neque non metus</p>
-
-                                    <div class="review-images mfp-gallery-container">
-                                        <a href="images/review-image-02.jpg" class="mfp-gallery"><img src="images/review-image-02.jpg" alt=""></a>
-                                        <a href="images/review-image-03.jpg" class="mfp-gallery"><img src="images/review-image-03.jpg" alt=""></a>
-                                    </div>
-                                    <a href="#" class="rate-review"><i class="sl sl-icon-like"></i> Helpful Review <span>4</span></a>
-                                </div>
-                            </li>
-
-                            <li>
-                                <div class="avatar"><img src="http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&amp;s=70" alt="" /> </div>
-                                <div class="comment-content">
-                                    <div class="arrow-comment"></div>
-                                    <div class="comment-by">
-                                        John Doe<span class="date">May 2019</span>
-                                        <div class="star-rating" data-rating="5"></div>
-                                    </div>
-                                    <p>Commodo est luctus eget. Proin in nunc laoreet justo volutpat blandit enim. Sem felis, ullamcorper vel aliquam non, varius eget justo. Duis quis nunc tellus sollicitudin mauris.</p>
-                                    <a href="#" class="rate-review"><i class="sl sl-icon-like"></i> Helpful Review</a>
-                                </div>
-
-                            </li>
-                        </ul>
-                    </section>
+                                </li>
+                                }
+                            </ul>
+                        </section>
+                    }
 
                     <!-- Pagination -->
                     <div class="clearfix"></div>
@@ -303,7 +297,7 @@
 
                         <!-- Subrating #1 -->
                         <div class="add-sub-rating">
-                            <div class="sub-rating-title">Service <i class="tip" data-tip-content="Quality of customer service and attitude to work with you"></i></div>
+                            <div class="sub-rating-title">Servicio <i class="tip" data-tip-content="Quality of customer service and attitude to work with you"></i></div>
                             <div class="sub-rating-stars">
                                 <!-- Leave Rating -->
                                 <div class="clearfix"></div>
@@ -324,7 +318,7 @@
 
                         <!-- Subrating #2 -->
                         <div class="add-sub-rating">
-                            <div class="sub-rating-title">Value for Money <i class="tip" data-tip-content="Overall experience received for the amount spent"></i></div>
+                            <div class="sub-rating-title">Costos <i class="tip" data-tip-content="Overall experience received for the amount spent"></i></div>
                             <div class="sub-rating-stars">
                                 <!-- Leave Rating -->
                                 <div class="clearfix"></div>
@@ -345,7 +339,7 @@
 
                         <!-- Subrating #3 -->
                         <div class="add-sub-rating">
-                            <div class="sub-rating-title">Location <i class="tip" data-tip-content="Visibility, commute or nearby parking spots"></i></div>
+                            <div class="sub-rating-title">Higiene <i class="tip" data-tip-content="Visibility, commute or nearby parking spots"></i></div>
                             <div class="sub-rating-stars">
                                 <!-- Leave Rating -->
                                 <div class="clearfix"></div>
@@ -366,7 +360,7 @@
 
                         <!-- Subrating #4 -->
                         <div class="add-sub-rating">
-                            <div class="sub-rating-title">Cleanliness <i class="tip" data-tip-content="The physical condition of the business"></i></div>
+                            <div class="sub-rating-title">Atención <i class="tip" data-tip-content="The physical condition of the business"></i></div>
                             <div class="sub-rating-stars">
                                 <!-- Leave Rating -->
                                 <div class="clearfix"></div>

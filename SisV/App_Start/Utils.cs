@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 
@@ -12,7 +13,7 @@ namespace SisV
             try
             {
                 decimal Valorizacion = 0;
-                Valorizacion = Math.Round((Convert.ToDecimal(valor.Replace(".",",")) / cantidad),1);
+                Valorizacion = Math.Round((Convert.ToDecimal(valor.Replace(".", ",")) / cantidad), 1);
                 return Valorizacion;
             }
             catch (Exception)
@@ -20,6 +21,7 @@ namespace SisV
                 return 0;
             }
         }
+
     }
 
 }

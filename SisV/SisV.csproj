@@ -303,8 +303,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Comuna.cs" />
     <Compile Include="Models\Crud.cs" />
     <Compile Include="App_Start\Utils.cs" />
+    <Compile Include="Models\ListDropdownList.cs" />
+    <Compile Include="Models\Region.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -408,6 +411,7 @@
     <Content Include="Views\Menu\Busqueda.cshtml" />
     <Content Include="Views\Menu\Centro.cshtml" />
     <Content Include="Views\Menu\Inicio.cshtml" />
+    <Content Include="Views\Menu\Paises.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
