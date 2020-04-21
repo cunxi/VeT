@@ -2,10 +2,14 @@
 @model DataSet
 
 @{
+    /**/
+
+    
+
     ViewBag.Title = "Landing";
 }
 
-<div class="main-search-container" data-background-image="https://listeo.pro/wp-content/uploads/2019/02/listeo_background-1.jpg">
+<div class="main-search-container dark-overlay" data-background-image="https://listeo.pro/wp-content/uploads/2019/02/listeo_background-1.jpg">
 
     <div class="main-search-inner">
 
@@ -105,7 +109,7 @@
                     {
                         <!-- Listing Item -->
                         <div class="carousel-item">
-                            <a href="@Url.Action("Centro","Menu", new { ID_Centro = row["cen_ID_Centro"] })"  class="listing-item-container">
+                            <a href="@Url.Action("Centro","Menu", new { ID_Centro = row["cen_ID_Centro"] })" class="listing-item-container">
                                 <div class="listing-item">
                                     <img src="@row["cen_Img1"]" alt="">
 
@@ -125,12 +129,12 @@
                                 </div>
                             </a>
                         </div>
-                                    }
+                    }
 
                 </div>
             </div>
         </div>
-    </div>    
+    </div>
 
 </section>
 
@@ -162,7 +166,7 @@
 
                         <div class="listing-badge now-open">Now Open</div>
 
-                        <div class="listing-item-content">                            
+                        <div class="listing-item-content">
                             <h3>@row["cen_RazonS"]</h3>
                             <span>@row["cen_Direccion"]</span>
                         </div>
@@ -177,9 +181,3 @@
 
 
 </section>
-<!-- Fullwidth Section / End -->
-<!-- Container -->
-<!-- Container / End -->
-<!-- Footer
-
-================================================== -->

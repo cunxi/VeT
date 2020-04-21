@@ -1,0 +1,100 @@
+﻿@using System.Data;
+@model DataSet
+@{
+    ViewBag.Title = "Registro";
+
+    string Nombre = Model.Tables[0].Rows[0]["cli_Nombres"].ToString();
+    string Apellidos = Model.Tables[0].Rows[0]["cli_Apellido_P"].ToString() + " " + Model.Tables[0].Rows[0]["cli_Apellido_M"].ToString();
+    string Email = Model.Tables[0].Rows[0]["cli_Email"].ToString();
+    string log_ID_Login = Model.Tables[0].Rows[0]["log_ID_Login"].ToString();
+    string cli_ID_Cliente = Model.Tables[0].Rows[0]["cli_ID_Cliente"].ToString();
+
+}
+
+<form action="@Url.Action("RegistroPaso2","Menu")" method="post" enctype="multipart/form-data">
+    <div class="row margin-bottom-10 margin-top-10 margin-left-20 margin-right-20">
+        <!-- Profile -->
+        <div class="col-lg-3 col-md-3 col-3 col-sm-12">
+            <div class="dashboard-list-box-static">
+                <!-- Avatar -->
+                <div class="edit-profile-photo">
+                    <label>Foto Perfíl</label>
+                    <img src="~/Content/images/user-profile-avatar.jpg" alt="" id="imgSalida">
+                    <div class="change-photo-btn">
+                        <div class="photoUpload">
+                            <span><i class="fa fa-upload"></i> Upload Photo</span>
+                            <input type="file" class="upload" name="log_Imagen" id="log_Imagen" accept="image/*"/>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-4 col-lg-4 col-md-4 col-sm-12">
+            <div class="my-profile">
+                <label>Su Nombre</label>
+                <input value="@Nombre" readonly="readonly" type="text">
+
+                <label>Apellidos </label>
+                <input value="@Apellidos" readonly="readonly" type="text">
+
+                <label>Email</label>
+                <input value="@Email" readonly="readonly" type="text">
+
+                <input type="hidden" value="@log_ID_Login" name="log_ID_Login"/>
+                <input type="hidden" value="@cli_ID_Cliente" name="cli_ID_Cliente"/>
+            </div>
+        </div>
+        <div class="col-4 col-lg-4 col-md-4 col-sm-12">
+            <div class="my-profile">
+
+                <label>Rut</label>
+                <input value="" placeholder="123456789-K" type="text" name="Identificador" required="">
+
+                <label>Dirección </label>
+                <input value="" type="text" name="cli_Direccion" required="">
+
+                <label>Teléfono</label>
+                <input value="" type="text" name="cli_Telefono" required="">
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row margin-left-20 margin-right-20">
+        <div class="col-12">
+            <div class="content text-center">
+                <button type="submit" class="button margin-top-15">Guardar Cambios</button>
+            </div>
+        </div>
+    </div>
+
+</form>
+
+
+@section Scripts{
+
+    <script type="text/javascript">
+
+        $(function () {
+
+            $("#log_Imagen").change(function () {
+
+                var image = document.getElementById('log_Imagen').files[0];
+                var reader = new FileReader();
+                reader.onload = fileOnload;
+                reader.readAsDataURL(image);
+
+                function fileOnload(e) {
+                    var result = e.target.result;
+                    $('#imgSalida').attr('src', result);
+                }
+
+            });
+
+        });
+
+
+    </script>
+}

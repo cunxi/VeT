@@ -240,25 +240,27 @@
                     {
                         <section class="comments listing-reviews">
                             <ul>
-                                @foreach (DataRow row in Model.Tables[2].Rows) {
-                                <li>
-                                    <div class="avatar"><img src="http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&amp;s=70" alt="" /></div>
-                                    <div class="comment-content">
-                                        <div class="arrow-comment"></div>
-                                        <div class="comment-by">
-                                            @row["cli_NombreCompleto"].ToString() <i class="tip" data-tip-content="Person who left this review actually was a customer"></i> <span class="date">@Convert.ToDateTime(row["opi_Fecha"].ToString(), new CultureInfo("es-ES")).ToString("MMMM-yyyy")</span>
-                                            <div class="star-rating" data-rating="@row["opi_Valor"]"></div>
-                                        </div>
-                                        <p>@row["opi_Descripcion"]</p>
+                                @foreach (DataRow row in Model.Tables[2].Rows)
+                                {
+                                    <li>
+                                        <div class="avatar"><img src="http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&amp;s=70" alt="" /></div>
+                                        <div class="comment-content">
+                                            <div class="arrow-comment"></div>
+                                            <div class="comment-by">
+                                                @row["cli_NombreCompleto"].ToString() <i class="tip" data-tip-content="Person who left this review actually was a customer"></i> <span class="date">@Convert.ToDateTime(row["opi_Fecha"].ToString(), new CultureInfo("es-ES")).ToString("MMMM-yyyy")</span>
+                                                <div class="star-rating" data-rating="@row["opi_Valor"]"></div>
+                                            </div>
+                                            <p>@row["opi_Descripcion"]</p>
 
-                                        @if (row["opi_Imagen1"].ToString() != "") {
-                                        <div class="review-images mfp-gallery-container">
-                                            <a href="images/review-image-01.jpg" class="mfp-gallery"><img src="images/review-image-01.jpg" alt=""></a>
+                                            @if (row["opi_Imagen1"].ToString() != "")
+                                            {
+                                                <div class="review-images mfp-gallery-container">
+                                                    <a href="images/review-image-01.jpg" class="mfp-gallery"><img src="images/review-image-01.jpg" alt=""></a>
+                                                </div>
+                                            }
+                                            <a href="#" class="rate-review"><i class="sl sl-icon-like"></i> Helpful Review <span>12</span></a>
                                         </div>
-                                        }
-                                        <a href="#" class="rate-review"><i class="sl sl-icon-like"></i> Helpful Review <span>12</span></a>
-                                    </div>
-                                </li>
+                                    </li>
                                 }
                             </ul>
                         </section>
@@ -289,8 +291,8 @@
                 <div id="add-review" class="add-review-box">
 
                     <!-- Add Review -->
-                    <h3 class="listing-desc-headline margin-bottom-10">Add Review</h3>
-                    <p class="comment-notes">Your email address will not be published.</p>
+                    <h3 class="listing-desc-headline margin-bottom-10">Valoraciones</h3>
+                    <p class="comment-notes">Deja una valoración de este centro.</p>
 
                     <!-- Subratings Container -->
                     <div class="sub-ratings-container">
@@ -381,8 +383,8 @@
 
                         <!-- Uplaod Photos -->
                         <div class="uploadButton margin-top-15">
-                            <input class="uploadButton-input" type="file" name="attachments[]" accept="image/*, application/pdf" id="upload" multiple />
-                            <label class="uploadButton-button ripple-effect" for="upload">Add Photos</label>
+                            <input class="uploadButton-input" type="file" name="attachments[]" accept="image/*" id="upload" multiple />
+                            <label class="uploadButton-button ripple-effect" for="upload">Adjuntar Fotos</label>
                             <span class="uploadButton-file-name"></span>
                         </div>
                         <!-- Uplaod Photos / End -->
@@ -395,24 +397,24 @@
 
                             <div class="row">
                                 <div class="col-md-6">
-                                    <label>Name:</label>
+                                    <label>Nombre:</label>
                                     <input type="text" value="" />
                                 </div>
 
                                 <div class="col-md-6">
-                                    <label>Email:</label>
+                                    <label>Correo:</label>
                                     <input type="text" value="" />
                                 </div>
                             </div>
 
                             <div>
-                                <label>Review:</label>
+                                <label>Opinion:</label>
                                 <textarea cols="40" rows="3"></textarea>
                             </div>
 
                         </fieldset>
 
-                        <button class="button">Submit Review</button>
+                        <button class="button">Enviar Comentario</button>
                         <div class="clearfix"></div>
                     </form>
 
@@ -427,35 +429,27 @@
             ================================================== -->
             <div class="col-lg-4 col-md-4 margin-top-75 sticky">
 
-
-                <!-- Verified Badge -->
-                <div class="verified-badge with-tip" data-tip-content="Listing has been verified and belongs the business owner or manager.">
-                    <i class="sl sl-icon-check"></i> Verified Listing
-                </div>
-
                 <!-- Book Now -->
                 <div id="booking-widget-anchor" class="boxed-widget booking-widget margin-top-35">
-                    <h3><i class="fa fa-calendar-check-o "></i> Booking</h3>
+                    <h3><i class="fa fa-calendar-check-o "></i> Agenda</h3>
                     <div class="row with-forms  margin-top-0">
 
                         <!-- Date Range Picker - docs: http://www.daterangepicker.com/ -->
                         <div class="col-lg-12">
-                            <input type="text" id="date-picker" placeholder="Date" readonly="readonly">
+                            <input type="text" id="date-picker" placeholder="Fecha" readonly="readonly">
                         </div>
 
                         <!-- Panel Dropdown -->
                         <div class="col-lg-12">
                             <div class="panel-dropdown time-slots-dropdown">
-                                <a href="#">Time Slots</a>
+                                <a href="#">Horario</a>
                                 <div class="panel-dropdown-content padding-reset">
                                     <div class="panel-dropdown-scrollable">
-
                                         <!-- Time Slot -->
                                         <div class="time-slot">
                                             <input type="radio" name="time-slot" id="time-slot-1">
                                             <label for="time-slot-1">
-                                                <strong>8:30 am - 9:00 am</strong>
-                                                <span>1 slot available</span>
+                                                <strong>8:30 am - 9:00 am</strong>                                               
                                             </label>
                                         </div>
 
@@ -463,8 +457,7 @@
                                         <div class="time-slot">
                                             <input type="radio" name="time-slot" id="time-slot-2">
                                             <label for="time-slot-2">
-                                                <strong>9:00 am - 9:30 am</strong>
-                                                <span>2 slots available</span>
+                                                <strong>9:00 am - 9:30 am</strong>                                                
                                             </label>
                                         </div>
 
@@ -472,8 +465,7 @@
                                         <div class="time-slot">
                                             <input type="radio" name="time-slot" id="time-slot-3">
                                             <label for="time-slot-3">
-                                                <strong>9:30 am - 10:00 am</strong>
-                                                <span>1 slots available</span>
+                                                <strong>9:30 am - 10:00 am</strong>                                               
                                             </label>
                                         </div>
 
@@ -481,8 +473,7 @@
                                         <div class="time-slot">
                                             <input type="radio" name="time-slot" id="time-slot-4">
                                             <label for="time-slot-4">
-                                                <strong>10:00 am - 10:30 am</strong>
-                                                <span>3 slots available</span>
+                                                <strong>10:00 am - 10:30 am</strong>                                               
                                             </label>
                                         </div>
 
@@ -490,8 +481,7 @@
                                         <div class="time-slot">
                                             <input type="radio" name="time-slot" id="time-slot-5">
                                             <label for="time-slot-5">
-                                                <strong>13:00 pm - 13:30 pm</strong>
-                                                <span>2 slots available</span>
+                                                <strong>13:00 pm - 13:30 pm</strong>                                              
                                             </label>
                                         </div>
 
@@ -499,42 +489,11 @@
                                         <div class="time-slot">
                                             <input type="radio" name="time-slot" id="time-slot-6">
                                             <label for="time-slot-6">
-                                                <strong>13:30 pm - 14:00 pm</strong>
-                                                <span>1 slots available</span>
+                                                <strong>13:30 pm - 14:00 pm</strong>                                              
                                             </label>
-                                        </div>
-
-                                        <!-- Time Slot -->
-                                        <div class="time-slot">
-                                            <input type="radio" name="time-slot" id="time-slot-7">
-                                            <label for="time-slot-7">
-                                                <strong>14:00 pm - 14:30 pm</strong>
-                                                <span>1 slots available</span>
-                                            </label>
-                                        </div>
+                                        </div>                                     
 
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Panel Dropdown / End -->
-                        <!-- Panel Dropdown -->
-                        <div class="col-lg-12">
-                            <div class="panel-dropdown">
-                                <a href="#">Guests <span class="qtyTotal" name="qtyTotal">1</span></a>
-                                <div class="panel-dropdown-content">
-
-                                    <!-- Quantity Buttons -->
-                                    <div class="qtyButtons">
-                                        <div class="qtyTitle">Adults</div>
-                                        <input type="text" name="qtyInput" value="1">
-                                    </div>
-
-                                    <div class="qtyButtons">
-                                        <div class="qtyTitle">Childrens</div>
-                                        <input type="text" name="qtyInput" value="0">
-                                    </div>
-
                                 </div>
                             </div>
                         </div>
@@ -543,70 +502,22 @@
                     </div>
 
                     <!-- Book Now -->
-                    <a href="pages-booking.html" class="button book-now fullwidth margin-top-5">Request To Book</a>
+                    <a href="pages-booking.html" class="button book-now fullwidth margin-top-5">Agendar</a>
                 </div>
                 <!-- Opening Hours -->
                 <div class="boxed-widget opening-hours margin-top-35">
-                    <div class="listing-badge now-open">Now Open</div>
-                    <h3><i class="sl sl-icon-clock"></i> Opening Hours</h3>
+                    <h3><i class="sl sl-icon-clock"></i> Horario Atención</h3>
                     <ul>
-                        <li>Monday <span>9 AM - 5 PM</span></li>
-                        <li>Tuesday <span>9 AM - 5 PM</span></li>
-                        <li>Wednesday <span>9 AM - 5 PM</span></li>
-                        <li>Thursday <span>9 AM - 5 PM</span></li>
-                        <li>Friday <span>9 AM - 5 PM</span></li>
-                        <li>Saturday <span>9 AM - 3 PM</span></li>
-                        <li>Sunday <span>Closed</span></li>
+                        <li>Lunes <span>9 AM - 5 PM</span></li>
+                        <li>Martes <span>9 AM - 5 PM</span></li>
+                        <li>Miércoles <span>9 AM - 5 PM</span></li>
+                        <li>Jueves <span>9 AM - 5 PM</span></li>
+                        <li>Viernes <span>9 AM - 5 PM</span></li>
+                        <li>Sabado <span>Cerrado</span></li>
+                        <li>Domingo <span>Cerrado</span></li>
                     </ul>
                 </div>
                 <!-- Opening Hours / End -->
-                <!-- Contact -->
-                <div class="boxed-widget margin-top-35">
-                    <div class="hosted-by-title">
-                        <h4><span>Hosted by</span> <a href="pages-user-profile.html">Tom Perrin</a></h4>
-                        <a href="pages-user-profile.html" class="hosted-by-avatar"><img src="images/dashboard-avatar.jpg" alt=""></a>
-                    </div>
-                    <ul class="listing-details-sidebar">
-                        <li><i class="sl sl-icon-phone"></i> (123) 123-456</li>
-                        <!-- <li><i class="sl sl-icon-globe"></i> <a href="#">http://example.com</a></li> -->
-                        <li><i class="fa fa-envelope-o"></i> <a href="#">tom@example.com</a></li>
-                    </ul>
-
-                    <ul class="listing-details-sidebar social-profiles">
-                        <li><a href="#" class="facebook-profile"><i class="fa fa-facebook-square"></i> Facebook</a></li>
-                        <li><a href="#" class="twitter-profile"><i class="fa fa-twitter"></i> Twitter</a></li>
-                        <!-- <li><a href="#" class="gplus-profile"><i class="fa fa-google-plus"></i> Google Plus</a></li> -->
-                    </ul>
-
-                    <!-- Reply to review popup -->
-                    <div id="small-dialog" class="zoom-anim-dialog mfp-hide">
-                        <div class="small-dialog-header">
-                            <h3>Send Message</h3>
-                        </div>
-                        <div class="message-reply margin-top-0">
-                            <textarea cols="40" rows="3" placeholder="Your message to Tom"></textarea>
-                            <button class="button">Send Message</button>
-                        </div>
-                    </div>
-
-                    <a href="#small-dialog" class="send-message-to-owner button popup-with-zoom-anim"><i class="sl sl-icon-envelope-open"></i> Send Message</a>
-                </div>
-                <!-- Contact / End-->
-                <!-- Share / Like -->
-                <div class="listing-share margin-top-40 margin-bottom-40 no-border">
-                    <button class="like-button"><span class="like-icon"></span> Bookmark this listing</button>
-                    <span>159 people bookmarked this place</span>
-
-                    <!-- Share Buttons -->
-                    <ul class="share-buttons margin-top-40 margin-bottom-0">
-                        <li><a class="fb-share" href="#"><i class="fa fa-facebook"></i> Share</a></li>
-                        <li><a class="twitter-share" href="#"><i class="fa fa-twitter"></i> Tweet</a></li>
-                        <li><a class="gplus-share" href="#"><i class="fa fa-google-plus"></i> Share</a></li>
-                        <!-- <li><a class="pinterest-share" href="#"><i class="fa fa-pinterest-p"></i> Pin</a></li> -->
-                    </ul>
-                    <div class="clearfix"></div>
-                </div>
-
             </div>
             <!-- Sidebar / End -->
 
@@ -630,84 +541,59 @@
     </div>
 
 </div>
-<script src="scripts/daterangepicker.js"></script>
-<script>
-    // Calendar Init
-    $(function () {
-        $('#date-picker').daterangepicker({
-            "opens": "left",
-            singleDatePicker: true,
 
-            // Disabling Date Ranges
-            isInvalidDate: function (date) {
-                // Disabling Date Range
-                var disabled_start = moment('09/02/2018', 'MM/DD/YYYY');
-                var disabled_end = moment('09/06/2018', 'MM/DD/YYYY');
-                return date.isAfter(disabled_start) && date.isBefore(disabled_end);
+@section Scripts{
 
-                // Disabling Single Day
-                // if (date.format('MM/DD/YYYY') == '08/08/2018') {
-                //     return true;
-                // }
-            }
+    <script src="~/Content/scripts/moment.min.js"></script>
+    <script src="~/Content/scripts/daterangepicker.js"></script>
+    <script>
+        // Calendar Init
+        $(function () {
+            $('#date-picker').daterangepicker({
+                "opens": "left",
+                singleDatePicker: true,
+
+                // Disabling Date Ranges
+                isInvalidDate: function (date) {
+                    // Disabling Date Range
+                    var disabled_start = moment('09/02/2020', 'MM/DD/YYYY');
+                    var disabled_end = moment('09/06/2020', 'MM/DD/YYYY');
+                    return date.isAfter(disabled_start) && date.isBefore(disabled_end);
+
+                    // Disabling Single Day
+                    // if (date.format('MM/DD/YYYY') == '08/08/2018') {
+                    //     return true;
+                    // }
+                }
+            });
         });
-    });
 
-    // Calendar animation
-    $('#date-picker').on('showCalendar.daterangepicker', function (ev, picker) {
-        $('.daterangepicker').addClass('calendar-animated');
-    });
-    $('#date-picker').on('show.daterangepicker', function (ev, picker) {
-        $('.daterangepicker').addClass('calendar-visible');
-        $('.daterangepicker').removeClass('calendar-hidden');
-    });
-    $('#date-picker').on('hide.daterangepicker', function (ev, picker) {
-        $('.daterangepicker').removeClass('calendar-visible');
-        $('.daterangepicker').addClass('calendar-hidden');
-    });
-</script>
-
-
-<!-- Replacing dropdown placeholder with selected time slot -->
-<script>
-    $(".time-slot").each(function () {
-        var timeSlot = $(this);
-        $(this).find('input').on('change', function () {
-            var timeSlotVal = timeSlot.find('strong').text();
-
-            $('.panel-dropdown.time-slots-dropdown a').html(timeSlotVal);
-            $('.panel-dropdown').removeClass('active');
+        // Calendar animation
+        $('#date-picker').on('showCalendar.daterangepicker', function (ev, picker) {
+            $('.daterangepicker').addClass('calendar-animated');
         });
-    });
-</script>
+        $('#date-picker').on('show.daterangepicker', function (ev, picker) {
+            $('.daterangepicker').addClass('calendar-visible');
+            $('.daterangepicker').removeClass('calendar-hidden');
+        });
+        $('#date-picker').on('hide.daterangepicker', function (ev, picker) {
+            $('.daterangepicker').removeClass('calendar-visible');
+            $('.daterangepicker').addClass('calendar-hidden');
+        });
+    </script>
 
 
-<!-- Style Switcher
-================================================== -->
-<script src="scripts/switcher.js"></script>
+    <!-- Replacing dropdown placeholder with selected time slot -->
+    <script>
+        $(".time-slot").each(function () {
+            var timeSlot = $(this);
+            $(this).find('input').on('change', function () {
+                var timeSlotVal = timeSlot.find('strong').text();
 
-<div id="style-switcher">
-    <h2>Color Switcher <a href="#"><i class="sl sl-icon-settings"></i></a></h2>
+                $('.panel-dropdown.time-slots-dropdown a').html(timeSlotVal);
+                $('.panel-dropdown').removeClass('active');
+            });
+        });
+    </script>
 
-    <div>
-        <ul class="colors" id="color1">
-            <li><a href="#" class="main" title="Main"></a></li>
-            <li><a href="#" class="blue" title="Blue"></a></li>
-            <li><a href="#" class="green" title="Green"></a></li>
-            <li><a href="#" class="orange" title="Orange"></a></li>
-            <li><a href="#" class="navy" title="Navy"></a></li>
-            <li><a href="#" class="yellow" title="Yellow"></a></li>
-            <li><a href="#" class="peach" title="Peach"></a></li>
-            <li><a href="#" class="beige" title="Beige"></a></li>
-            <li><a href="#" class="purple" title="Purple"></a></li>
-            <li><a href="#" class="celadon" title="Celadon"></a></li>
-            <li><a href="#" class="red" title="Red"></a></li>
-            <li><a href="#" class="brown" title="Brown"></a></li>
-            <li><a href="#" class="cherry" title="Cherry"></a></li>
-            <li><a href="#" class="cyan" title="Cyan"></a></li>
-            <li><a href="#" class="gray" title="Gray"></a></li>
-            <li><a href="#" class="olive" title="Olive"></a></li>
-        </ul>
-    </div>
-
-</div>
+}

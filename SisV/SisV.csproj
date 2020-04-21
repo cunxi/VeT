@@ -177,6 +177,7 @@
     <Content Include="Content\images\main-search-video-poster.jpg" />
     <Content Include="Content\images\main-search-video.mp4" />
     <Content Include="Content\images\our-office.jpg" />
+    <Content Include="Content\images\perfil-defualt.png" />
     <Content Include="Content\images\plus-icon.svg" />
     <Content Include="Content\images\popular-location-01.jpg" />
     <Content Include="Content\images\popular-location-02.jpg" />
@@ -291,6 +292,7 @@
     <Content Include="Content\scripts\tooltips.min.js" />
     <Content Include="Content\scripts\typed.js" />
     <Content Include="Content\scripts\waypoints.min.js" />
+    <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -308,6 +310,8 @@
     <Compile Include="App_Start\Utils.cs" />
     <Compile Include="Models\ListDropdownList.cs" />
     <Compile Include="Models\Region.cs" />
+    <Compile Include="Models\Result.cs" />
+    <Compile Include="Models\Usuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -412,6 +416,7 @@
     <Content Include="Views\Menu\Centro.cshtml" />
     <Content Include="Views\Menu\Inicio.cshtml" />
     <Content Include="Views\Menu\Paises.cshtml" />
+    <Content Include="Views\Menu\RegistroPaso2.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -421,10 +426,14 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\ImagesPerfil\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>favicon.ico</ApplicationIcon>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />

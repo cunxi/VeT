@@ -12,15 +12,18 @@
     ================================================== -->
     @Styles.Render("~/bundles/css")
 
+    @{
+        SisV.Models.Usuario usuario = Utils.ObtenerUsuarioSesion();
+    }
+
 </head>
 
-<body class="transparent-header">
+<body >
 
     <!-- Wrapper -->
     <div id="wrapper">
-
         <!-- Header Container
-        ================================================== -->
+    ================================================== -->
         <header id="header-container">
 
             <!-- Header -->
@@ -32,7 +35,7 @@
 
                         <!-- Logo -->
                         <div id="logo">
-                            <a href="index.html"><img src="/Content/images/logo2.png" data-sticky-logo="/Content/images/logo.png" alt=""></a>
+                            <a href="/"><img src="/Content/images/logo.png" alt=""></a>
                         </div>
 
                         <!-- Mobile Navigation -->
@@ -76,15 +79,36 @@
                         <!-- Main Navigation / End -->
 
                     </div>
-                    <!-- Left Side Content / End -->
-                    <!-- Right Side Content / End -->
-                    <div class="right-side">
-                        <div class="header-widget">
-                            <a href="#sign-in-dialog" class="sign-in popup-with-zoom-anim"><i class="sl sl-icon-login"></i> Iniciar Sesión</a>
+
+                    @if (usuario != null)
+                    {
+                        <!-- Left Side Content / End -->
+                        <div class="right-side">
+                            <div class="header-widget">
+                                <!-- User Menu -->
+                                <div class="user-menu">
+                                    <div class="user-name"><span><img src="@usuario.Imagen" alt=""></span>Hola @usuario.Nombres @usuario.Apellidos!</div>
+                                    <ul>
+                                        <li><a href="dashboard.html"><i class="sl sl-icon-settings"></i> Dashboard</a></li>
+                                        <li><a href="dashboard-messages.html"><i class="sl sl-icon-envelope-open"></i> Messages</a></li>
+                                        <li><a href="dashboard-bookings.html"><i class="fa fa-calendar-check-o"></i> Bookings</a></li>
+                                        <li><a href="@Url.Action("LogOut", "Menu")"><i class="sl sl-icon-power"></i> Cerrar Sesión</a></li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <!-- Right Side Content / End -->
-                    <!-- Sign In Popup -->
+                    }
+
+                    @if (usuario == null)
+                    {
+                        <!-- Right Side Content / End -->
+                        <div class="right-side">
+                            <div class="header-widget">
+                                <a href="#sign-in-dialog" class="sign-in popup-with-zoom-anim"><i class="sl sl-icon-login"></i> Iniciar Sesión</a>
+                            </div>
+                        </div>
+                        <!-- Sign In Popup -->
+                    }
                     <div id="sign-in-dialog" class="zoom-anim-dialog mfp-hide">
 
                         <div class="small-dialog-header">
@@ -103,72 +127,84 @@
 
                                 <!-- Login -->
                                 <div class="tab-content" id="tab1" style="display: none;">
-                                    <form method="post" class="login">
 
-                                        <p class="form-row form-row-wide">
-                                            <label for="username">
-                                                Usuario:
-                                                <i class="im im-icon-Male"></i>
-                                                <input type="text" class="input-text" name="username" id="username" value="" />
-                                            </label>
-                                        </p>
+                                    <p class="form-row form-row-wide">
+                                        <label for="username">
+                                            Usuario:
+                                            <i class="im im-icon-Male"></i>
+                                            <input type="text" class="input-text" name="Usuario" id="Usuario" value="" required />
+                                        </label>
+                                    </p>
 
-                                        <p class="form-row form-row-wide">
-                                            <label for="password">
-                                                Contraseña:
-                                                <i class="im im-icon-Lock-2"></i>
-                                                <input class="input-text" type="password" name="password" id="password" />
-                                            </label>
-                                            <span class="lost_password">
-                                                <a href="#">¿Olvidaste tu contraseña?</a>
-                                            </span>
-                                        </p>
+                                    <p class="form-row form-row-wide">
+                                        <label for="password">
+                                            Contraseña:
+                                            <i class="im im-icon-Lock-2"></i>
+                                            <input class="input-text" type="password" name="Password" id="Password" required />
+                                        </label>
+                                        <span class="lost_password">
+                                            <a href="#">¿Olvidaste tu contraseña?</a>
+                                        </span>
+                                    </p>
 
-                                        <div class="form-row">
-                                            <input type="submit" class="button border margin-top-5" name="login" value="Login" />
-                                        </div>
+                                    <div class="form-row">
+                                        <input type="button" class="button border margin-top-5" name="login" onclick="Login()" value="Login" />
+                                        <div id="div_Loginerror" class="notification closeable error" style="margin-top: 20px; margin-bottom: 0px;" hidden></div>
+                                    </div>
 
-                                    </form>
                                 </div>
 
                                 <!-- Register -->
                                 <div class="tab-content" id="tab2" style="display: none;">
-
-                                    <form method="post" class="register">
+                                    <form action="@Url.Action("RegistroPaso2","Menu")" method="post" class="" id="Form_Registrar">
 
                                         <p class="form-row form-row-wide">
-                                            <label for="username2">
-                                                Usuario:
-                                                <i class="im im-icon-Male"></i>
-                                                <input type="text" class="input-text" name="username" id="username2" value="" />
+                                            <label for="nombre">
+                                                Nombre:
+                                                <i class="text-danger im im-icon-Male"></i>
+                                                <input type="text" class="input-text" name="Nombre" id="nombre" value="" required />
                                             </label>
+                                            <label id="lbl_nombre"></label>
                                         </p>
 
                                         <p class="form-row form-row-wide">
-                                            <label for="email2">
+                                            <label for="apellidos">
+                                                Apellidos:
+                                                <i class="im im-icon-Male"></i>
+                                                <input type="text" class="input-text" name="Apellidos" id="apellidos" value="" required />
+                                            </label>
+                                            <label id="lbl_apellidos"></label>
+                                        </p>
+
+                                        <p class="form-row form-row-wide">
+                                            <label for="email">
                                                 Email :
                                                 <i class="im im-icon-Mail"></i>
-                                                <input type="text" class="input-text" name="email" id="email2" value="" />
+                                                <input type="text" class="input-text" name="Email" id="email" value="" required />
                                             </label>
+                                            <label id="lbl_email"></label>
                                         </p>
 
                                         <p class="form-row form-row-wide">
-                                            <label for="password1">
+                                            <label for="contrasena1">
                                                 Contraseña:
                                                 <i class="im im-icon-Lock-2"></i>
-                                                <input class="input-text" type="password" name="password1" id="password1" />
+                                                <input class="input-text" type="password" name="Contrasena" id="contrasena1" required />
                                             </label>
+                                            <label id="lbl_contrasena1"></label>
                                         </p>
 
                                         <p class="form-row form-row-wide">
-                                            <label for="password2">
+                                            <label for="contrasena2">
                                                 Repetir contraseña:
                                                 <i class="im im-icon-Lock-2"></i>
-                                                <input class="input-text" type="password" name="password2" id="password2" />
+                                                <input class="input-text" type="password" name="contrasena2" id="contrasena2" required>
                                             </label>
+                                            <label id="lbl_contrasena2"></label>
                                         </p>
 
-                                        <input type="submit" class="button border fw margin-top-10" name="register" value="Registrar" />
+                                        <input type="button" class="button border fw margin-top-10" onclick="Registrar()" name="register" value="Registrar" />
+                                        <div id="div_Registroerror" class="notification closeable error" style="margin-top: 20px; margin-bottom: 0px;" hidden></div>
 
                                     </form>
                                 </div>
@@ -177,7 +213,8 @@
                         </div>
                     </div>
                     <!-- Sign In Popup / End -->
-
+                    <!--Continuo de Registro-->
+                    <!--End Registro-->
                 </div>
             </div>
             <!-- Header / End -->
@@ -185,9 +222,9 @@
 
             @RenderBody()
 
+
         </header>
         <div class="clearfix"></div>
-
 
         <a href="listings-half-screen-map-list.html" class="flip-banner parallax margin-top-65" data-background="/Content/images/slider-bg-02.jpg" data-color="#f91942" data-color-opacity="0.85" data-img-width="2500" data-img-height="1666">
             <div class="flip-banner-content">
@@ -260,7 +297,7 @@
     ================================================== -->
     <!-- Typed Script -->
     <script type="text/javascript" src="~/Content/scripts/typed.js"></script>
-    <script>
+    <script type="text/javascript">
         var typed = new Typed('.typed-words', {
             strings: ["Vacunas", " Exámenes", " Radiografias", "Peluquería"],
             typeSpeed: 80,
@@ -270,11 +307,144 @@
             loop: true,
             showCursor: true
         });
+
+    </script>
+
+    <script type="text/javascript">
+        function Registrar() {
+            var nombre = document.getElementById("nombre").value;
+            var apellidos = document.getElementById("apellidos").value;
+            var email = document.getElementById("email").value;
+            var contrasena1 = document.getElementById("contrasena1").value;
+            var contrasena2 = document.getElementById("contrasena2").value;
+            var Mensaje = "";
+            var pathname = window.location.pathname;
+
+            if (nombre == "") { $("#lbl_nombre").addClass("bg-danger"); document.getElementById("lbl_nombre").innerHTML = "Campo Obligatorio"; Mensaje = "Error"; } else { $("#lbl_nombre").removeClass("bg-danger"); document.getElementById("lbl_nombre").innerHTML = ""; }
+            if (apellidos == "") { $("#lbl_apellidos").addClass("bg-danger"); document.getElementById("lbl_apellidos").innerHTML = "Campo Obligatorio"; Mensaje = "Error"; } else { $("#lbl_apellidos").removeClass("bg-danger"); document.getElementById("lbl_apellidos").innerHTML = ""; }
+            if (contrasena1 == "") {
+                $("#lbl_contrasena1").addClass("bg-danger"); document.getElementById("lbl_contrasena1").innerHTML = "Campo Obligatorio"; Mensaje = "Error";
+            } else if (contrasena1.length < 8) {
+                $("#lbl_contrasena1").addClass("bg-danger"); document.getElementById("lbl_contrasena1").innerHTML = "Mínimo 8 Caracteres"; Mensaje = "Error";
+            } else {
+                $("#lbl_contrasena1").removeClass("bg-danger"); document.getElementById("lbl_contrasena1").innerHTML = "";
+            }
+
+            if (contrasena2 == "") {
+                $("#lbl_contrasena2").addClass("bg-danger"); document.getElementById("lbl_contrasena2").innerHTML = "Campo Obligatorio"; Mensaje = "Error";
+            } else if (contrasena2.length < 8) {
+                $("#lbl_contrasena2").addClass("bg-danger"); document.getElementById("lbl_contrasena2").innerHTML = "Mínimo 8 Caracteres"; Mensaje = "Error";
+            } else {
+                $("#lbl_contrasena2").removeClass("bg-danger"); document.getElementById("lbl_contrasena2").innerHTML = "";
+            }
+
+
+            var regex = /[\w-\.]{2,}@@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/;
+
+            if (regex.test($('#email').val().trim())) { $("#lbl_email").removeClass("bg-danger"); document.getElementById("lbl_email").innerHTML = ""; } else { $("#lbl_email").addClass("bg-danger"); document.getElementById("lbl_email").innerHTML = "Correo Invalido"; Mensaje = "Error"; }
+
+            if (contrasena2 != contrasena1) { $("#lbl_contrasena2").addClass("bg-danger"); document.getElementById("lbl_contrasena2").innerHTML = "Contraseña diferente a la anterior"; Mensaje = "Error"; }
+
+            if (Mensaje == "") {
+                params = "Nombre=" + nombre + "&Apellidos=" + apellidos + "&Email=" + email + "&Contrasena=" + contrasena1;
+
+                if (pathname == "/") {
+                    url = "/Menu/Register";
+                } else if (pathname == "/Menu") {
+                    url = "/Register";
+                } else {
+                    url = "Register";
+                }
+
+                $("#Form_Registrar").submit();
+
+                //$.ajax
+                //    ({
+                //        data: params,
+                //        cache: true,
+                //        type: 'Post',
+                //        typeData: "json",
+                //        url: url,
+                //        success: function (data) {
+                //            if (data.Codigo == 0) {
+                //                $("#div_Registroerror").removeClass("error");
+                //                $("#div_Registroerror").addClass("success");
+                //                document.getElementById("div_Registroerror").innerHTML = "Se Ha Registrado Exitosamente";
+                //                $("#div_Registroerror").removeAttr("hidden");
+                //                $("#register-continue").modal('show');
+                //            } else {
+                //                $("#div_Registroerror").removeAttr("hidden");
+                //                document.getElementById("div_Registroerror").innerHTML = "Usted Ya se encuentra en nuestros Registros";
+                //            }
+
+                //        }
+                //    });
+            }
+        }
+
+        function Login() {
+
+            var Usuario = document.getElementById("Usuario").value;
+            var Password = document.getElementById("Password").value;
+            var Mensaje = "";
+            var url = "";
+            var pathname = window.location.pathname;
+
+            if (Usuario == "") {
+                $("#div_Loginerror").removeAttr("hidden");
+                document.getElementById("div_Loginerror").innerHTML = "Debe ingresar Usuario";
+                Mensaje = "Error";
+            }
+
+            if (Password == "") {
+                $("#div_Loginerror").removeAttr("hidden");
+                document.getElementById("div_Loginerror").innerHTML = "Debe ingresar Contraseña";
+                Mensaje = "Error";
+            } else if (Password.length < 8) {
+                $("#div_Loginerror").removeAttr("hidden");
+                document.getElementById("div_Loginerror").innerHTML = "Contraseña Mínimo 8 Caracteres";
+                Mensaje = "Error";
+            }
+
+            if (Mensaje == "") {
+                params = "Usuario=" + Usuario + "&Password=" + Password;
+
+                if (pathname == "/") {
+                    url = "/Menu/Login";
+                } else if (pathname == "/Menu") {
+                    url = "/Login";
+                } else {
+                    url = "Login";
+                }
+
+                $.ajax
+                    ({
+                        data: params,
+                        cache: true,
+                        type: 'Post',
+                        typeData: "json",
+                        url: url,
+                        success: function (data) {
+                            if (data.Codigo == 0) {
+                                $("#div_Loginerror").removeClass("error");
+                                $("#div_Loginerror").addClass("success");
+                                document.getElementById("div_Loginerror").innerHTML = "Bienvenido";
+                                $("#div_Loginerror").removeAttr("hidden");
+                                location.reload();
+                            } else {
+                                $("#div_Loginerror").removeAttr("hidden");
+                                document.getElementById("div_Loginerror").innerHTML = "Usuario y Contraseña Incorrecta";
+                            }
+                        }
+                    });
+            }
+        }
+
     </script>
 
 
-
     @Scripts.Render("~/bundles/js")
+    @RenderSection("Scripts", false)
 
 </body>
 </html>
