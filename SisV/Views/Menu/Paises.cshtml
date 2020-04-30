@@ -1,0 +1,63 @@
+﻿
+@{
+    ViewBag.Title = "Paises";
+}
+
+
+<br /><br /><br /><br /><br /><br /><br />
+<h2>Paises</h2>
+
+
+<div class="row">
+    <div class="form-group">
+        <div class="col-md-6">
+            @Html.DropDownList("pai_Codigo", new SelectList(SisV.Models.ListDropdownList.ListaPaises, "Value", "Text"), "SELECCIONE PAIS", new { @class = "form-control", @onchange = "GetRegion(this.value)" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-6">
+            <select class="form-control" id="Region">
+                <option value="" selected>Sin Region</option>
+            </select>
+        </div>
+    </div>
+
+</div>
+
+
+<br />
+
+
+
+
+
+<script type="text/javascript">
+
+    function GetRegion(pai_Codigo) {
+        params = "pai_Codigo=" + pai_Codigo;
+
+        $.ajax
+            ({
+                data: params,
+                cache: true,
+                type: 'Post',
+                typeData: "json",
+                url: "GetRegion",
+                success: function (data) {
+                    console.log(data);
+                    if (data.length > 0) {
+                        document.getElementById("Region").innerHTML = "<option value='' selected>SELECCIONE REGION</option>";
+
+                        for (var i = 0; i < data.length; i++) {
+                            document.getElementById("Region").innerHTML += "<option value='" + data[i].reg_Codigo + "'>" + data[i].reg_Nombre + "</option>";
+                        }
+
+                    }
+                    
+                }
+            });
+
+    }
+
+</script>
