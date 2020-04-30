@@ -1,5 +1,6 @@
 .ui-pnotify{
   border-radius: 4px;
+  z-index:9999999999;
 }
 .ui-pnotify-title{
   font-size: 16px;

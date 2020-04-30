@@ -573,7 +573,8 @@ p {
 }
 
 .location-selector .bit.top {
-    top: 0
+    top: 0;
+    height:30px;
 }
 
 .location-selector .bit.bottom {
@@ -4031,7 +4032,8 @@ a[data-toggle="lightbox"] .img-fluid {
         -webkit-box-flex: 0;
         -ms-flex: 0 0 83.333333%;
         flex: 0 0 83.333333%;
-        max-width: 83.333333%
+        max-width: 83.333333%;
+       height:30px;
     }
     .col-sm-11 {
         -webkit-box-flex: 0;
@@ -14670,14 +14672,13 @@ label.txt-ellipsis {
 }
 
 .bg-pic {
-    background-color: rgba(0, 0, 0, 0.5);
-    background-blend-mode: overlay
+    background-color: rgba(0, 0, 0, 0.5);    
 }
 
 .j-pro {
     -webkit-box-shadow: none;
     box-shadow: none;
-    border: 1px solid rgba(0, 0, 0, 0.15)
+    border: 10px solid rgba(0, 0, 0, 0.15)
 }
 
 .j-pro .j-header {

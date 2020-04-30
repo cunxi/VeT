@@ -1149,6 +1149,7 @@ address {
   }
   .col-md-10 {
     width: 83.33333333%;
+    height:30px;
   }
   .col-md-9 {
     width: 75%;

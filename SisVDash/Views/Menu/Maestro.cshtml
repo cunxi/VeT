@@ -1,6 +1,20 @@
 ﻿@using System.Data;
 
 <style>
+    .btn11 {
+        background-color: #148F40;
+        border: none;
+        color: white;
+        padding: 6px 11px;
+        font-size: 11px;
+        cursor: pointer;
+    }
+
+        .btn11:hover {
+            background-color: #1ED760;
+        }
+</style>
+<style>
     .btn22 {
         background-color: #007072;
         border: none;
@@ -28,24 +42,58 @@
             background-color: #FE5D70;
         }
 </style>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+<style>
+    .form-control-feedback {
+        position: absolute;
+        padding: 10px;
+        pointer-events: none;
+    }
+
+    .form-control {
+        padding-left: 30px !important;
+    }
+</style>
+<style>
+    .validation {
+        border: 1px solid red;        
+        background-color: #FFEBEE;
+        display: block;
+        width: 100%;
+        padding: .5rem .75rem;
+        font-size: 1rem;
+        line-height: 1.25;
+        color: #495057;
+        background-image: none;
+        background-clip: padding-box;
+        border-radius: .25rem;
+        transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+        font-size: 14px;
+        padding-left: 30px;
+    }
+</style>
+
 
 <link rel="icon" href="~/Content/assets/images/favicon.ico" type="image/x-icon">
+<!-- Google font--><link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,800" rel="stylesheet">
+<!-- Required Fremwork -->
 <link rel="stylesheet" type="text/css" href="~/Content/bower_components/bootstrap/css/bootstrap.min.css">
+<!-- themify-icons line icon -->
 <link rel="stylesheet" type="text/css" href="~/Content/assets/icon/themify-icons/themify-icons.css">
+<!-- ico font -->
 <link rel="stylesheet" type="text/css" href="~/Content/assets/icon/icofont/css/icofont.css">
-<link rel="stylesheet" type="text/css" href="~/Content/assets/icon/feather/css/feather.css">
-<link rel="stylesheet" type="text/css" href="~/Content/assets/css/style.css">
 
 <link rel="stylesheet" type="text/css" href="~/Content/bower_components/pnotify/css/pnotify.css">
 <link rel="stylesheet" type="text/css" href="~/Content/bower_components/pnotify/css/pnotify.brighttheme.css">
 <link rel="stylesheet" type="text/css" href="~/Content/bower_components/pnotify/css/pnotify.buttons.css">
-<link rel="stylesheet" type="text/css" href="~/Content/bower_components/pnotify/css/pnotify.history.css">
 
-<link href="https:/fonts.googleapis.com/css?family=Open+Sans:400,600,800" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="~/Content/assets/pages/pnotify/notify.css">
+<!-- Style.css -->
 <link rel="stylesheet" type="text/css" href="~/Content/assets/css/style.css">
-<link rel="stylesheet" type="text/css" href="~/Content/assets/css/jquery.mCustomScrollbar.css">
+@*<link rel="stylesheet" type="text/css" href="~/Content/assets/css/jquery.mCustomScrollbar.css">*@
 
 <body>
+
 
     <div class="col-sm-12">
         <div class="page-body toolbar-page">
@@ -57,7 +105,7 @@
                 <div class="card-block">
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-md-10">
+                            <div class="col-md-12">
                                 <div class="d-flex flex-wrap" id="inventario_header">
 
                                     @if (@ViewBag.Nombre == "color")
@@ -77,6 +125,14 @@
                                     {
                                         <button class="btn btn-primary btn-outline-primary" id="btnAddEspecie" onclick="OpenModMan('RAZ|I|0~0~0')" data-toggle="tooltip" data-placement="top" title="Agregar @ViewBag.Nombre"><i class="icofont icofont-ui-add"></i>Agregar @ViewBag.Nombre</button>
                                     }
+                                    else if (@ViewBag.Nombre == "empresa")
+                                    {
+                                        <button class="btn btn-primary btn-outline-primary" id="btnAddEspecie" onclick="OpenModMan('EMP|I|0~0~0')" data-toggle="tooltip" data-placement="top" title="Agregar @ViewBag.Nombre"><i class="icofont icofont-ui-add"></i>Agregar @ViewBag.Nombre</button>
+                                    }
+                                    else if (@ViewBag.Nombre == "centro")
+                                    {
+                                        <button class="btn btn-primary btn-outline-primary" id="btnAddEspecie" onclick="OpenModMan('CEN|I|0~0~0')" data-toggle="tooltip" data-placement="top" title="Agregar @ViewBag.Nombre"><i class="icofont icofont-ui-add"></i>Agregar @ViewBag.Nombre</button>
+                                    }
 
                                     &nbsp;<button class="btn btn-primary btn-outline-primary" data-toggle="tooltip" data-placement="top" title="Exportar a Excel"><i class="icofont icofont-file-excel"></i>Xls</button>
                                     &nbsp;<button class="btn btn-primary btn-outline-primary" data-toggle="tooltip" data-placement="top" title="Exportar a Pdf"><i class="icofont icofont-file-pdf"></i>Pdf</button>
@@ -91,7 +147,6 @@
                                 <table id="simpletable" class="table">
                                     <thead>
                                         <tr>
-                                            <th>Código</th>
                                             <th>Nombre</th>
                                             <th>Acciones</th>
                                         </tr>
@@ -100,7 +155,6 @@
                                         @foreach (DataRow row in Model.Tables[0].Rows)
                                         {
                                             <tr id="@row["col_Codigo"]">
-                                                <td>@row["col_Codigo"]</td>
                                                 <td>@row["col_Nombre"]</td>
                                                 <td>
                                                     <button class="btn22" onclick="OpenModMan('COL|U|@row["col_Codigo"]~@row["col_Nombre"]')"><i class="icofont icofont-ui-edit"></i> Modificar</button>
@@ -111,7 +165,6 @@
                                     </tbody>
                                     <tfoot>
                                         <tr>
-                                            <th>Código</th>
                                             <th>Nombre</th>
                                             <th>Acciones</th>
                                         </tr>
@@ -123,7 +176,6 @@
                                 <table id="simpletable" class="table">
                                     <thead>
                                         <tr>
-                                            <th>Código</th>
                                             <th>Nombre</th>
                                             <th>Acciones</th>
                                         </tr>
@@ -132,7 +184,6 @@
                                         @foreach (DataRow row in Model.Tables[0].Rows)
                                         {
                                             <tr id="@row["esp_Codigo"]">
-                                                <td>@row["esp_Codigo"]</td>
                                                 <td>@row["esp_Nombre"]</td>
                                                 <td>
                                                     <button class="btn22" onclick="OpenModMan('ESP|U|@row["esp_Codigo"]~@row["esp_Nombre"]')"><i class="icofont icofont-ui-edit"></i> Modificar</button>
@@ -143,7 +194,6 @@
                                     </tbody>
                                     <tfoot>
                                         <tr>
-                                            <th>Código</th>
                                             <th>Nombre</th>
                                             <th>Acciones</th>
                                         </tr>
@@ -155,7 +205,6 @@
                                 <table id="simpletable" class="table">
                                     <thead>
                                         <tr>
-                                            <th>Código</th>
                                             <th>Nombre</th>
                                             <th>Acciones</th>
                                         </tr>
@@ -164,7 +213,6 @@
                                         @foreach (DataRow row in Model.Tables[0].Rows)
                                         {
                                             <tr id="@row["pat_Codigo"]">
-                                                <td>@row["pat_Codigo"]</td>
                                                 <td>@row["pat_Nombre"]</td>
                                                 <td>
                                                     <button class="btn22" onclick="OpenModMan('PAT|U|@row["pat_Codigo"]~@row["pat_Nombre"]')"><i class="icofont icofont-ui-edit"></i> Modificar</button>
@@ -175,7 +223,6 @@
                                     </tbody>
                                     <tfoot>
                                         <tr>
-                                            <th>Código</th>
                                             <th>Nombre</th>
                                             <th>Acciones</th>
                                         </tr>
@@ -187,7 +234,6 @@
                                 <table id="simpletable" class="table">
                                     <thead>
                                         <tr>
-                                            <th>Código</th>
                                             <th>Nombre</th>
                                             <th>Especie</th>
                                             <th>Acciones</th>
@@ -197,7 +243,6 @@
                                         @foreach (DataRow row in Model.Tables[0].Rows)
                                         {
                                             <tr id="@row["raz_Codigo"]">
-                                                <td>@row["raz_Codigo"]</td>
                                                 <td>@row["raz_Nombre"]</td>
                                                 <td>@row["esp_Nombre"]</td>
                                                 <td>
@@ -209,9 +254,88 @@
                                     </tbody>
                                     <tfoot>
                                         <tr>
-                                            <th>Código</th>
                                             <th>Nombre</th>
                                             <th>Especie</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            }
+                            @if (@ViewBag.Nombre == "empresa")
+                            {
+                                <table id="simpletable" class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Rut</th>
+                                            <th>Nombre</th>
+                                            <th>Giro</th>
+                                            <th>Dirección</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (DataRow row in Model.Tables[0].Rows)
+                                        {
+                                            <tr id="@row["emp_ID_empresa"]">
+                                                <td>@row["emp_Rut"]-@row["emp_Dv"]</td>
+                                                <td>@row["emp_RazonS"]</td>
+                                                <td>@row["emp_Giro"]</td>
+                                                <td>@row["emp_Direccion"]</td>
+
+                                                <td>
+                                                    <button class="btn11" onclick="OpenModMan('EMP|V|@row["emp_ID_empresa"]~@row["emp_Rut"]-@row["emp_Dv"]~@row["emp_RazonS"]~@row["emp_Giro"]~@row["emp_Direccion"]~@row["pai_Codigo"]~@row["reg_Codigo"]~@row["com_Codigo"]~@row["emp_Telefono"]~@row["emp_Email"]~@row["emp_RutRepreLegal"]-@row["emp_DvRepreLegal"]~@row["emp_RepreLegal"]')"><i class="icofont icofont-eye"></i> Detalle</button>
+                                                    <button class="btn22" onclick="OpenModMan('EMP|U|@row["emp_ID_empresa"]~@row["emp_Rut"]-@row["emp_Dv"]~@row["emp_RazonS"]~@row["emp_Giro"]~@row["emp_Direccion"]~@row["pai_Codigo"]~@row["reg_Codigo"]~@row["com_Codigo"]~@row["emp_Telefono"]~@row["emp_Email"]~@row["emp_RutRepreLegal"]-@row["emp_DvRepreLegal"]~@row["emp_RepreLegal"]')"><i class="icofont icofont-ui-edit"></i> Modificar</button>
+                                                    <button class="btn33" onclick="Save('EMP|D|@row["emp_ID_empresa"]~@row["emp_Rut"]-@row["emp_Dv"]~@row["emp_RazonS"]~@row["emp_Giro"]~@row["emp_Direccion"]~@row["pai_Codigo"]~@row["reg_Codigo"]~@row["com_Codigo"]~@row["emp_Telefono"]~@row["emp_Email"]~@row["emp_RutRepreLegal"]-@row["emp_DvRepreLegal"]~@row["emp_RepreLegal"]')"><i class="icofont icofont-ui-delete"></i> Eliminar</button>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Rut</th>
+                                            <th>Nombre</th>
+                                            <th>Giro</th>
+                                            <th>Dirección</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            }
+                            @if (@ViewBag.Nombre == "centro")
+                            {
+                                <table id="simpletable" class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Rut</th>
+                                            <th>Nombre</th>
+                                            <th>Giro</th>
+                                            <th>Dirección</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (DataRow row in Model.Tables[0].Rows)
+                                        {
+                                            <tr id="@row["cen_ID_centro"]">
+                                                <td>@row["cen_Rut"]-@row["cen_Dv"]</td>
+                                                <td>@row["cen_RazonS"]</td>
+                                                <td>@row["cen_Giro"]</td>
+                                                <td>@row["cen_Direccion"]</td>
+
+                                                <td>
+                                                    <button class="btn11" onclick="OpenModMan('CEN|V|@row["cen_ID_Centro"]~@row["emp_ID_Empresa"]~@row["cen_Rut"]-@row["cen_Dv"]~@row["cen_RazonS"]~@row["cen_Giro"]~@row["cen_Direccion"]~@row["pai_Codigo"]~@row["reg_Codigo"]~@row["com_Codigo"]~@row["cen_Telefono"]~@row["cen_Email"]~@row["est_Cod_Est_Sec"]~@row["cen_RutContacto"]-@row["cen_DvContacto"]~@row["cen_Contacto"]')"><i class="icofont icofont-eye"></i> Detalle</button>
+                                                    <button class="btn22" onclick="OpenModMan('CEN|U|@row["cen_ID_Centro"]~@row["emp_ID_Empresa"]~@row["cen_Rut"]-@row["cen_Dv"]~@row["cen_RazonS"]~@row["cen_Giro"]~@row["cen_Direccion"]~@row["pai_Codigo"]~@row["reg_Codigo"]~@row["com_Codigo"]~@row["cen_Telefono"]~@row["cen_Email"]~@row["est_Cod_Est_Sec"]~@row["cen_RutContacto"]-@row["cen_DvContacto"]~@row["cen_Contacto"]')"><i class="icofont icofont-ui-edit"></i> Modificar</button>
+                                                    <button class="btn33" onclick="Save('CEN|D|@row["cen_ID_centro"]~@row["emp_ID_Empresa"]~@row["cen_Rut"]-@row["cen_Dv"]~@row["cen_RazonS"]~@row["cen_Giro"]~@row["cen_Direccion"]~@row["pai_Codigo"]~@row["reg_Codigo"]~@row["com_Codigo"]~@row["cen_Telefono"]~@row["cen_Email"]~@row["est_Cod_Est_Sec"]~@row["cen_RutContacto"]-@row["cen_DvContacto"]~@row["cen_Contacto"]')"><i class="icofont icofont-ui-delete"></i> Eliminar</button>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Rut</th>
+                                            <th>Nombre</th>
+                                            <th>Giro</th>
+                                            <th>Dirección</th>
                                             <th>Acciones</th>
                                         </tr>
                                     </tfoot>
@@ -235,24 +359,26 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Código *</label>
-                        <div class="col-sm-10">
-                            <input name="codColor" id="codColor" onkeypress="return check(event)" maxlength="3" type="text" class="form-control" placeholder="Código color" pattern="[A-Za-z0-9]{5,40}">
-                        </div>
+                        <input name="codColor" id="codColor" maxlength="3" type="hidden" class="form-control" placeholder="Código color">
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Nombre *</label>
-                        <div class="col-sm-10">
-                            <input name="nomColor" id="nomColor" onkeypress="return check(event)" type="text" maxlength="50" class="form-control" placeholder="Nombre color" pattern="[A-Za-z0-9]{5,40}">
+                        <div class="col-sm-10" style="height:30px">
+                            <div class="form-group has-feedback">
+                                <i class="fa fa-pencil form-control-feedback"></i>
+                                <input data-toggle="validator" name="nomColor" id="nomColor" onkeypress="return check(this.value,'nomColor')" type="text" maxlength="50" class="form-control" placeholder="Nombre color" required>
+                            </div>
                         </div>
                     </div>
-
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Cerrar</button>
                     <button type="button" id="btnUpdateCol" class="btn btn-primary waves-effect waves-light" onclick="Save('COL|U'+ '|' + document.getElementById('codColor').value + '~' + document.getElementById('nomColor').value)">Guardar</button>
-                    <button type="button" id="btnGuardarCol" class="btn btn-primary waves-effect waves-light" onclick="Save('COL|I'+ '|' + document.getElementById('codColor').value + '~' + document.getElementById('nomColor').value)">Guardar</button>
+                    <button type="button" id="btnGuardarCol" class="btn btn-primary waves-effect waves-light" onclick="Save('COL|I'+ '|' + '0' + '~' + document.getElementById('nomColor').value)">Guardar</button>
                 </div>
+
+
+
             </div>
         </div>
     </div>
@@ -268,15 +394,16 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Código *</label>
-                        <div class="col-sm-10">
-                            <input name="codEspecie" id="codEspecie" onkeypress="return check(event)" maxlength="3" type="text" class="form-control" placeholder="Código especie" pattern="[A-Za-z0-9]{5,40}">
-                        </div>
+                        <input name="codEspecie" id="codEspecie" onkeypress="return check(event)" maxlength="3" type="hidden" class="form-control" placeholder="Código especie">
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Nombre *</label>
-                        <div class="col-sm-10">
-                            <input name="nomEspecie" id="nomEspecie" onkeypress="return check(event)" type="text" maxlength="50" class="form-control" placeholder="Nombre especie" pattern="[A-Za-z0-9]{5,40}">
+                        <div class="col-sm-10" style="height:30px">
+                            <div class="form-group has-feedback">
+                                <i class="fa fa-pencil form-control-feedback"></i>
+                                <input name="nomEspecie" id="nomEspecie" onkeypress="return check(this.value,'nomEspecie')" type="text" maxlength="50" class="form-control" placeholder="Nombre especie">
+                            </div>
+
                         </div>
                     </div>
 
@@ -301,18 +428,18 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Código *</label>
-                        <div class="col-sm-10">
-                            <input name="codPatron" id="codPatron" onkeypress="return check(event)" maxlength="3" type="text" class="form-control" placeholder="Código patrón" pattern="[A-Za-z0-9]{5,40}">
-                        </div>
+                        <input name="codPatron" id="codPatron" onkeypress="return check(event)" maxlength="3" type="hidden" class="form-control" placeholder="Código patrón">
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Nombre *</label>
-                        <div class="col-sm-10">
-                            <input name="nomPatron" id="nomPatron" onkeypress="return check(event)" type="text" maxlength="50" class="form-control" placeholder="Nombre patrón" pattern="[A-Za-z0-9]{5,40}">
+                        <div class="col-sm-10" style="height:30px">
+                            <div class="form-group has-feedback">
+                                <i class="fa fa-pencil form-control-feedback"></i>
+                                <input name="nomPatron" id="nomPatron" onkeypress="return check(this.value,'nomPatron')" type="text" maxlength="50" class="form-control" placeholder="Nombre patrón">
+                            </div>
+
                         </div>
                     </div>
-
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Cerrar</button>
@@ -334,54 +461,514 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Código *</label>
-                        <div class="col-sm-10">
-                            <input name="codRaza" id="codRaza" onkeypress="return check(event)" maxlength="3" type="text" class="form-control" placeholder="Código raza" pattern="[A-Za-z0-9]{5,40}">
-                        </div>
+                        <input name="codRaza" id="codRaza" onkeypress="return check(event)" maxlength="3" type="hidden" class="form-control" placeholder="Código raza">
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Nombre *</label>
-                        <div class="col-sm-10">
-                            <input name="nomRaza" id="nomRaza" onkeypress="return check(event)" type="text" maxlength="50" class="form-control" placeholder="Nombre raza" pattern="[A-Za-z0-9]{5,40}">
+                        <div class="col-sm-10" style="height:30px">
+                            <div class="form-group has-feedback">
+                                <i class="fa fa-pencil form-control-feedback"></i>
+                                <input name="nomRaza" id="nomRaza" onkeypress="return check(this.value,'nomRaza')" type="text" maxlength="50" class="form-control" placeholder="Nombre raza">
+                            </div>
+
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Nombre *</label>
-                        <div class="col-sm-10">
-                            <input name="nomRaza" id="nomRaza" onkeypress="return check(event)" type="text" maxlength="50" class="form-control" placeholder="Nombre raza" pattern="[A-Za-z0-9]{5,40}">
+
+                        <label class="col-sm-2 col-form-label">Especie *</label>
+                        <div class="col-sm-10" style="height:30px">
+                            <div class="form-group has-feedback">
+                                <i class="fa fa-pencil-square form-control-feedback"></i>
+                                @{ var CodEspecie = @ViewBag.codEspecie;}
+                                @if (@ViewBag.Nombre == "raza")
+                                {
+                                    @Html.DropDownList("ddlraza", new SelectList(SisVDash.Models.DropDownList.ListaEspecies, "Value", "Text", CodEspecie), "Seleccione Especie", new
+
+                               {
+                                   @class = "select form-control custom-select",
+                                   @onchange = "ddlEsp(this.value)"})
+
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Cerrar</button>
+                    <button type="button" id="btnUpdateRaz" class="btn btn-primary waves-effect waves-light" onclick="Save('RAZ|U'+ '|' + document.getElementById('codRaza').value + '~' + document.getElementById('nomRaza').value + '~' + document.getElementById('ddlraza').value)">Guardar</button>
+                    <button type="button" id="btnGuardarRaz" class="btn btn-primary waves-effect waves-light" onclick="Save('RAZ|I'+ '|' + '0' + '~' + document.getElementById('nomRaza').value + '~' + document.getElementById('ddlraza').value)">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- MODAL EMPRESA -->
+    <div class="modal fade" id="ModEmpresa" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="TitulModEmpresa">Mantenedor de Empresa</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input name="IdEmpresa" id="IdEmpresa" onkeypress="return check(event)" maxlength="3" type="hidden" class="form-control" placeholder="Id Empresa">
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Rut *</label>
+                        <div class="col-sm-10" style="height:30px">
+                            <div class="form-group has-feedback">
+                                <i class="fa fa-id-badge form-control-feedback"></i>
+                                <input name="rutEmpresa" id="rutEmpresa" required oninput="checkRut(this)" type="text" maxlength="50" class="form-control" placeholder="Rut Empresa">
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Razón social *</label>
+                        <div class="col-sm-10" style="height:30px">
+                            <div class="form-group has-feedback">
+                                <i class="fa fa-id-card-o form-control-feedback"></i>
+                                <input name="razonSocialEmpresa" id="razonSocialEmpresa" onkeypress="return check(this.value,'razonSocialEmpresa')" type="text" maxlength="50" class="form-control" placeholder="Razón Social Empresa" required>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Giro *</label>
+                        <div class="col-sm-10" style="height:30px">
+                            <div class="form-group has-feedback">
+                                <i class="fa fa-pencil form-control-feedback"></i>
+                                <input name="GiroEmpresa" id="GiroEmpresa" onkeypress="return check(this.value,'GiroEmpresa')" type="text" maxlength="50" class="form-control" placeholder="Giro Empresa">
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Dirección *</label>
+                        <div class="col-sm-10" style="height:30px">
+                            <div class="form-group has-feedback">
+                                <i class="fa fa-address-book-o form-control-feedback"></i>
+                                <input name="DireccionEmpresa" id="DireccionEmpresa" onkeypress="return check(this.value,'DireccionEmpresa')" type="text" maxlength="50" class="form-control" placeholder="Dirección Empresa">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">País *</label>
+                        <div class="col-sm-10" style="height:30px">
+                            <div class="form-group has-feedback">
+                                <i class="fa fa-flag form-control-feedback"></i>
+                                @{ var pai_Codigo = @ViewBag.pai_Codigo;}
+                                @if (@ViewBag.Nombre == "empresa")
+                                {
+                                    @Html.DropDownList("ddlPaisEmpresa", new SelectList(SisVDash.Models.DropDownList.ListaPaises, "Value", "Text", pai_Codigo), "Seleccione País", new
+
+                               {
+                                   @class = "select form-control custom-select" ,
+                                   @onchange = "GetRegion(this.value,'Empresa')"})
+
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Región *</label>
+                        <div class="col-sm-10" style="height:30px">
+                            <div class="form-group has-feedback">
+                                <i class="fa fa-location-arrow form-control-feedback"></i>
+                                <select class="form-control custom-select" id="ddlRegionEmpresa" name="ddlRegionEmpresa" onchange="GetComuna(this.value,'Empresa')">
+                                    <option value="" selected>Sin Region</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Comuna *</label>
+                        <div class="col-sm-10" style="height:30px">
+                            <div class="form-group has-feedback">
+                                <i class="fa fa-map-pin form-control-feedback"></i>
+                                <select class="form-control custom-select" id="ddlComunaEmpresa" name="ddlComunaEmpresa" onchange="ddlCom('Empresa')">
+                                    <option value="" selected>Sin Comuna</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Teléfono </label>
+                        <div class="col-sm-4" style="height:30px">
+                            <div class="form-group has-feedback">
+                                <i class="fa fa-phone form-control-feedback"></i>
+                                <input type="text" id="TelefonoEmp" name="TelefonoEmp" class="form-control" placeholder="Teléfono">
+                            </div>
+
+                        </div>
+                        <label class="col-sm-2 col-form-label">E-mail</label>
+                        <div class="col" style="height:30px">
+                            <div class="form-group has-feedback">
+                                <i class="fa fa-at form-control-feedback"></i>
+                                <input type="email" id="Email" name="Email" class="form-control" placeholder="E-mail" onkeypress="return check(this.value,'Email')">
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Rut Rep. legal </label>
+                        <div class="col-sm-10" style="height:30px">
+                            <div class="form-group has-feedback">
+                                <i class="fa fa-id-badge form-control-feedback"></i>
+                                <input name="RutRepLegal" id="RutRepLegal" required oninput="checkRut(this)" type="text" maxlength="50" class="form-control" placeholder="Rut representante legal">
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Rep. legal </label>
+                        <div class="col-sm-10" style="height:30px">
+                            <div class="form-group has-feedback">
+                                <i class="fa fa-user form-control-feedback"></i>
+                                <input name="NomRepLegal" id="NomRepLegal" type="text" maxlength="50" class="form-control" placeholder="Nombre representante legal">
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Cerrar</button>
+                    <button type="button" id="btnUpdateEmp" class="btn btn-primary waves-effect waves-light" onclick="Save('EMP|U|' + document.getElementById('IdEmpresa').value+ '~' + document.getElementById('rutEmpresa').value+ '~' + document.getElementById('razonSocialEmpresa').value+ '~' + document.getElementById('GiroEmpresa').value+ '~' + document.getElementById('DireccionEmpresa').value+ '~' + document.getElementById('ddlPais').value+ '~' + document.getElementById('ddlRegion').value+ '~' + document.getElementById('ddlComuna').value+ '~' + document.getElementById('TelefonoEmp').value+ '~' + document.getElementById('Email').value+ '~' + document.getElementById('RutRepLegal').value+ '~' + document.getElementById('NomRepLegal').value)">Guardar</button>                    
+                    <button type="button" id="btnGuardarEmp" class="btn btn-primary waves-effect waves-light" onclick="Save('EMP|I|0'+ '~' +document.getElementById('rutEmpresa').value+ '~' + document.getElementById('razonSocialEmpresa').value+ '~' + document.getElementById('GiroEmpresa').value+ '~' + document.getElementById('DireccionEmpresa').value+ '~' + document.getElementById('ddlPaisEmpresa').value+ '~' + document.getElementById('ddlRegionEmpresa').value+ '~' + document.getElementById('ddlComunaEmpresa').value+ '~' + document.getElementById('TelefonoEmp').value+ '~' + document.getElementById('Email').value+ '~' + document.getElementById('RutRepLegal').value+ '~' + document.getElementById('NomRepLegal').value)">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- MODAL CENTRO -->
+    <div class="modal fade" id="ModCentro" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="TitulModCentro">Mantenedor de centro</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input name="IdCentro" id="IdCentro"  type="hidden" class="form-control" placeholder="Id Centro">
+                    <input name="estadoCentro" id="estadoCentro" maxlength="3" type="hidden" class="form-control" placeholder="Estado Centro">
+                    <div class="col-lg-12">
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs md-tabs" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="tab" href="#home3" role="tab">Datos centro</a>
+                                <div class="slide"></div>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="tabImg" data-toggle="tab" href="#profile3" role="tab">Imágenes</a>
+                                <div class="slide"></div>
+                            </li>
+
+                        </ul>
+                        <!-- Tab panes -->
+                        <div class="tab-content card-block">
+                            <div class="tab-pane active" id="home3" role="tabpanel">
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label">Empresa *</label>
+                                    <div class="col-sm-10" style="height:30px">
+                                        <div class="form-group has-feedback">
+                                            <i class="fa fa-pencil-square form-control-feedback"></i>
+                                            @{ var emp_Codigo = @ViewBag.emp_Codigo;}
+                                            @if (@ViewBag.Nombre == "centro")
+                                            {
+                                                @Html.DropDownList("ddlEmpresa", new SelectList(SisVDash.Models.DropDownList.ListaEmpresas, "Value", "Text", emp_Codigo), "Seleccione Empresa", new
+
+                                           {
+                                               @class = "select form-control custom-select",
+                                               @onchange = "ddlEmpresa(this.value)"
+                                           })
+
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label">Rut centro *</label>
+                                    <div class="col-sm-10" style="height:30px">
+                                        <div class="form-group has-feedback">
+                                            <i class="fa fa-id-badge form-control-feedback"></i>
+                                            <input name="rutCentro" id="rutCentro" required oninput="checkRut(this)" type="text" maxlength="50" class="form-control" placeholder="Rut centro">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label">Nombre *</label>
+                                    <div class="col-sm-10" style="height:30px">
+                                        <div class="form-group has-feedback">
+                                            <i class="fa fa-id-card-o form-control-feedback"></i>
+                                            <input name="razonSocialCentro" id="razonSocialCentro" onkeypress="return check(this.value,'razonSocialCentro')" type="text" maxlength="50" class="form-control" placeholder="Nombre centro">
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label">Giro *</label>
+                                    <div class="col-sm-10" style="height:30px">
+                                        <div class="form-group has-feedback">
+                                            <i class="fa fa-pencil form-control-feedback"></i>
+                                            <input name="GiroCentro" id="GiroCentro" onkeypress="return check(this.value,'GiroCentro')" type="text" maxlength="50" class="form-control" placeholder="Giro centro">
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label">Dirección *</label>
+                                    <div class="col-sm-10" style="height:30px">
+                                        <div class="form-group has-feedback">
+                                            <i class="fa fa-address-book-o form-control-feedback"></i>
+                                            <input name="DireccionCentro" id="DireccionCentro" onkeypress="return check(this.value,'DireccionCentro')" type="text" maxlength="50" class="form-control" placeholder="Dirección centro">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label">País *</label>
+                                    <div class="col-sm-10" style="height:30px">
+                                        <div class="form-group has-feedback">
+                                            <i class="fa fa-flag form-control-feedback"></i>
+                                            @{ var pai_CodigoC = @ViewBag.pai_CodigoC;}
+                                            @if (@ViewBag.Nombre == "centro")
+                                            {
+                                                @Html.DropDownList("ddlPaisCentro", new SelectList(SisVDash.Models.DropDownList.ListaPaises, "Value", "Text", pai_CodigoC), "Seleccione País", new
+
+                                           {
+                                               @class = "select form-control custom-select" ,
+                                               @onchange = "GetRegion(this.value,'Centro')"})
+
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label">Región *</label>
+                                    <div class="col-sm-10" style="height:30px">
+                                        <div class="form-group has-feedback">
+                                            <i class="fa fa-location-arrow form-control-feedback"></i>
+                                            <select class="form-control custom-select" id="ddlRegionCentro" name="ddlRegionCentro" onchange="GetComuna(this.value,'Centro')">
+                                                <option value="" selected>Sin Region</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label">Comuna *</label>
+                                    <div class="col-sm-10" style="height:30px">
+                                        <div class="form-group has-feedback">
+                                            <i class="fa fa-map-pin form-control-feedback"></i>
+                                            <select class="form-control custom-select" id="ddlComunaCentro" name="ddlComunaCentro" onchange="ddlCom('Centro')">
+                                                <option value="" selected>Sin Comuna</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label">Teléfono </label>
+                                    <div class="col-sm-4" style="height:30px">
+                                        <div class="form-group has-feedback">
+                                            <i class="fa fa-phone form-control-feedback"></i>
+                                            <input type="text" id="TelefonoCentro" name="TelefonoCentro" class="form-control" placeholder="Teléfono">
+                                        </div>
+
+                                    </div>
+                                    <label class="col-sm-2 col-form-label">E-mail</label>
+                                    <div class="col" style="height:30px">
+                                        <div class="form-group has-feedback">
+                                            <i class="fa fa-at form-control-feedback"></i>
+                                            <input type="email" id="EmailCentro" name="EmailCentro" class="form-control" placeholder="E-mail">
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label">Rut contacto</label>
+                                    <div class="col-sm-10" style="height:30px">
+                                        <div class="form-group has-feedback">
+                                            <i class="fa fa-id-badge form-control-feedback"></i>
+                                            <input name="RutContacto" id="RutContacto" required oninput="checkRut(this)" type="text" maxlength="50" class="form-control" placeholder="Rut contacto">
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label">Contacto</label>
+                                    <div class="col-sm-10" style="height:30px">
+                                        <div class="form-group has-feedback">
+                                            <i class="fa fa-user form-control-feedback"></i>
+                                            <input name="NomContacto" id="NomContacto" onkeypress="return check(event)" type="text" maxlength="50" class="form-control" placeholder="Nombre contacto">
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label">Estado centro</label>
+                                    <div class="col-sm-10" style="height:30px">
+                                        <div class="form-group has-feedback">
+                                            <div class="form-radio">
+                                                <div class="radio radiofill radio-primary radio-inline">
+                                                    <label>
+                                                        <input type="radio" name="member" value="ACT" data-bv-field="member" onchange="Estado('ACT')">
+                                                        <i class="helper"></i>Activo
+                                                    </label>
+                                                </div>
+                                                <div class="radio radiofill radio-primary radio-inline">
+                                                    <label>
+                                                        <input type="radio" name="member" value="INA" data-bv-field="member" onchange="Estado('INA')">
+                                                        <i class="helper"></i>Inactivo
+                                                    </label>
+                                                </div>
+                                                <div class="radio radiofill radio-primary radio-inline">
+                                                    <label>
+                                                        <input type="radio" name="member" value="SUS" data-bv-field="member" onchange="Estado('SUS')">
+                                                        <i class="helper"></i>Suspendido
+                                                    </label>
+                                                </div>
+                                                <div class="radio radiofill radio-primary radio-inline">
+                                                    <label>
+                                                        <input type="radio" name="member" value="CON" data-bv-field="member" onchange="Estado('CON')">
+                                                        <i class="helper"></i>Congelado
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="tab-pane" id="profile3" role="tabpanel">
+
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5>Gallery Masonry</h5>
+                                    </div>
+                                    <div class="card-block masonry-image">
+                                        <div class="default-grid ">
+                                            <div class="row lightboxgallery-popup">
+                                                <div class="col-sm-3 default-grid-item">
+                                                    <div class="masonry-media">
+                                                        <a class="media-middle" href="#!">
+                                                            <input type='file' /><br><img id="myImg" src="#" alt="your image" height=200 width=100>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3 default-grid-item">
+                                                    <div class="masonry-media">
+                                                        <a class="media-middle" href="#!">
+                                                            <img class="img-fluid" id="myimg1" alt="masonary" style="width:142px;height:121px">
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3 default-grid-item">
+                                                    <div class="masonry-media">
+                                                        <a class="media-middle" href="#!">
+                                                            <img class="img-fluid" src="~/Content/assets/images/gallery-grid/masonry-2.jpg" alt="masonary" style="width:142px;height:121px">
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3 default-grid-item">
+                                                    <div class="masonry-media">
+                                                        <a class="media-middle" href="#!">
+                                                            <img class="img-fluid" src="~/Content/assets/images/gallery-grid/masonry-2.jpg" alt="masonary" style="width:142px;height:121px">
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3 default-grid-item">
+                                                    <div class="masonry-media">
+                                                        <a class="media-middle" href="#!">
+                                                            <img class="img-fluid" src="~/Content/assets/images/gallery-grid/masonry-2.jpg" alt="masonary" style="width:142px;height:121px">
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3 default-grid-item">
+                                                    <div class="masonry-media">
+                                                        <a class="media-middle" href="#!">
+                                                            <img class="img-fluid" src="~/Content/assets/images/gallery-grid/masonry-2.jpg" alt="masonary" style="width:142px;height:121px">
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3 default-grid-item">
+                                                    <div class="masonry-media">
+                                                        <a class="media-middle" href="#!">
+                                                            <img class="img-fluid" src="~/Content/assets/images/gallery-grid/masonry-2.jpg" alt="masonary" style="width:142px;height:121px">
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3 default-grid-item">
+                                                    <div class="masonry-media">
+                                                        <a class="media-middle" href="#!">
+                                                            <img class="img-fluid" src="~/Content/assets/images/gallery-grid/masonry-2.jpg" alt="masonary" style="width:142px;height:121px">
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3 default-grid-item">
+                                                    <div class="masonry-media">
+                                                        <a class="media-middle" href="#!">
+                                                            <img class="img-fluid" src="~/Content/assets/images/gallery-grid/masonry-2.jpg" alt="masonary" style="width:142px;height:121px">
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3 default-grid-item">
+                                                    <div class="masonry-media">
+                                                        <a class="media-middle" href="#!">
+                                                            <img class="img-fluid" src="~/Content/assets/images/gallery-grid/masonry-2.jpg" alt="masonary" style="width:142px;height:121px">
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Cerrar</button>
-                    <button type="button" id="btnUpdateRaz" class="btn btn-primary waves-effect waves-light" onclick="Save('RAZ|U'+ '|' + document.getElementById('codRaza').value + '~' + document.getElementById('nomRaza').value + '~' + document.getElementById('codEspecie').value)">Guardar</button>
-                    <button type="button" id="btnGuardarRaz" class="btn btn-primary waves-effect waves-light" onclick="Save('RAZ|I'+ '|' + document.getElementById('codRaza').value + '~' + document.getElementById('nomRaza').value + '~' + document.getElementById('codEspecie').value)">Guardar</button>
+                    <button type="button" id="btnUpdateCen" class="btn btn-primary waves-effect waves-light" onclick="Save('CEN|U|' + document.getElementById('IdCentro').value + '~' + document.getElementById('ddlEmpresa').value + '~' + document.getElementById('rutCentro').value + '~' + document.getElementById('razonSocialCentro').value + '~' + document.getElementById('GiroCentro').value+ '~' + document.getElementById('DireccionCentro').value+ '~' + document.getElementById('ddlPaisCentro').value+ '~' + document.getElementById('ddlRegionCentro').value+ '~' + document.getElementById('ddlComunaCentro').value+ '~' + document.getElementById('TelefonoCentro').value+ '~' + document.getElementById('EmailCentro').value + '~' + document.getElementById('estadoCentro').value + '~' + document.getElementById('RutContacto').value+ '~' + document.getElementById('NomContacto').value)">Guardar</button>
+                    <button type="button" id="btnGuardarCen" class="btn btn-primary waves-effect waves-light" onclick="Save('CEN|I|0'+ '~' + document.getElementById('ddlEmpresa').value + '~' + document.getElementById('rutCentro').value + '~' + document.getElementById('razonSocialCentro').value + '~' + document.getElementById('GiroCentro').value+ '~' + document.getElementById('DireccionCentro').value+ '~' + document.getElementById('ddlPaisCentro').value+ '~' + document.getElementById('ddlRegionCentro').value+ '~' + document.getElementById('ddlComunaCentro').value+ '~' + document.getElementById('TelefonoCentro').value+ '~' + document.getElementById('EmailCentro').value +  '~' + document.getElementById('estadoCentro').value + '~' + document.getElementById('RutContacto').value+ '~' + document.getElementById('NomContacto').value)">Guardar</button>
                 </div>
             </div>
+
+
+
         </div>
     </div>
-
     <!-- SCRIPTS -->
+    <!-- OPEN MODAL -->
     <script>
         function OpenModMan(dat) {
-
+         
             var datInt;
             var valores = dat.split("|");
             var man = valores[0];
             var acc = valores[1];
             var Datos = valores[2];
 
+            var cod;
+            var nom;
+            
             if (man == "COL") {
+                document.getElementById("nomColor").className = "form-control";
                 datInt = Datos.split("~");
-                var cod = datInt[0];
-                var nom = datInt[1];
+                cod = datInt[0];
+                nom = datInt[1];
 
                 if (acc == "I") {
+
                     $("#codColor").prop('disabled', false);
                     $('#TitulModColor').text("Ingresar color");
                     $('#codColor').val("");
                     $('#nomColor').val("");
+
                     document.getElementById("btnUpdateCol").style.display = "none";
                     document.getElementById("btnGuardarCol").style.display = "block";
                 }
@@ -390,16 +977,17 @@
                     $('#TitulModColor').text("Modificar color");
                     $('#codColor').val(cod);
                     $('#nomColor').val(nom);
+
                     document.getElementById("btnGuardarCol").style.display = "none";
                     document.getElementById("btnUpdateCol").style.display = "block";
                 }
-
                 $('#ModColor').modal('show');
             }
             if (man == "ESP") {
+                document.getElementById("nomEspecie").className = "form-control";
                 datInt = Datos.split("~");
-                var cod = datInt[0];
-                var nom = datInt[1];
+                cod = datInt[0];
+                nom = datInt[1];
 
                 if (acc == "I") {
                     $("#codEspecie").prop('disabled', false);
@@ -421,9 +1009,10 @@
                 $('#ModEspecie').modal('show');
             }
             if (man == "PAT") {
+                document.getElementById("nomPatron").className = "form-control";
                 datInt = Datos.split("~");
-                var cod = datInt[0];
-                var nom = datInt[1];
+                cod = datInt[0];
+                nom = datInt[1];
 
                 if (acc == "I") {
                     $("#codPatron").prop('disabled', false);
@@ -445,16 +1034,20 @@
                 $('#ModPatron').modal('show');
             }
             if (man == "RAZ") {
+                document.getElementById("nomRaza").className = "form-control";
+                document.getElementById("ddlraza").className = "form-control";
+
                 datInt = Datos.split("~");
-                var cod = datInt[0];
-                var nom = datInt[1];
-                var esp = datInt[1];
+                cod = datInt[0];
+                nom = datInt[1];
+                var esp = datInt[2];
 
                 if (acc == "I") {
                     $("#codRaza").prop('disabled', false);
                     $('#TitulModRaza').text("Ingresar raza");
                     $('#codRaza').val("");
                     $('#nomRaza').val("");
+                    $('#ddlraza').val("");
                     document.getElementById("btnUpdateRaz").style.display = "none";
                     document.getElementById("btnGuardarRaz").style.display = "block";
                 }
@@ -463,69 +1056,286 @@
                     $('#TitulModRaza').text("Modificar raza");
                     $('#codRaza').val(cod);
                     $('#nomRaza').val(nom);
+                    $('#ddlraza').val(esp);
                     document.getElementById("btnGuardarRaz").style.display = "none";
                     document.getElementById("btnUpdateRaz").style.display = "block";
                 }
 
                 $('#ModRaza').modal('show');
             }
+            if (man == "EMP") {
+                document.getElementById("rutEmpresa").className = "form-control";
+                document.getElementById("razonSocialEmpresa").className = "form-control";
+                document.getElementById("GiroEmpresa").className = "form-control";
+                document.getElementById("DireccionEmpresa").className = "form-control";
+                document.getElementById("ddlPaisEmpresa").className = "form-control";
+                document.getElementById("ddlRegionEmpresa").className = "form-control";
+                document.getElementById("ddlComunaEmpresa").className = "form-control";
+                document.getElementById("RutRepLegal").className = "form-control";
+
+                datInt = Datos.split("~");
+                
+                cod = datInt[0];
+                nom = datInt[1];
+                var esp = datInt[2];
+
+                $("#rutEmpresa").prop('disabled', false);
+                $("#IdEmpresa").prop('disabled', false);
+
+                if (acc == "I") {
+
+                    $("#rutEmpresa").prop('disabled', false);
+                    $('#IdEmpresa').val("");
+                    $('#rutEmpresa').val("");
+                    $('#razonSocialEmpresa').val("");
+                    $('#GiroEmpresa').val("");
+                    $('#DireccionEmpresa').val("");
+                    $('#ddlPaisEmpresa').val("");
+                    $('#ddlRegionEmpresa').val("");
+                    $('#ddlComunaEmpresa').val("");
+                    $('#TelefonoEmp').val("");
+                    $('#Email').val("");
+                    $('#RutRepLegal').val("");
+                    $('#NomRepLegal').val("");
+                    $('#TitulModEmpresa').text("Ingresar empresa");
+                    document.getElementById("btnUpdateEmp").style.display = "none";
+                    document.getElementById("btnGuardarEmp").style.display = "block";
+
+                    $("[id*='ddlRegion']").empty();
+                    $("[id*='ddlComuna']").empty();
+                }
+                else {
+                    var RutRepL = datInt[10].trim();
+                    if (RutRepL == "-") {
+                        RutRepL = ""
+                    }
+                   
+                    $('#IdEmpresa').val(datInt[0]);
+                    $("#rutEmpresa").prop('disabled', true);
+                    $('#rutEmpresa').val(datInt[1]);
+                    $('#razonSocialEmpresa').val(datInt[2]);
+                    $('#GiroEmpresa').val(datInt[3]);
+                    $('#DireccionEmpresa').val(datInt[4]);
+                    $('#ddlPaisEmpresa').val(datInt[5]);
+
+                    GetRegion(datInt[5],'Empresa');
+                   // GetComuna(datInt[6],'Empresa');
+                    $('#ddlRegionEmpresa option[value="V"]').attr('selected', 'selected');
+                    var select = document.getElementById("ddlRegionEmpresa");
+                    console.log(select);
+
+                    var reg = (datInt[6].trim());
+                    var com = (datInt[7].trim());
+                   
+                    // $("#ddlRegionEmpresa :selected").remove();
+
+                     // $('#ddlRegionEmpresa option[value="III"]').attr("selected", true);
+                    //$("#ddlRegionEmpresa option[value='V']").attr("selected", true);
+                    //$('#ddlRegionEmpresa option[value="III"]').prop("selected", true).trigger("change");
+                    //$("#ddlRegionEmpresa").val("III").change();
+                    //$('ddlRegionEmpresa').val('III');
+                    //$("#ddlRegionEmpresa option:contains('Región de Coquimbo')").val();
+                    //$("#ddlRegionEmpresa option[text=" + 'Región de Coquimbo' + "]").prop("selected", true);
+                    //$('#ddlRegionEmpresa').find('option[value="' + datInt[6].trim() + '"]').attr("selected", "selected");
+                    //$("select[name='ddlRegionEmpresa']").find("option[value='V]").attr("selected", true);
+                   //$('#ddlRegionEmpresa option[value="V"]').attr("selected", "selected");
+                  
+                    //$('#ddlRegionEmpresa option[value="V"]').attr("selected", true);
+                   
+
+                    //$('#ddlRegion option[value=V]').prop('selected', 'selected');                    
+                   // $('#ddlRegionEmpresa').val(reg.trim()).attr('selected', 'selected');
+                    //$('#ddlRegion').val(datInt[6].trim());
+                    //$('#ddlComuna').val(datInt[7].trim());
+                    alert('ASDASD');
+
+                    $('#TelefonoEmp').val(datInt[8]);
+                    $('#Email').val(datInt[9]);
+                    $('#RutRepLegal').val(RutRepL);
+                    $('#NomRepLegal').val(datInt[11]);
+
+                    if (acc == "U") {
+                        $('#TitulModEmpresa').text("Modificar empresa");
+                        document.getElementById("btnUpdateEmp").style.display = "block";
+                        document.getElementById("btnGuardarEmp").style.display = "none";
+                    }
+                    else {
+                        $('#TitulModEmpresa').text("Detalle empresa");
+                        document.getElementById("btnUpdateEmp").style.display = "none";
+                        document.getElementById("btnGuardarEmp").style.display = "none";
+                    }
+                }
+
+                $('#ModEmpresa').modal('show');
+            }
+            if (man == "CEN") {
+                datInt = Datos.split("~");
+
+                cod = datInt[0];
+                nom = datInt[1];
+                var esp = datInt[2];
+              
+                if (acc == "I") {
+
+                    $("#rutEmpresaCentro").prop('disabled', false);
+                    $('#IdCentro').val("");
+                    $('#rutCentro').val("");
+                    $('#razonSocialCentro').val("");
+                    $('#GiroCentro').val("");
+                    $('#DireccionCentro').val("");
+                    $('#ddlPais').val("");
+                    $('#ddlRegion').val("");
+                    $('#ddlComuna').val("");
+                    $('#TelefonoCentro').val("");
+                    $('#EmailCentro').val("");
+                    $('#RutContacto').val("");
+                    $('#NomContacto').val("");
+                    $('#TitulModCentro').text("Ingresar centro");
+                    document.getElementById("btnUpdateCen").style.display = "none";
+                    document.getElementById("btnGuardarCen").style.display = "block";
+                }
+                else {                   
+                    var RutContacto = datInt[12].trim();
+                    if (RutContacto.trim() == "-") {
+                        RutContacto = ""
+                    }
+
+                    $("#rutEmpresaCentro").prop('disabled', true);
+                    $("#rutCentro").prop('disabled', true);
+
+                    $('#IdCentro').val(datInt[0]);
+                    $("#rutEmpresaCentro").val(datInt[1]);
+                    $('#rutCentro').val(datInt[2]);
+                    $('#razonSocialCentro').val(datInt[3]);
+                    $('#GiroCentro').val(datInt[4]);
+                    $('#DireccionCentro').val(datInt[5]);
+                    $('#ddlPais').val(datInt[6]);
+
+                    GetRegion(datInt[6]);
+                    GetComuna(datInt[7]);
+
+                    alert(datInt[7].trim());
+                    alert(datInt[8].trim());
+
+                    var reg = (datInt[7].trim());
+                    var com = (datInt[8].trim());
+
+                    $('#ddlRegion').val(datInt[7].trim());
+                    $('#ddlComuna').val(datInt[8].trim());
+                    $('#TelefonoCentro').val(datInt[9]);
+                    $('#EmailCentro').val(datInt[10]);
+                    $('#RutContacto').val(RutContacto);
+                    $('#NomContacto').val(datInt[13]);
+
+                    if (acc == "U") {
+                        $('#TitulModCentro').text("Modificar centro");
+                        document.getElementById("btnUpdateCen").style.display = "block";
+                        document.getElementById("btnGuardarCen").style.display = "none";
+                    }
+                    else {
+                        $('#TitulModCentro').text("Detalle centro");
+                        document.getElementById("btnUpdateCen").style.display = "none";
+                        document.getElementById("btnGuardarCen").style.display = "none";
+                    }
+                }
+
+                $('#ModCentro').modal('show');
+            }
 
         };
     </script>
+    <!-- VALIDA, CONFIRMA Y GUARDA-->
     <script>
-        function Save(data) {
+        function Save(data) {                
             var recibido = data.split("|");
             var man = recibido[0];
             var acc = recibido[1];
             var dat = recibido[2];
 
-
-            validaCampos(acc, man, data)
+            validaCampos(acc, man, dat, data)
 
         }
-        function validaCampos(acc, man, data) {
+
+        function validaCampos(acc, man, dat, data) {
 
             if (man == "COL") {
-                var recibido = data.split("~");
-                var codCol = recibido[0];
-                var nomCol = recibido[1];
-                if (codCol == "" || nomCol == "") {
+
+                var recibidoCol = dat.split("~");
+                var codCol = recibidoCol[0];
+                var nomCol = recibidoCol[1];
+                if (nomCol == "") {
+
+
                     new PNotify({
-                        title: 'Información',
+                        title: 'Atención',
                         text: "Debe completar campos requeridos (*)",
                         icon: 'icofont icofont-info-square',
                         type: "error"
                     });
-
+                    document.getElementById("nomColor").className = "validation";
                 }
                 else {
+
                     Confirmacion(acc, data)
+
                 }
             }
             if (man == "ESP") {
-                var recibido = data.split("~");
-                var codEsp = recibido[0];
-                var nomEsp = recibido[1];
-                if (codEsp == "" || nomEsp == "") {
+                var recibidoEsp = dat.split("~");
+                var codEsp = recibidoEsp[0];
+                var nomEsp = recibidoEsp[1];
+                if (nomEsp == "") {
                     new PNotify({
-                        title: 'Información',
+                        title: 'Atención',
                         text: "Debe completar campos requeridos (*)",
                         icon: 'icofont icofont-info-square',
                         type: "error"
                     });
-
+                    document.getElementById("nomEspecie").className = "validation";
                 }
                 else {
                     Confirmacion(acc, data)
                 }
             }
             if (man == "PAT") {
-                var recibido = data.split("~");
-                var codPat = recibido[0];
-                var nomPat = recibido[1];
-                if (codPat == "" || nomPat == "") {
+                var recibidoPat = dat.split("~");
+                var codPat = recibidoPat[0];
+                var nomPat = recibidoPat[1];
+                if (nomPat == "") {
                     new PNotify({
-                        title: 'Información',
+                        title: 'Atención',
+                        text: "Debe completar campos requeridos (*)",
+                        icon: 'icofont icofont-info-square',
+                        type: "error"
+                    });
+                    document.getElementById("nomPatron").className = "validation";
+                }
+                else {
+                    Confirmacion(acc, data)
+                }
+            }
+            if (man == "RAZ") {
+                RazValida = new Boolean(true);
+                var recibidoRaz = dat.split("~");
+                var codRaz = recibidoRaz[0];
+                var nomRaz = recibidoRaz[1];
+                var codEsp = recibidoRaz[2];
+                var codEsp = codEsp + "nulo";
+                var codEsp = codEsp.trim();
+
+
+                if (nomRaz == "") {
+                    document.getElementById("nomRaza").className = "validation";
+                    RazValida = false;
+                }
+                if (codEsp == "nulo") {
+                    document.getElementById("ddlraza").className = "validation";
+                    RazValida = false;
+                }
+
+                if (RazValida == false) {
+                    new PNotify({
+                        title: 'Atención',
                         text: "Debe completar campos requeridos (*)",
                         icon: 'icofont icofont-info-square',
                         type: "error"
@@ -536,10 +1346,285 @@
                     Confirmacion(acc, data)
                 }
             }
+            if (man == "EMP") {
 
+                if (acc != "D") {
+                    EmpValida = new Boolean(true);
+                    EmpValida2 = new Boolean(true);
+
+                    var recibidoEmp = dat.split("~");
+                    var codEmp = recibidoEmp[0];
+                    var RutEmp = recibidoEmp[1];
+                    var razonEmp = recibidoEmp[2];
+                    var GiroEmp = recibidoEmp[3];
+                    var DirEmp = recibidoEmp[4];
+                    var PaiEmp = recibidoEmp[5];
+                    var RegEmp = recibidoEmp[6];
+                    var ComEmp = recibidoEmp[7];
+
+                    var PaiEmp = PaiEmp + "nulo";
+                    var PaiEmp = PaiEmp.trim();
+                    var RegEmp = RegEmp + "nulo";
+                    var RegEmp = RegEmp.trim();
+                    var ComEmp = ComEmp + "nulo";
+                    var ComEmp = ComEmp.trim();
+
+                    if (codEmp == "") {
+                        document.getElementById("IdEmpresa").className = "validation";
+                        EmpValida = false;
+                    }
+                    if (RutEmp == "") {
+                        document.getElementById("rutEmpresa").className = "validation";
+                        EmpValida = false;
+                    }
+                    if (razonEmp == "") {
+                        document.getElementById("razonSocialEmpresa").className = "validation";
+                        EmpValida = false;
+                    }
+                    if (GiroEmp == "") {
+                        document.getElementById("GiroEmpresa").className = "validation";
+                        EmpValida = false;
+                    }
+                    if (DirEmp == "") {
+                        document.getElementById("DireccionEmpresa").className = "validation";
+                        EmpValida = false;
+                    }
+                    if (PaiEmp == "nulo") {
+                        document.getElementById("ddlPais").className = "validation";
+                        EmpValida = false;
+                    }
+                    if (RegEmp == "nulo") {
+                        document.getElementById("ddlRegion").className = "validation";
+                        EmpValida = false;
+                    }
+                    if (ComEmp == "nulo") {
+                        document.getElementById("ddlComuna").className = "validation";
+                        EmpValida = false;
+                    }
+
+                    if (EmpValida == false) {
+                        new PNotify({
+                            title: 'Atención',
+                            text: "Debe completar campos requeridos (*)",
+                            icon: 'icofont icofont-info-square',
+                            type: "error"
+                        });
+
+                    }
+
+                    //SI ESTAN TODOS LOS DATOS OBLIGATORIOS
+                    else {
+
+                        EmpValida2 = new Boolean(true);
+
+                        if (Fn.validaRut($("#rutEmpresa").val())) {
+                        } else {
+                            document.getElementById("rutEmpresa").className = "validation";
+                            EmpValida2 = false;
+                            new PNotify({
+                                title: 'Atención',
+                                text: "Rut empresa inválido",
+                                icon: 'icofont icofont-info-square',
+                                type: "error"
+                            });
+                        }
+
+                        if (EmpValida2 == true) {
+
+                            var rutRepL = document.getElementById("RutRepLegal").value;
+
+                            if (rutRepL == "" || rutRepL == "-") {
+
+                            }
+                            else {
+                                if (Fn.validaRut($("#RutRepLegal").val())) {
+                                } else {
+                                    document.getElementById("RutRepLegal").className = "validation";
+                                    EmpValida2 = false;
+                                    new PNotify({
+                                        title: 'Atención',
+                                        text: "Rut Rep. Legal inválido",
+                                        icon: 'icofont icofont-info-square',
+                                        type: "error"
+                                    });
+                                }
+                            }
+                        }
+
+
+                        if (EmpValida = true) {
+                            var texto = document.getElementById("Email").value;
+                            if (texto != "") {
+                                var regex = /^[-\w.%+]{1,64}@@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i;
+
+                                if (!regex.test(texto)) {
+                                    EmpValida2 = false;
+                                    document.getElementById("Email").className = "validation";
+                                    new PNotify({
+                                        title: 'Atención',
+                                        text: "Correo inválido",
+                                        icon: 'icofont icofont-info-square',
+                                        type: "error"
+                                    });
+
+                                }
+                            }
+                        }
+
+                        //VALIDACI0N
+                        if (EmpValida2 == true) {
+                            Confirmacion(acc, data);
+                        }
+
+                    }
+                }
+                //SI ES PARA ELIMINAR
+                else {
+                    Confirmacion(acc, data);
+                }
+            }
+            if (man == "CEN") {
+
+                if (acc != "D") {
+                   
+                    EmpValida = new Boolean(true);
+                    EmpValida2 = new Boolean(true);    
+                    var recibidoCen = dat.split("~");
+                    var codCen = recibidoCen[0];
+                    var codEmpCen = recibidoCen[1];
+                    var RutCen = recibidoCen[2];
+                    var razonCen = recibidoCen[3];
+                    var GiroCen = recibidoCen[4];
+                    var DirCen = recibidoCen[5];
+                    var PaiCen = recibidoCen[6];
+                    var RegCen = recibidoCen[7];
+                    var ComCen = recibidoCen[8];
+
+                    var PaiCen = PaiCen + "nulo";
+                    var PaiCen = PaiCen.trim();
+                    var RegCen = RegCen + "nulo";
+                    var RegCen = RegCen.trim();
+                    var ComCen = ComCen + "nulo";
+                    var ComCen = ComCen.trim();
+
+                    if (codEmpCen == "") {
+                        document.getElementById("ddlEmpresa").className = "validation";
+                        EmpValida = false;
+                    }
+                    if (RutCen == "") {
+                        document.getElementById("rutCentro").className = "validation";
+                        EmpValida = false;
+                    }
+                    if (razonCen == "") {
+                        document.getElementById("razonSocialCentro").className = "validation";
+                        EmpValida = false;
+                    }
+                    if (GiroCen == "") {
+                        document.getElementById("GiroCentro").className = "validation";
+                        EmpValida = false;
+                    }
+                    if (DirCen == "") {
+                        document.getElementById("DireccionCentro").className = "validation";
+                        EmpValida = false;
+                    }
+                    if (PaiCen == "nulo") {
+                        document.getElementById("ddlPaisCentro").className = "validation";
+                        EmpValida = false;
+                    }
+                    if (RegCen == "nulo") {
+                        document.getElementById("ddlRegionCentro").className = "validation";
+                        EmpValida = false;
+                    }
+                    if (ComCen == "nulo") {
+                        document.getElementById("ddlComunaCentro").className = "validation";
+                        EmpValida = false;
+                    }
+
+                    if (EmpValida == false) {
+                        new PNotify({
+                            title: 'Atención',
+                            text: "Debe completar campos requeridos (*)",
+                            icon: 'icofont icofont-info-square',
+                            type: "error"
+                        });
+
+                    }
+
+                    //SI ESTAN TODOS LOS DATOS OBLIGATORIOS
+                    else {
+
+                        EmpValida2 = new Boolean(true);
+
+                        if (Fn.validaRut($("#rutCentro").val())) {
+                        } else {
+                            document.getElementById("rutCentro").className = "validation";
+                            EmpValida2 = false;
+                            new PNotify({
+                                title: 'Atención',
+                                text: "Rut centro inválido",
+                                icon: 'icofont icofont-info-square',
+                                type: "error"
+                            });
+                        }
+
+                        if (EmpValida2 == true) {
+
+                            var rutContacto = document.getElementById("RutContacto").value;
+
+                            if (rutContacto == "" || rutContacto == "-") {
+
+                            }
+                            else {
+                                if (Fn.validaRut($("#RutContacto").val())) {
+                                } else {
+                                    document.getElementById("RutContacto").className = "validation";
+                                    EmpValida2 = false;
+                                    new PNotify({
+                                        title: 'Atención',
+                                        text: "Rut contacto inválido",
+                                        icon: 'icofont icofont-info-square',
+                                        type: "error"
+                                    });
+                                }
+                            }
+                        }
+
+
+                        if (EmpValida = true) {
+                            var texto = document.getElementById("EmailCentro").value;
+                            if (texto != "") {
+                                var regex = /^[-\w.%+]{1,64}@@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i;
+
+                                if (!regex.test(texto)) {
+                                    EmpValida2 = false;
+                                    document.getElementById("EmailCentro").className = "validation";
+                                    new PNotify({
+                                        title: 'Atención',
+                                        text: "Correo inválido",
+                                        icon: 'icofont icofont-info-square',
+                                        type: "error"
+                                    });
+
+                                }
+                            }
+                        }
+
+                        //VALIDACI0N
+                        if (EmpValida2 == true) {
+                            Confirmacion(acc, data);
+                        }
+
+                    }
+                }
+                //SI ES PARA ELIMINAR
+                else {
+                    Confirmacion(acc, data);
+                }
+            }
         }
 
         function Confirmacion(acc, data) {
+
             if (acc == "D") {
                 var notice = new PNotify({
                     title: 'Confirmación',
@@ -567,12 +1652,12 @@
                     }
                 })
 
-                / Si es positivo
+                // Si es positivo
                 notice.get().on('pnotify.confirm', function () {
                     Save2(data);
                 })
 
-                / Si es negativo
+                // Si es negativo
                 notice.get().on('pnotify.cancel', function () {
 
                 });
@@ -598,7 +1683,6 @@
                 var nom = datosInt[1];
                 a = data;
             }
-
             if (man == "ESP") {
                 NombreModal = "#ModEspecie"
                 var datosInt = dat.split("~");
@@ -613,6 +1697,31 @@
                 var nom = datosInt[1];
                 a = data;
             }
+            if (man == "RAZ") {
+                NombreModal = "#ModRaza"
+                var datosInt = dat.split("~");
+                var cod = datosInt[0];
+                var nom = datosInt[1];
+                var codRaz = datosInt[2];
+                a = data;
+            }
+            if (man == "EMP") {
+                NombreModal = "#ModEmpresa"
+                var datosInt = dat.split("~");
+                var cod = datosInt[0];
+                var nom = datosInt[1];
+                var codEmp = datosInt[2];
+                a = data;
+            }
+            if (man == "CEN") {
+                NombreModal = "#ModCentro"
+                var datosInt = dat.split("~");
+                var cod = datosInt[0];
+                var nom = datosInt[1];
+                var codCen = datosInt[2];
+                a = data;
+            }
+
 
             $.ajax({
 
@@ -623,27 +1732,72 @@
                     var dRespuesta = response.split("|");
                     var codigoRespuesta = dRespuesta[0];
                     var mensajeRespuesta = dRespuesta[1];
+                    var CodigoMantenedor = dRespuesta[2];
+
+
+                    var Arraycad = dat.split("~");
+                    var dato1 = Arraycad[0];
+
+                    dat = dat.replace(dato1, CodigoMantenedor);
+                    cod = CodigoMantenedor;
+
+                    alert(response);
+                    alert(dat);
 
                     if (codigoRespuesta == "0") {
 
                         tipoNotify = "info";
                         $(NombreModal).modal('hide')
 
-                        if (acc == "D") {
+                        if (acc == "D") {                           
                             var drow = $('#simpletable').DataTable();
                             drow.row('#' + cod).remove().draw(!1);
                         }
                         if (acc == "I") {
-                            var drow = $('#simpletable').DataTable();
 
-                            drow.row.add([cod, nom, '<button class="btn22" onclick="OpenModMan(\'' + man + '|U|' + dat + '\')" ><i class=\"icofont icofont-ui-edit\"></i> Modificar</button>&nbsp;<button class="btn33" onclick="Save(\'' + man + '|D|' + dat + '\')" ><i class=\"icofont icofont-ui-delete\"></i> Eliminar</button>']).node().id = cod;
-                            drow.draw();
+                            var drow = $('#simpletable').DataTable();
+                            if (man == "RAZ") {
+                                drow.row.add([nom, dRespuesta[4], '<button class="btn22" onclick="OpenModMan(\'' + man + '|U|' + dat + '\')" ><i class=\"icofont icofont-ui-edit\"></i> Modificar</button>&nbsp;<button class="btn33" onclick="Save(\'' + man + '|D|' + dat + '\')" ><i class=\"icofont icofont-ui-delete\"></i> Eliminar</button>']).node().id = cod;
+                                drow.draw();
+                            }
+                            else if (man == "EMP") {
+                                drow.row.add([dRespuesta[3], dRespuesta[4], dRespuesta[5], dRespuesta[6], '<button class="btn11" onclick="OpenModMan(\'' + man + '|V|' + dat + '\')" ><i class=\"icofont icofont-eye\"></i> Detalle</button>&nbsp;<button class="btn22" onclick="OpenModMan(\'' + man + '|U|' + dat + '\')" ><i class=\"icofont icofont-ui-edit\"></i> Modificar</button>&nbsp;<button class="btn33" onclick="Save(\'' + man + '|D|' + dat + '\')" ><i class=\"icofont icofont-ui-delete\"></i> Eliminar</button>']).node().id = cod;
+                                drow.draw();
+                            }
+                            else if (man == "CEN") {
+                                var respCen = dat.split("~")
+                                drow.row.add([respCen[2], respCen[3], respCen[4], respCen[5], '<button class="btn11" onclick="OpenModMan(\'' + man + '|V|' + dat + '\')" ><i class=\"icofont icofont-eye\"></i> Detalle</button>&nbsp;<button class="btn22" onclick="OpenModMan(\'' + man + '|U|' + dat + '\')" ><i class=\"icofont icofont-ui-edit\"></i> Modificar</button>&nbsp;<button class="btn33" onclick="Save(\'' + man + '|D|' + dat + '\')" ><i class=\"icofont icofont-ui-delete\"></i> Eliminar</button>']).node().id = cod;
+                                drow.draw();
+                            }
+                            else {
+                                drow.row.add([nom, '<button class="btn22" onclick="OpenModMan(\'' + man + '|U|' + dat + '\')" ><i class=\"icofont icofont-ui-edit\"></i> Modificar</button>&nbsp;<button class="btn33" onclick="Save(\'' + man + '|D|' + dat + '\')" ><i class=\"icofont icofont-ui-delete\"></i> Eliminar</button>']).node().id = cod;
+                                drow.draw();
+                            }
                         }
                         if (acc == "U") {
                             var drow = $('#simpletable').DataTable();
-                            drow.row('#' + cod).remove().draw(!1);
-                            drow.row.add([cod, nom, '<button class="btn22" onclick="OpenModMan(\'' + man + '|U|' + dat + '\')" ><i class=\"icofont icofont-ui-edit\"></i> Modificar</button>&nbsp;<button class="btn33" onclick="Save(\'' + man + '|D|' + dat + '\')" ><i class=\"icofont icofont-ui-delete\"></i> Eliminar</button>']).node().id = cod;
-                            drow.draw();
+
+                            if (man == "RAZ") {
+
+                                drow.row('#' + cod).remove().draw(!1);
+                                drow.row.add([nom, dRespuesta[4], '<button class="btn22" onclick="OpenModMan(\'' + man + '|U|' + dat + '\')" ><i class=\"icofont icofont-ui-edit\"></i> Modificar</button>&nbsp;<button class="btn33" onclick="Save(\'' + man + '|D|' + dat + '\')" ><i class=\"icofont icofont-ui-delete\"></i> Eliminar</button>']).node().id = cod;
+                                drow.draw();
+                            }
+                            else if (man == "EMP") {
+                                drow.row('#' + cod).remove().draw(!1);
+                                drow.row.add([dRespuesta[3], dRespuesta[4], dRespuesta[5], dRespuesta[6], '<button class="btn11" onclick="OpenModMan(\'' + man + '|V|' + dat + '\')" ><i class=\"icofont icofont-eye\"></i> Detalle</button>&nbsp;<button class="btn22" onclick="OpenModMan(\'' + man + '|U|' + dat + '\')" ><i class=\"icofont icofont-ui-edit\"></i> Modificar</button>&nbsp;<button class="btn33" onclick="Save(\'' + man + '|D|' + dat + '\')" ><i class=\"icofont icofont-ui-delete\"></i> Eliminar</button>']).node().id = cod;
+                                drow.draw();
+                            }
+                            else if (man == "CEN") {
+                                drow.row('#' + cod).remove().draw(!1);
+                                drow.row.add([respCen[2], respCen[3], respCen[4], respCen[5], '<button class="btn11" onclick="OpenModMan(\'' + man + '|V|' + dat + '\')" ><i class=\"icofont icofont-eye\"></i> Detalle</button>&nbsp;<button class="btn22" onclick="OpenModMan(\'' + man + '|U|' + dat + '\')" ><i class=\"icofont icofont-ui-edit\"></i> Modificar</button>&nbsp;<button class="btn33" onclick="Save(\'' + man + '|D|' + dat + '\')" ><i class=\"icofont icofont-ui-delete\"></i> Eliminar</button>']).node().id = cod;
+                                drow.draw();
+                            }
+                            else {
+                                drow.row('#' + cod).remove().draw(!1);
+                                drow.row.add([nom, '<button class="btn22" onclick="OpenModMan(\'' + man + '|U|' + dat + '\')" ><i class=\"icofont icofont-ui-edit\"></i> Modificar</button>&nbsp;<button class="btn33" onclick="Save(\'' + man + '|D|' + dat + '\')" ><i class=\"icofont icofont-ui-delete\"></i> Eliminar</button>']).node().id = cod;
+                                drow.draw();
+                            }
                         }
                     }
                     else {
@@ -665,26 +1819,224 @@
         }
 
     </script>
+    <!-- TOOLTIP-->
     <script>
         $(function () {
             $('[data-toggle="tooltip"]').tooltip()
         })
     </script>
+    <!-- SOLO NUMEROS Y LETRAS-->
     <script>
-        function check(e) {
+        function check(e, controlt) {
+
+            var hola = controlt;
+
+
+            //document.getElementById(hola).style.background = "#555555";
+            document.getElementById(hola).className = "form-control";
+
             tecla = (document.all) ? e.keyCode : e.which;
 
-            /Tecla de retroceso para borrar, siempre la permite
+            //Tecla de retroceso para borrar, siempre la permite
             if (tecla == 8) {
                 return true;
             }
 
-            / Patron de entrada, en este caso solo acepta numeros y letras
-            patron = /[A-Za-z0-9]/;
+            // Patron de entrada, en este caso solo acepta numeros y letras
+            patron = /[A-Za-z0-9-áéíóú--]/;
             tecla_final = String.fromCharCode(tecla);
             return patron.test(tecla_final);
         }
     </script>
+    <!-- GET REGION-->
+    <script type="text/javascript">
+
+        function GetRegion(pai_Codigo, Tipo) {           
+            params = "pai_Codigo=" + pai_Codigo;
+         
+            $.ajax
+                ({
+                    data: params,
+                    cache: true,
+                    type: 'Post',
+                    typeData: "json",
+                    url: "GetRegion",
+                    success: function (data) {
+                        console.log(data);
+                       
+                        if (data.length > 0) {
+                      
+                                document.getElementById("ddlPais" + Tipo).className = "form-control";
+                                document.getElementById("ddlRegion" + Tipo).innerHTML = "<option value='' >Seleccione región</option>";
+                            for (var i = 0; i < data.length; i++) {
+                                document.getElementById("ddlRegion" + Tipo).innerHTML += "<option value='" + data[i].reg_Codigo + "'>" + data[i].reg_Nombre + "</option>";
+                            }                          
+                           
+                        } else {
+                      
+                            
+                            $("[id*=" + 'ddlRegion' + Tipo + "]").empty();
+                            document.getElementById("ddlRegion" + Tipo).innerHTML = "<option value='' >Seleccione región</option>";
+                            $("[id*=" + 'ddlComuna' + Tipo + "]").empty();
+                            //$("[id*='ddlComuna']").empty();
+                            document.getElementById("ddlComuna" + Tipo).innerHTML = "<option value=''>Seleccione comuna</option>";
+                            
+                        }
+                    }
+                });
+
+        }
+    </script>
+    <!-- GET COMUNA-->
+    <script type="text/javascript">
+
+        function GetComuna(reg_Codigo,Tipo) {
+            params = "reg_Codigo=" + reg_Codigo;
+            
+            $.ajax
+                ({
+                    data: params,
+                    cache: true,
+                    type: 'Post',
+                    typeData: "json",
+                    url: "GetComuna",
+                    success: function (data) {
+                        console.log(data);
+                        if (data.length > 0) {                            
+                                document.getElementById("ddlRegion" + Tipo).className = "form-control";
+                                document.getElementById("ddlComuna" + Tipo).innerHTML = "<option value='' >Seleccione comuna</option>";
+                                for (var i = 0; i < data.length; i++) {
+                                    document.getElementById("ddlComuna" + Tipo).innerHTML += "<option value='" + data[i].com_Codigo + "'>" + data[i].com_Nombre + "</option>";
+                                }                            
+                        }
+                        else {
+                            
+                                $("[id*="+'ddlComuna'+Tipo + "]").empty();
+                            document.getElementById("ddlComuna" + Tipo).innerHTML = "<option value='' >Seleccione comuna</option>";                            
+                        }
+                    }
+                });
+
+        }
+
+    </script>
+    <!-- GET ONCHANGE-->
+    <script>
+        function ddlEsp(dato) {
+            document.getElementById("ddlraza").className = "form-control";
+        }
+        function ddlCom(dato) {
+            document.getElementById(dato).className = "form-control";
+        }
+        function ddlEmpresa(dato) {
+           
+
+            if (dato != "") {
+                document.getElementById("ddlEmpresa").className = "form-control";
+                params = "emp_Codigo=" + dato;
+                $.ajax
+                    ({
+                        data: params,
+                        cache: true,
+                        type: 'Post',
+                        typeData: "json",
+                        url: "GetDatosEmpresa",
+                        success: function (data) {
+                            console.log(data);
+                            if (data.length > 0) {
+                                var resEmpresa = data.split("|");
+                                $('#rutCentro').val(resEmpresa[0]);
+                                $('#razonSocialCentro').val(resEmpresa[1]);
+                                $('#GiroCentro').val(resEmpresa[2]);
+                                $('#DireccionCentro').val(resEmpresa[3]);
+                                $('#ddlPais').val(resEmpresa[4]);
+                                $('#ddlRegion').val(resEmpresa[5]);
+                                $('#ddlComuna').val(resEmpresa[6]);
+                                $('#TelefonoCentro').val(resEmpresa[7]);
+                                $('#EmailCentro').val(resEmpresa[8]);
+                                $('#RutContacto').val(resEmpresa[9]);
+                                $('#NomContacto').val(resEmpresa[10]);
+                            }
+
+                        }
+                    });
+            }
+            else {
+                $('#rutCentro').val("");
+                $('#razonSocialCentro').val("");
+                $('#GiroCentro').val("");
+                $('#DireccionCentro').val("");
+                $('#ddlPais').val("");
+                $('#ddlRegion').val("");
+                $('#ddlComuna').val("");
+                $('#TelefonoCentro').val("");
+                $('#EmailCentro').val("");
+                $('#RutContacto').val("");
+                $('#NomContacto').val("");
+            }
+        }
+        function Estado(dato) {            
+            var valor = dato;
+            $('#estadoCentro').val(valor);                  
+        }
+    </script>
+    <!-- VALIDA RUT-->
+    <script>
+        function checkRut(rut) {
+            var valor = rut.value.replace('.', '');            
+            valor = valor.replace('-', '');
+            cuerpo = valor.slice(0, -1);
+            dv = valor.slice(-1).toUpperCase();
+            rut.value = cuerpo + '-' + dv
+            if (cuerpo.length < 7) { rut.setCustomValidity("RUT Incompleto"); return false; }
+            suma = 0;
+            multiplo = 2;
+
+            for (i = 1; i <= cuerpo.length; i++) {
+                index = multiplo * valor.charAt(cuerpo.length - i);
+                suma = suma + index;
+                if (multiplo < 7) { multiplo = multiplo + 1; } else { multiplo = 2; }
+            }
+
+            dvEsperado = 11 - (suma % 11);
+            dv = (dv == 'K') ? 10 : dv;
+            dv = (dv == 0) ? 11 : dv;
+            if (dvEsperado != dv) { rut.setCustomValidity("RUT Inválido"); return false; }
+            rut.setCustomValidity('');
+        }
+    </script>
+    <script>
+        var Fn = {
+            validaRut: function (rutCompleto) {
+                rutCompleto = rutCompleto.replace("‐", "-");
+                if (!/^[0-9]+[-|‐]{1}[0-9kK]{1}$/.test(rutCompleto))
+                    return false;
+                var tmp = rutCompleto.split('-');
+                var digv = tmp[1];
+                var rut = tmp[0];
+                if (digv == 'K') digv = 'k';
+
+                return (Fn.dv(rut) == digv);
+            },
+            dv: function (T) {
+                var M = 0, S = 1;
+                for (; T; T = Math.floor(T / 10))
+                    S = (S + T % 10 * (9 - M++ % 6)) % 11;
+                return S ? S - 1 : 'k';
+            }
+        }
+
+
+        $("#btnvalida").click(function () {
+            if (Fn.validaRut($("#txt_rut").val())) {
+                $("#msgerror").html("El rut ingresado es válido :D");
+            } else {
+                $("#msgerror").html("El Rut no es válido :'( ");
+            }
+        });
+    </script>
+
+
 </body>
 
 <script type="text/javascript" src="~/Content/bower_components/jquery/js/jquery.min.js"></script>
