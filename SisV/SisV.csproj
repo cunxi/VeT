@@ -301,6 +301,7 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -417,6 +418,10 @@
     <Content Include="Views\Menu\Inicio.cshtml" />
     <Content Include="Views\Menu\Paises.cshtml" />
     <Content Include="Views\Menu\RegistroPaso2.cshtml" />
+    <Content Include="Views\Dashboard\Principal.cshtml" />
+    <Content Include="Views\Menu\Busqueda_Sidebar.cshtml" />
+    <Content Include="Views\Dashboard\Index.cshtml" />
+    <Content Include="Views\Dashboard\_Principal.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

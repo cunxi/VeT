@@ -3,15 +3,15 @@
 @{
     ViewBag.Title = "Registro";
 
-    string Nombre = Model.Tables[0].Rows[0]["cli_Nombres"].ToString();
-    string Apellidos = Model.Tables[0].Rows[0]["cli_Apellido_P"].ToString() + " " + Model.Tables[0].Rows[0]["cli_Apellido_M"].ToString();
-    string Email = Model.Tables[0].Rows[0]["cli_Email"].ToString();
-    string log_ID_Login = Model.Tables[0].Rows[0]["log_ID_Login"].ToString();
+    string Nombre =         Model.Tables[0].Rows[0]["cli_Nombres"].ToString();
+    string Apellidos =      Model.Tables[0].Rows[0]["cli_Apellido_P"].ToString() + " " + Model.Tables[0].Rows[0]["cli_Apellido_M"].ToString();
+    string Email =          Model.Tables[0].Rows[0]["cli_Email"].ToString();
+    string log_ID_Login =   Model.Tables[0].Rows[0]["log_ID_Login"].ToString();
     string cli_ID_Cliente = Model.Tables[0].Rows[0]["cli_ID_Cliente"].ToString();
 
 }
 
-<form action="@Url.Action("RegistroPaso2","Menu")" method="post" enctype="multipart/form-data">
+<form action="@Url.Action("RegistroFinal","Menu")" method="post" enctype="multipart/form-data">
     <div class="row margin-bottom-10 margin-top-10 margin-left-20 margin-right-20">
         <!-- Profile -->
         <div class="col-lg-3 col-md-3 col-3 col-sm-12">
@@ -49,7 +49,7 @@
             <div class="my-profile">
 
                 <label>Rut</label>
-                <input value="" placeholder="123456789-K" type="text" name="Identificador" required="">
+                <input value="" placeholder="123456789-K" class="input_rut" type="text" name="Identificador" oninput = "checkRut(this)" required="">
 
                 <label>Dirección </label>
                 <input value="" type="text" name="cli_Direccion" required="">
@@ -57,6 +57,8 @@
                 <label>Teléfono</label>
                 <input value="" type="text" name="cli_Telefono" required="">
 
+                <label>Usuario (Inicio de Sesión)</label>
+                <input value="" type="text" name="log_Usuario" onchange="GetUsuario(this)" required="" maxlength="20" minlength="8">                
             </div>
         </div>
 
@@ -93,8 +95,82 @@
 
             });
 
+
+            $('.input_rut').rut();       
+
         });
 
+        function checkRut(rut) {
+            // Despejar Puntos
+            var valor = rut.value.replace('.', '');
+            // Despejar Guión
+            valor = valor.replace('-', '');
 
+            // Aislar Cuerpo y Dígito Verificador
+            cuerpo = valor.slice(0, -1);
+            dv = valor.slice(-1).toUpperCase();
+
+            // Formatear RUN
+            rut.value = cuerpo + '-' + dv
+
+            // Si no cumple con el mínimo ej. (n.nnn.nnn)
+            if (cuerpo.length < 7) { rut.setCustomValidity("RUT Incompleto"); return false; }
+
+            // Calcular Dígito Verificador
+            suma = 0;
+            multiplo = 2;
+
+            // Para cada dígito del Cuerpo
+            for (i = 1; i <= cuerpo.length; i++) {
+
+                // Obtener su Producto con el Múltiplo Correspondiente
+                index = multiplo * valor.charAt(cuerpo.length - i);
+
+                // Sumar al Contador General
+                suma = suma + index;
+
+                // Consolidar Múltiplo dentro del rango [2,7]
+                if (multiplo < 7) { multiplo = multiplo + 1; } else { multiplo = 2; }
+
+            }
+
+            // Calcular Dígito Verificador en base al Módulo 11
+            dvEsperado = 11 - (suma % 11);
+
+            // Casos Especiales (0 y K)
+            dv = (dv == 'K') ? 10 : dv;
+            dv = (dv == 0) ? 11 : dv;
+
+            // Validar que el Cuerpo coincide con su Dígito Verificador
+            if (dvEsperado != dv) { rut.setCustomValidity("RUT Inválido"); return false; }
+
+            // Si todo sale bien, eliminar errores (decretar que es válido)
+            rut.setCustomValidity('');
+        }
+
+        function GetUsuario(Usuario) {
+
+            var valor = Usuario.value;
+            params = "Usuario=" + valor;
+            $.ajax
+                ({
+                    data: params,
+                    cache: true,
+                    type: 'Post',
+                    typeData: "json",
+                    url: 'GetUsuario',
+                    success: function (data) {
+                        console.log(data);
+                        if (data.Codigo == 0) {
+                            Usuario.setCustomValidity("Usuario Registrado, Favor Eliga Otro Usuario");
+                            return false;
+                        } else {
+                            Usuario.setCustomValidity('');
+                            return true;
+                        } 
+                    }
+                });
+
+        }
     </script>
 }

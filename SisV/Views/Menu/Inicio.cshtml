@@ -3,13 +3,10 @@
 
 @{
     /**/
-
-    
-
     ViewBag.Title = "Landing";
 }
 
-<div class="main-search-container dark-overlay" data-background-image="https://listeo.pro/wp-content/uploads/2019/02/listeo_background-1.jpg">
+<div class="main-search-container dark-overlay" data-background-image="/Content/Images/listeo_background-1.jpg">
 
     <div class="main-search-inner">
 
@@ -22,33 +19,34 @@
                         <span class="typed-words"></span>
                     </h2>
                     <h4>Busca éstos y muchos más servicios disponibles</h4>
+                    <form action="@Url.Action("Busqueda","Menu")" method="post" autocomplete="off">
+                        <div class="main-search-input">
 
-                    <div class="main-search-input">
-
-                        <div class="main-search-input-item">
-                            <input type="text" placeholder="¿Qué necesitas?" value="" />
-                        </div>
-
-                        <div class="main-search-input-item location">
-                            <div id="autocomplete-container">
-                                <input id="autocomplete-input" type="text" placeholder="Ubicación">
+                            <div class="main-search-input-item">
+                                <input type="text" placeholder="¿Qué necesitas?" value="" name="Texto" onkeypress="return pulsar(event)" required />
                             </div>
-                            <a href="#"><i class="fa fa-map-marker"></i></a>
+
+                            <div class="main-search-input-item location">
+                                <div id="autocomplete-container">
+                                    <input id="autocomplete-input" type="text" placeholder="Ubicación" name="Ubicacion" onkeypress="return pulsar(event)" required>
+                                </div>
+                                <a href="#"><i class="fa fa-map-marker"></i></a>
+                            </div>
+
+                            <div class="main-search-input-item">
+                                <select data-placeholder="Categorias" class="chosen-select" name="Categoria">
+                                    <option value="ALL">Todas las categorias</option>
+                                    @foreach (DataRow row in Model.Tables[0].Rows)
+                                    {
+                                        <option value="@row["tpo_ID_TipoGeneral"]">@row["tpo_Nombre"]</option>
+                                    }
+                                </select>
+                            </div>
+
+                            <button type="submit" class="button">Buscar</button>
+
                         </div>
-
-                        <div class="main-search-input-item">
-                            <select data-placeholder="Categorias" class="chosen-select">
-                                <option>Todas las categorias</option>
-                                @foreach (DataRow row in Model.Tables[0].Rows)
-                                {
-                                    <option value="@row["tpo_ID_TipoGeneral"]">@row["tpo_Nombre"]</option>
-                                }
-                            </select>
-                        </div>
-
-                        <button class="button" onclick="window.location.href='/Menu/Busqueda'">Buscar</button>
-
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -144,7 +142,6 @@
 
     <div class="container">
         <div class="row">
-
             <div class="col-md-12">
                 <h3 class="headline centered margin-bottom-45">
                     Últimas clínicas
@@ -181,3 +178,10 @@
 
 
 </section>
+
+<script type="text/javascript">
+    function pulsar(e) {
+        tecla = (document.all) ? e.keyCode : e.which;
+        return (tecla != 13);
+    }
+</script>

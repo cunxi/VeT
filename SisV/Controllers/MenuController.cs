@@ -25,8 +25,28 @@ namespace SisV.Controllers
 
         public ActionResult Busqueda()
         {
+            return RedirectToAction("Inicio","Menu");
+        }
+
+        [HttpPost]
+        public ActionResult Busqueda(string Texto, string Ubicacion, string Categoria)
+        {
+            ViewBag.Cant = 0;
+            DataSet ds = new DataSet();
+            string Mensaje = "";
+            crud.Busqueda_Centro(Texto,Ubicacion,Categoria, ref ds, ref Mensaje);
+
+            if (ds.Tables.Count > 0) { ViewBag.Cant = ds.Tables[0].Rows.Count; }
+
+            return View(ds);
+        }
+
+        public ActionResult Busqueda_Sidebar()
+        {
+            ViewBag.Cant = 0;
             return View();
         }
+
         public ActionResult Centro(string ID_Centro)
         {
             DataSet ds = new DataSet();
@@ -55,40 +75,39 @@ namespace SisV.Controllers
 
         public ActionResult RegistroPaso2(string Nombre, string Apellidos, string Email, string Contrasena)
         {
-            return View();
-            //try
-            //{
-            //    DataSet ds = new DataSet();
-            //    string mensaje = "";
-            //    string[] apelliidos_ = Apellidos.Split(' ');
-            //    string apellido_P = apelliidos_[0].ToString();
-            //    string apellido_M = "";
-            //    if (apelliidos_.Length > 1) { apellido_M = apelliidos_[1].ToString(); }
-            //    crud.RegistrarCliente(Nombre, apellido_P, apellido_M, Email, Contrasena, ref ds, ref mensaje);
+            try
+            {
+                DataSet ds = new DataSet();
+                string mensaje = "";
+                string[] apelliidos_ = Apellidos.Split(' ');
+                string apellido_P = apelliidos_[0].ToString();
+                string apellido_M = "";
+                if (apelliidos_.Length > 1) { apellido_M = apelliidos_[1].ToString(); }
+                crud.RegistrarCliente(Nombre, apellido_P, apellido_M, Email, Contrasena, ref ds, ref mensaje);
 
-            //    Models.Result result = new Models.Result();
-            //    if (ds.Tables.Count > 0 && ds.Tables[0].Columns.Count > 2)
-            //    {
-            //        result.Codigo = 0;
-            //        result.Mensaje = "Registro Exitoso";
-            //        return View(ds);
-            //    }
-            //    else
-            //    {
-            //        result.Codigo = Convert.ToInt32(ds.Tables[0].Rows[0]["Codigo"].ToString());
-            //        result.Mensaje = ds.Tables[0].Rows[0]["Resultado"].ToString();
-            //        return RedirectToAction("Inicio", "Menu");
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    return RedirectToAction("Inicio", "Menu");
-            //}
+                Models.Result result = new Models.Result();
+                if (ds.Tables.Count > 0 && ds.Tables[0].Columns.Count > 2)
+                {
+                    result.Codigo = 0;
+                    result.Mensaje = "Registro Exitoso";
+                    return View(ds);
+                }
+                else
+                {
+                    result.Codigo = Convert.ToInt32(ds.Tables[0].Rows[0]["Codigo"].ToString());
+                    result.Mensaje = ds.Tables[0].Rows[0]["Resultado"].ToString();
+                    return RedirectToAction("Inicio", "Menu");
+                }
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Inicio", "Menu");
+            }
 
         }
 
         [HttpPost]
-        public ActionResult RegistroPaso2(HttpPostedFileBase log_Imagen, string cli_ID_Cliente, string log_ID_Login,string Identificador, string cli_Direccion, string cli_Telefono)
+        public ActionResult RegistroFinal(HttpPostedFileBase log_Imagen, string cli_ID_Cliente, string log_ID_Login,string Identificador, string cli_Direccion, string cli_Telefono, string log_Usuario)
         {
             DataSet ds_Imegn = new DataSet();
             DataSet ds_Cliente = new DataSet();
@@ -116,7 +135,8 @@ namespace SisV.Controllers
                     log_Imagen.SaveAs(srcImagen);
 
                 }
-                crud.Actualizar_Foto(log_ID_Login, "", ref ds_Imegn,ref Mensaje_Imagen);
+                crud.Actualizar_Foto(log_ID_Login, "/Content/ImagesPerfil/" + cli_ID_Cliente + ".png", ref ds_Imegn,ref Mensaje_Imagen);
+                srcImagen = "/Content/ImagesPerfil/" + cli_ID_Cliente + ".png";
             }
             else
             {
@@ -126,14 +146,15 @@ namespace SisV.Controllers
             string[] dividerRut = Identificador.Split('-');
             string Rut = dividerRut[0].Replace(".", "");
             string Dv = dividerRut[1];
-            crud.RegistrarCliente_Paso2(cli_ID_Cliente, Rut, Dv, cli_Telefono, cli_Direccion, ref ds_Cliente,ref Mensaje_Cliente);
+            
+            crud.RegistrarCliente_Paso2(cli_ID_Cliente, Rut, Dv, cli_Telefono, cli_Direccion,log_Usuario, ref ds_Cliente,ref Mensaje_Cliente);
 
             Models.Usuario usuario = new Models.Usuario
             {
                 ID = ds_Cliente.Tables[0].Rows[0]["cli_ID_Cliente"].ToString(),
                 Nombres = ds_Cliente.Tables[0].Rows[0]["cli_Nombres"].ToString(),
-                Apellidos = ds_Cliente.Tables[0].Rows[0]["cli_Apellidos"].ToString(),
-                Identificador = ds_Cliente.Tables[0].Rows[0]["cli_Identificador"].ToString(),
+                Apellidos = ds_Cliente.Tables[0].Rows[0]["cli_Apellido_P"].ToString() + " " + ds_Cliente.Tables[0].Rows[0]["cli_Apellido_P"].ToString(),
+                Identificador = ds_Cliente.Tables[0].Rows[0]["cli_Rut"].ToString() + "-" + ds_Cliente.Tables[0].Rows[0]["cli_Dv"].ToString(),
                 Telefono = ds_Cliente.Tables[0].Rows[0]["cli_Telefono"].ToString(),
                 Direccion = ds_Cliente.Tables[0].Rows[0]["cli_Direccion"].ToString(),
                 Imagen = srcImagen,
@@ -172,23 +193,26 @@ namespace SisV.Controllers
             Models.Result result = new Models.Result();
             if (ds.Tables.Count > 0 && ds.Tables[0].Columns.Count > 2)
             {
-                FormsAuthentication.SetAuthCookie(ds.Tables[0].Rows[0]["cli_ID_Cliente"].ToString(), true);
+                if (Convert.ToInt32(ds.Tables[0].Rows[0]["cli_Level"].ToString()) == 2) {
+                    FormsAuthentication.SetAuthCookie(ds.Tables[0].Rows[0]["cli_ID_Cliente"].ToString(), true);
 
-                Models.Usuario usuario = new Models.Usuario
-                {
-                    ID = ds.Tables[0].Rows[0]["cli_ID_Cliente"].ToString(),
-                    Nombres = ds.Tables[0].Rows[0]["cli_Nombres"].ToString(),
-                    Apellidos = ds.Tables[0].Rows[0]["cli_Apellidos"].ToString(),
-                    Identificador = ds.Tables[0].Rows[0]["cli_Identificador"].ToString(),
-                    Telefono = ds.Tables[0].Rows[0]["cli_Telefono"].ToString(),
-                    Direccion = ds.Tables[0].Rows[0]["cli_Direccion"].ToString(),
-                    Imagen = ds.Tables[0].Rows[0]["log_Imagen"].ToString(),
-                    log_ID_Login = ds.Tables[0].Rows[0]["log_ID_Login"].ToString(),
-                    Level = Convert.ToInt32(ds.Tables[0].Rows[0]["cli_Level"].ToString())
-                };
-                Utils.GuardarUsuarioSesion(usuario);
-                result.Codigo = 0;
-                result.Mensaje = "Usuario Exitoso";
+                    Models.Usuario usuario = new Models.Usuario
+                    {
+                        ID = ds.Tables[0].Rows[0]["cli_ID_Cliente"].ToString(),
+                        Nombres = ds.Tables[0].Rows[0]["cli_Nombres"].ToString(),
+                        Apellidos = ds.Tables[0].Rows[0]["cli_Apellidos"].ToString(),
+                        Identificador = ds.Tables[0].Rows[0]["cli_Identificador"].ToString(),
+                        Telefono = ds.Tables[0].Rows[0]["cli_Telefono"].ToString(),
+                        Correo = ds.Tables[0].Rows[0]["cli_Email"].ToString(),
+                        Direccion = ds.Tables[0].Rows[0]["cli_Direccion"].ToString(),
+                        Imagen = ds.Tables[0].Rows[0]["log_Imagen"].ToString(),
+                        log_ID_Login = ds.Tables[0].Rows[0]["log_ID_Login"].ToString(),
+                        Level = Convert.ToInt32(ds.Tables[0].Rows[0]["cli_Level"].ToString())
+                    };
+                    Utils.GuardarUsuarioSesion(usuario);
+                    result.Codigo = 0;
+                    result.Mensaje = "Usuario Exitoso";
+                }
             }
             else
             {
@@ -198,6 +222,18 @@ namespace SisV.Controllers
 
             return Json(result);
 
+        }
+
+        public JsonResult GetUsuario(string Usuario)
+        {
+            DataSet ds = new DataSet();
+            string Mensaje = "";
+            crud.Validar_Usuario(Usuario, ref ds, ref Mensaje);
+
+            Models.Result result = new Models.Result();
+            result.Mensaje = ds.Tables[0].Rows[0]["Resultado"].ToString();
+            result.Codigo = Convert.ToInt32(ds.Tables[0].Rows[0]["Codigo"].ToString());
+            return Json(result);
         }
     }
 }

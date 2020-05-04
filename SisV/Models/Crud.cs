@@ -192,7 +192,7 @@ namespace SisV.Models
 
         #region Registrar Cliente Paso 2     
 
-        public bool RegistrarCliente_Paso2(string ID_Cliente, string Rut, string Dv, string Telefono, string Direccion, ref DataSet ds, ref string sError)
+        public bool RegistrarCliente_Paso2(string ID_Cliente, string Rut, string Dv, string Telefono, string Direccion,string Usuario, ref DataSet ds, ref string sError)
         {
             Cnx.Data.cConexion data;
             Cnx.Data.cParamDictionary param;
@@ -208,7 +208,6 @@ namespace SisV.Models
             string Apellido_P = "";
             string Apellido_M = "";
             string Email = "";
-            string Usuario = "";
             string Password = "";
             string Level = "2";
             try
@@ -255,7 +254,7 @@ namespace SisV.Models
         }
         #endregion
 
-        #region Registrar Cliente Paso 2     
+        #region Actualizar Foto    
 
         public bool Actualizar_Foto(string ID_Login, string log_Imagen, ref DataSet ds, ref string sError)
         {
@@ -278,6 +277,51 @@ namespace SisV.Models
                 paramv = new Cnx.Data.cParam(sDb, sNomsp);
                 paramv.Add("log_Imagen", log_Imagen);
                 paramv.Add("ID_Login", ID_Login);            
+                param.Add(sDic, paramv);
+                if (!data.ExecSP(sNomsp, sDic, param, EoCType.TYPE_TRAN, ref sXmlErr, ref sXmlOutput))
+                    throw new Exception(sXmlErr);
+
+                CargaData = new System.IO.StringReader(sXmlOutput);
+                ds = new System.Data.DataSet();
+                ds.ReadXml(CargaData);
+                breturn = true;
+            }
+            catch (Exception ex)
+            {
+                sError = ex.Message;
+            }
+            finally
+            {
+                data = null;
+                param = null;
+
+            }
+            return breturn;
+        }
+        #endregion
+
+        #region Validar Usuario  
+
+        public bool Validar_Usuario(string log_Usuario, ref DataSet ds, ref string sError)
+        {
+            Cnx.Data.cConexion data;
+            Cnx.Data.cParamDictionary param;
+            Cnx.Data.cParam paramv;
+            System.IO.StringReader CargaData;
+            string sNomsp;
+            string sDic;
+            string sXmlErr = "";
+            string sXmlOutput = "";
+            bool breturn = false;
+            try
+            {
+                sNomsp = "SPU_ValidaUsuario";
+                sDic = "Consulta";
+                data = new Cnx.Data.cConexion();
+                data.sCon = sconexion;
+                param = new Cnx.Data.cParamDictionary();
+                paramv = new Cnx.Data.cParam(sDb, sNomsp);
+                paramv.Add("log_Usuario", log_Usuario);
                 param.Add(sDic, paramv);
                 if (!data.ExecSP(sNomsp, sDic, param, EoCType.TYPE_TRAN, ref sXmlErr, ref sXmlOutput))
                     throw new Exception(sXmlErr);
@@ -344,6 +388,53 @@ namespace SisV.Models
             }
             return breturn;
         }
+        #endregion
+
+        #region Busqueda Centro
+
+        public bool Busqueda_Centro(string Texo_Busqueda, string Ubicacion, string Categoria, ref DataSet ds, ref string sError)
+        {
+            Cnx.Data.cConexion data;
+            Cnx.Data.cParamDictionary param;
+            Cnx.Data.cParam paramv;
+            System.IO.StringReader CargaData;
+            string sNomsp;
+            string sDic;
+            string sXmlErr = "";
+            string sXmlOutput = "";
+            bool breturn = false;
+            try
+            {
+                sNomsp = "SPU_Busqueda";
+                sDic = "Consulta";
+                data = new Cnx.Data.cConexion();
+                data.sCon = sconexion;
+                param = new Cnx.Data.cParamDictionary();
+                paramv = new Cnx.Data.cParam(sDb, sNomsp);
+                paramv.Add("Texto_Busqueda", Texo_Busqueda);
+                paramv.Add("Ubicacion", Ubicacion);
+                paramv.Add("Categoria", Categoria);
+                param.Add(sDic, paramv);
+                if (!data.ExecSP(sNomsp, sDic, param, EoCType.TYPE_TRAN, ref sXmlErr, ref sXmlOutput))
+                    throw new Exception(sXmlErr);
+                CargaData = new System.IO.StringReader(sXmlOutput);
+                ds = new System.Data.DataSet();
+                ds.ReadXml(CargaData);
+                breturn = true;
+            }
+            catch (Exception ex)
+            {
+                sError = ex.Message;
+            }
+            finally
+            {
+                data = null;
+                param = null;
+
+            }
+            return breturn;
+        }
+
         #endregion
 
         #region SPU_PAISES REGION COMUNA

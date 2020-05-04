@@ -145,20 +145,22 @@
                             <!-- Food List -->
                             <h4>Servicios Disponibles</h4>
                             <ul>
-                                @foreach (DataRow row in Model.Tables[1].Rows)
+                                @if (Model.Tables.Count > 1)
                                 {
-                                    <li>
-                                        <h5>@row["ser_Nombre_Servicio"]</h5>
-                                        <p>@row["ser_Descripcion"]</p>
-                                        <span>$@row["ser_Valor"]</span>
-                                    </li>
+                                    foreach (DataRow row in Model.Tables[1].Rows)
+                                    {
+                                        <li>
+                                            <h5>@row["ser_Nombre_Servicio"]</h5>
+                                            <p>@row["ser_Descripcion"]</p>
+                                            <span>$@row["ser_Valor"]</span>
+                                        </li>
+                                    }
                                 }
-
                             </ul>
 
                         </div>
                     </div>
-                    @if (Model.Tables[1].Rows.Count > 4)
+                    @if (Model.Tables.Count > 1 && Model.Tables[1].Rows.Count > 4)
                     {<a href="#" class="show-more-button" data-more-title="Ver más" data-less-title="Ver menos"><i class="fa fa-angle-down"></i></a>}
                 </div>
                 <!-- Food Menu / End -->
@@ -449,7 +451,7 @@
                                         <div class="time-slot">
                                             <input type="radio" name="time-slot" id="time-slot-1">
                                             <label for="time-slot-1">
-                                                <strong>8:30 am - 9:00 am</strong>                                               
+                                                <strong>8:30 am - 9:00 am</strong>
                                             </label>
                                         </div>
 
@@ -457,7 +459,7 @@
                                         <div class="time-slot">
                                             <input type="radio" name="time-slot" id="time-slot-2">
                                             <label for="time-slot-2">
-                                                <strong>9:00 am - 9:30 am</strong>                                                
+                                                <strong>9:00 am - 9:30 am</strong>
                                             </label>
                                         </div>
 
@@ -465,7 +467,7 @@
                                         <div class="time-slot">
                                             <input type="radio" name="time-slot" id="time-slot-3">
                                             <label for="time-slot-3">
-                                                <strong>9:30 am - 10:00 am</strong>                                               
+                                                <strong>9:30 am - 10:00 am</strong>
                                             </label>
                                         </div>
 
@@ -473,7 +475,7 @@
                                         <div class="time-slot">
                                             <input type="radio" name="time-slot" id="time-slot-4">
                                             <label for="time-slot-4">
-                                                <strong>10:00 am - 10:30 am</strong>                                               
+                                                <strong>10:00 am - 10:30 am</strong>
                                             </label>
                                         </div>
 
@@ -481,7 +483,7 @@
                                         <div class="time-slot">
                                             <input type="radio" name="time-slot" id="time-slot-5">
                                             <label for="time-slot-5">
-                                                <strong>13:00 pm - 13:30 pm</strong>                                              
+                                                <strong>13:00 pm - 13:30 pm</strong>
                                             </label>
                                         </div>
 
@@ -489,9 +491,9 @@
                                         <div class="time-slot">
                                             <input type="radio" name="time-slot" id="time-slot-6">
                                             <label for="time-slot-6">
-                                                <strong>13:30 pm - 14:00 pm</strong>                                              
+                                                <strong>13:30 pm - 14:00 pm</strong>
                                             </label>
-                                        </div>                                     
+                                        </div>
 
                                     </div>
                                 </div>
