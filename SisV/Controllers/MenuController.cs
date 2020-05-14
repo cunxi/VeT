@@ -166,6 +166,12 @@ namespace SisV.Controllers
             return RedirectToAction("Inicio","Menu");
         }
 
+
+        public ActionResult Promociones()
+        {
+            return View();
+        }
+
         public ActionResult LogOut()
         {
             FormsAuthentication.SignOut();

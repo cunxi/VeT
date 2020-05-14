@@ -422,6 +422,10 @@
     <Content Include="Views\Menu\Busqueda_Sidebar.cshtml" />
     <Content Include="Views\Dashboard\Index.cshtml" />
     <Content Include="Views\Dashboard\_Principal.cshtml" />
+    <Content Include="Views\Menu\Promociones.cshtml" />
+    <Content Include="Views\Dashboard\Perfil.cshtml" />
+    <Content Include="Views\Dashboard\Documentos.cshtml" />
+    <Content Include="Views\Dashboard\MisOpiniones.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -14,6 +14,22 @@ namespace SisV.Controllers
             return View();
         }
 
+
+        public ActionResult Perfil()
+        {
+            return View();
+        }
+
+        public ActionResult Documentos()
+        {
+            return View();
+        }
+
+        public ActionResult MisOpiniones()
+        {
+            return View();
+        }
+
         // GET: Dashboard/Details/5
         public ActionResult Details(int id)
         {

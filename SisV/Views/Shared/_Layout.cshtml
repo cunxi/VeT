@@ -71,7 +71,7 @@
                                     </ul>
                                 </li>
                                 <li>
-                                    <a href="#">Promociones</a>
+                                    <a href="/Menu/Promociones">Promociones</a>
                                 </li>
                             </ul>
                         </nav>
@@ -90,8 +90,8 @@
                                     <div class="user-name"><span><img src="@usuario.Imagen" alt=""></span>Hola @usuario.Nombres @usuario.Apellidos!</div>
                                     <ul>
                                         <li><a href="@Url.Action("Index", "Dashboard")"><i class="sl sl-icon-settings"></i> Dashboard</a></li>
-                                        <li><a href="dashboard-messages.html"><i class="sl sl-icon-envelope-open"></i> Messages</a></li>
-                                        <li><a href="dashboard-bookings.html"><i class="fa fa-calendar-check-o"></i> Bookings</a></li>
+                                        <li><a href="@Url.Action("Documentos", "Dashboard")"><i class="sl sl-icon-envelope-open"></i> Informes o Recetas</a></li>
+                                        <li><a href="@Url.Action("MisOpiniones","Dashboard")"><i class="fa fa-calendar-check-o"></i> Mis Reseñas</a></li>
                                         <li><a href="@Url.Action("LogOut", "Menu")"><i class="sl sl-icon-power"></i> Cerrar Sesión</a></li>
                                     </ul>
                                 </div>

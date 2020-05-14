@@ -157,7 +157,7 @@
         {
             <!-- Listing Item -->
             <div class="fw-carousel-item">
-                <a href="listings-single-page.html" class="listing-item-container compact">
+                <a href="@Url.Action("Centro","Menu", new { ID_Centro = row["cen_ID_Centro"] })" class="listing-item-container compact">
                     <div class="listing-item">
                         <img src="@row["cen_Img1"]" alt="">
 

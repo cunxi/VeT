@@ -1,0 +1,122 @@
+﻿
+@{
+    ViewBag.Title = "Mí Perfil";
+    Layout = "~/Views/Dashboard/Principal.cshtml";
+
+    SisV.Models.Usuario usuario = Utils.ObtenerUsuarioSesion();
+
+    string Nombre = "";
+    string Apellidos = "";
+    string Identificador = "";
+    string Correo = "";
+    string Telefono = "";
+    string Direccion = "";
+    string Imagen = "";
+
+
+    if (usuario == null) { Response.Redirect(Url.Action("Inicio", "Menu")); }
+    else
+    {
+        Nombre = usuario.Nombres;
+        Apellidos = usuario.Apellidos;
+        Identificador = usuario.Identificador;
+        Correo = usuario.Correo;
+        Telefono = usuario.Telefono;
+        Direccion = usuario.Direccion;
+        Imagen = usuario.Imagen;
+    }
+
+}
+
+<div class="row">
+
+    <!-- Profile -->
+    <div class="col-lg-6 col-md-12">
+        <div class="dashboard-list-box margin-top-0">
+            <h4 class="gray">Mi Perfíl</h4>
+            <div class="dashboard-list-box-static">
+
+                <!-- Avatar -->
+                <div class="edit-profile-photo">
+                    <label>Foto Perfíl</label>
+                    <img src="@Imagen" alt="" id="imgSalida">
+                    <div class="change-photo-btn">
+                        <div class="photoUpload">
+                            <span><i class="fa fa-upload"></i> Cargar Foto</span>
+                            <input type="file" class="upload" name="log_Imagen" id="log_Imagen" accept="image/*"/>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Details -->
+                <div class="my-profile">
+
+                    <label>Su Nombre</label>
+                    <input value="" placeholder="@Nombre" type="text">
+
+                    <label>Su Apellidos</label>
+                    <input value="" placeholder="@Apellidos" type="text">
+
+                    <label>Telefono</label>
+                    <input value="" placeholder="@Telefono" type="text">
+
+                    <label>Correo</label>
+                    <input value="" placeholder="@Correo" type="text">
+
+                    <label>Direccion</label>
+                    <input value="" placeholder="@Direccion" type="text">
+                </div>
+
+                <button class="button margin-top-15">Guardar Cambios</button>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Change Password -->
+    <div class="col-lg-6 col-md-12">
+        <div class="dashboard-list-box margin-top-0">
+            <h4 class="gray">Actualizar Contraseña</h4>
+            <div class="dashboard-list-box-static">
+
+                <!-- Change Password -->
+                <div class="my-profile">
+                    <label class="margin-top-0">Contraseña Actual</label>
+                    <input type="password">
+
+                    <label>Nueva Contraseña</label>
+                    <input type="password">
+
+                    <label>Confirme</label>
+                    <input type="password">
+
+                    <button class="button margin-top-15">Cambiar Contrasña</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+
+    <script type="text/javascript">
+
+        $(function () {
+
+            $("#log_Imagen").change(function () {
+
+                var image = document.getElementById('log_Imagen').files[0];
+                var reader = new FileReader();
+                reader.onload = fileOnload;
+                reader.readAsDataURL(image);
+
+                function fileOnload(e) {
+                    var result = e.target.result;
+                    $('#imgSalida').attr('src', result);
+                }
+
+            });
+        });
+     </script>
+}
