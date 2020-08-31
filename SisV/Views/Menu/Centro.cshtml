@@ -1,32 +1,35 @@
 ﻿@using System.Data;
 @using System.Globalization;
 @model DataSet
-<div id="wrapper">
 
-    @{
-        string RazonSocial = Model.Tables[0].Rows[0]["cen_RazonS"].ToString();
-        string Direccion = Model.Tables[0].Rows[0]["cen_Direccion"].ToString();
-        string Comuna = Model.Tables[0].Rows[0]["com_Nombre"].ToString();
-        string Telefono = Model.Tables[0].Rows[0]["cen_Telefono"].ToString();
-        string Email = Model.Tables[0].Rows[0]["cen_Email"].ToString();
-        string Informacion = Model.Tables[0].Rows[0]["per_Informacion"].ToString();
-        string linkWeb = Model.Tables[0].Rows[0]["per_LinkWeb"].ToString();
-        string linkFacebook = Model.Tables[0].Rows[0]["per_LinkFacebook"].ToString();
-        string linkYoutube = Model.Tables[0].Rows[0]["per_LinkYoutube"].ToString();
-        string linkInstagram = Model.Tables[0].Rows[0]["per_LinkInstagram"].ToString();
-        string linkTwitter = Model.Tables[0].Rows[0]["per_LinkTwitter"].ToString();
-        string GeoLocation = Model.Tables[0].Rows[0]["per_GeoLocation"].ToString();
-        ViewBag.Title = RazonSocial;
+@{
 
-        string CantidadOpiniones = "0";
-        string Estrella = "0";
-        string PromedioServicio = "0";
-        string PromedioHigiene = "0";
-        string PromedioCostos = "0";
-        string PromedioAtencion = "0";
+    SisV.Models.Usuario usuario = Utils.ObtenerUsuarioSesion();
 
+    string RazonSocial = Model.Tables[0].Rows[0]["cen_RazonS"].ToString();
+    string Direccion = Model.Tables[0].Rows[0]["cen_Direccion"].ToString();
+    string Comuna = Model.Tables[0].Rows[0]["com_Nombre"].ToString();
+    string Telefono = Model.Tables[0].Rows[0]["cen_Telefono"].ToString();
+    string Email = Model.Tables[0].Rows[0]["cen_Email"].ToString();
+    string Informacion = Model.Tables[0].Rows[0]["per_Informacion"].ToString();
+    string linkWeb = Model.Tables[0].Rows[0]["per_LinkWeb"].ToString();
+    string linkFacebook = Model.Tables[0].Rows[0]["per_LinkFacebook"].ToString();
+    string linkYoutube = Model.Tables[0].Rows[0]["per_LinkYoutube"].ToString();
+    string linkInstagram = Model.Tables[0].Rows[0]["per_LinkInstagram"].ToString();
+    string linkTwitter = Model.Tables[0].Rows[0]["per_LinkTwitter"].ToString();
+    string GeoLocation = Model.Tables[0].Rows[0]["per_GeoLocation"].ToString();
+    ViewBag.Title = RazonSocial;
 
-        if (Model.Tables.Count > 2)
+    string CantidadOpiniones = "0";
+    string Estrella = "0";
+    string PromedioServicio = "0";
+    string PromedioHigiene = "0";
+    string PromedioCostos = "0";
+    string PromedioAtencion = "0";
+
+    foreach (DataTable table in Model.Tables)
+    {
+        if (table.TableName == "SPU_VistaCentro3")
         {
             CantidadOpiniones = Model.Tables[2].Rows.Count.ToString();
             Estrella = Model.Tables[3].Rows[0]["opi_Valor"].ToString();
@@ -35,119 +38,121 @@
             PromedioHigiene = Model.Tables[3].Rows[0]["opi_Higiene"].ToString();
             PromedioCostos = Model.Tables[3].Rows[0]["opi_Costos"].ToString();
         }
-
-
     }
 
-
-    <div class="clearfix"></div>
-    <!-- Header Container / End -->
-    <!-- Slider
-    ================================================== -->
-    <div class="listing-slider mfp-gallery-container margin-bottom-0">
-
-        <a href="@Model.Tables[0].Rows[0]["cen_Img2"].ToString()" data-background-image="@Model.Tables[0].Rows[0]["cen_Img2"].ToString()" class="item mfp-gallery" title="@RazonSocial"></a>
-        <a href="@Model.Tables[0].Rows[0]["cen_Img3"].ToString()" data-background-image="@Model.Tables[0].Rows[0]["cen_Img3"].ToString()" class="item mfp-gallery" title="@RazonSocial"></a>
-        <a href="@Model.Tables[0].Rows[0]["cen_Img4"].ToString()" data-background-image="@Model.Tables[0].Rows[0]["cen_Img4"].ToString()" class="item mfp-gallery" title="@RazonSocial"></a>
-        <a href="@Model.Tables[0].Rows[0]["cen_Img5"].ToString()" data-background-image="@Model.Tables[0].Rows[0]["cen_Img5"].ToString()" class="item mfp-gallery" title="@RazonSocial"></a>
-        <a href="@Model.Tables[0].Rows[0]["cen_Img6"].ToString()" data-background-image="@Model.Tables[0].Rows[0]["cen_Img6"].ToString()" class="item mfp-gallery" title="@RazonSocial"></a>
-        <a href="@Model.Tables[0].Rows[0]["cen_Img7"].ToString()" data-background-image="@Model.Tables[0].Rows[0]["cen_Img7"].ToString()" class="item mfp-gallery" title="@RazonSocial"></a>
-        <a href="@Model.Tables[0].Rows[0]["cen_Img8"].ToString()" data-background-image="@Model.Tables[0].Rows[0]["cen_Img8"].ToString()" class="item mfp-gallery" title="@RazonSocial"></a>
-        <a href="@Model.Tables[0].Rows[0]["cen_Img9"].ToString()" data-background-image="@Model.Tables[0].Rows[0]["cen_Img9"].ToString()" class="item mfp-gallery" title="@RazonSocial"></a>
-        <a href="@Model.Tables[0].Rows[0]["cen_Img10"].ToString()" data-background-image="@Model.Tables[0].Rows[0]["cen_Img10"].ToString()" class="item mfp-gallery" title="@RazonSocial"></a>
-    </div>
+}
 
 
-    <!-- Content
-    ================================================== -->
-    <div class="container">
-        <div class="row sticky-wrapper">
-            <div class="col-lg-8 col-md-8 padding-right-30">
+<div class="clearfix"></div>
+<!-- Header Container / End -->
+<!-- Slider
+================================================== -->
+<div class="listing-slider mfp-gallery-container margin-bottom-0">
+    <a href="@Model.Tables[0].Rows[0]["cen_Img2"].ToString()" data-background-image="@Model.Tables[0].Rows[0]["cen_Img2"].ToString()" class="item mfp-gallery" title="@RazonSocial"></a>
+    <a href="@Model.Tables[0].Rows[0]["cen_Img3"].ToString()" data-background-image="@Model.Tables[0].Rows[0]["cen_Img3"].ToString()" class="item mfp-gallery" title="@RazonSocial"></a>
+    <a href="@Model.Tables[0].Rows[0]["cen_Img4"].ToString()" data-background-image="@Model.Tables[0].Rows[0]["cen_Img4"].ToString()" class="item mfp-gallery" title="@RazonSocial"></a>
+    <a href="@Model.Tables[0].Rows[0]["cen_Img5"].ToString()" data-background-image="@Model.Tables[0].Rows[0]["cen_Img5"].ToString()" class="item mfp-gallery" title="@RazonSocial"></a>
+    <a href="@Model.Tables[0].Rows[0]["cen_Img6"].ToString()" data-background-image="@Model.Tables[0].Rows[0]["cen_Img6"].ToString()" class="item mfp-gallery" title="@RazonSocial"></a>
+    <a href="@Model.Tables[0].Rows[0]["cen_Img7"].ToString()" data-background-image="@Model.Tables[0].Rows[0]["cen_Img7"].ToString()" class="item mfp-gallery" title="@RazonSocial"></a>
+    <a href="@Model.Tables[0].Rows[0]["cen_Img8"].ToString()" data-background-image="@Model.Tables[0].Rows[0]["cen_Img8"].ToString()" class="item mfp-gallery" title="@RazonSocial"></a>
+    <a href="@Model.Tables[0].Rows[0]["cen_Img9"].ToString()" data-background-image="@Model.Tables[0].Rows[0]["cen_Img9"].ToString()" class="item mfp-gallery" title="@RazonSocial"></a>
+    <a href="@Model.Tables[0].Rows[0]["cen_Img10"].ToString()" data-background-image="@Model.Tables[0].Rows[0]["cen_Img10"].ToString()" class="item mfp-gallery" title="@RazonSocial"></a>
+</div>
 
-                <!-- Titlebar -->
-                <div id="titlebar" class="listing-titlebar">
-                    <div class="listing-titlebar-title">
-                        <h2>@RazonSocial</h2>
-                        <span>
-                            <a href="#listing-location" class="listing-address">
-                                <i class="fa fa-map-marker"></i>
-                                @Direccion ,@Comuna
-                            </a>
-                        </span>
-                        <div class="star-rating" data-rating="@Estrella">
-                            <div class="rating-counter"><a href="#listing-reviews">(@CantidadOpiniones Opiniones)</a></div>
-                        </div>
+
+
+<!-- Content
+================================================== -->
+<div class="container">
+    <div class="row sticky-wrapper">
+        <div class="col-8 col-lg-8 col-md-8 padding-right-30">
+
+            <!-- Titlebar -->
+            <div id="titlebar" class="listing-titlebar">
+                <div class="listing-titlebar-title">
+                    <h2>@RazonSocial</h2>
+                    <span>
+                        <a href="#listing-location" class="listing-address">
+                            <i class="fa fa-map-marker"></i>
+                            @Direccion ,@Comuna
+                        </a>
+                    </span>
+                    <div class="star-rating" data-rating="@Estrella">
+                        <div class="rating-counter"><a href="#listing-reviews">(@CantidadOpiniones Opiniones)</a></div>
                     </div>
                 </div>
+            </div>
 
-                <!-- Listing Nav -->
-                <div id="listing-nav" class="listing-nav-container">
-                    <ul class="listing-nav">
-                        <li><a href="#nosotros" class="active">Nosotros</a></li>
-                        <li><a href="#listing-pricing-list">Servicios y precios</a></li>
-                        @if (GeoLocation != "")
+            <!-- Listing Nav -->
+            <div id="listing-nav" class="listing-nav-container">
+                <ul class="listing-nav">
+                    <li><a href="#nosotros" class="active">Nosotros</a></li>
+                    <li><a href="#listing-pricing-list">Servicios y precios</a></li>
+                    @if (GeoLocation != "")
+                    {
+                        <li><a href="#listing-location">Ubicación</a></li>
+                    }
+                    <li><a href="#listing-reviews">Opiniones y calificaciones</a></li>
+                </ul>
+            </div>
+
+            <!-- Overview -->
+            <div id="nosotros" class="listing-section">
+                <p>@Informacion</p>
+
+
+                <!-- Listing Contacts -->
+                <div class="listing-links-container">
+
+                    <ul class="listing-links contact-links">
+                        @if (Telefono != "")
                         {
-                            <li><a href="#listing-location">Ubicación</a></li>
-                        }
-                        <li><a href="#listing-reviews">Opiniones y calificaciones</a></li>
+                            <li><a href="tel:@Telefono" class="listing-links"><i class="fa fa-phone"></i> @Telefono</a></li>}
+                        @if (Email != "")
+                        {
+                            <li><a href="mailto:@Email" class="listing-links"><i class="fa fa-envelope-o"></i> @Email</a></li>}
+                        @if (linkWeb != "")
+                        {
+                            <li><a href="@linkWeb" target="_blank" class="listing-links"><i class="fa fa-link"></i> @linkWeb.Replace("https://", "").Replace("http://", "")</a></li>}
                     </ul>
-                </div>
-
-                <!-- Overview -->
-                <div id="nosotros" class="listing-section">
-                    <p>@Informacion</p>
-
-
-                    <!-- Listing Contacts -->
-                    <div class="listing-links-container">
-
-                        <ul class="listing-links contact-links">
-                            @if (Telefono != "")
-                            {
-                                <li><a href="tel:@Telefono" class="listing-links"><i class="fa fa-phone"></i> @Telefono</a></li>}
-                            @if (Email != "")
-                            {
-                                <li><a href="mailto:@Email" class="listing-links"><i class="fa fa-envelope-o"></i> @Email</a></li>}
-                            @if (linkWeb != "")
-                            {
-                                <li><a href="@linkWeb" target="_blank" class="listing-links"><i class="fa fa-link"></i> @linkWeb.Replace("https://", "").Replace("http://", "")</a></li>}
-                        </ul>
-                        <div class="clearfix"></div>
-
-                        <ul class="listing-links">
-                            @if (linkFacebook != "")
-                            {
-                                <li><a href="#" target="_blank" class="listing-links-fb"><i class="fa fa-facebook-square"></i> Facebook</a></li>}
-                            @if (linkYoutube != "")
-                            {
-                                <li><a href="#" target="_blank" class="listing-links-yt"><i class="fa fa-youtube-play"></i> YouTube</a></li>}
-                            @if (linkInstagram != "")
-                            {
-                                <li><a href="#" target="_blank" class="listing-links-ig"><i class="fa fa-instagram"></i> Instagram</a></li>}
-                            @if (linkInstagram != "")
-                            {
-                                <li><a href="#" target="_blank" class="listing-links-tt"><i class="fa fa-twitter"></i> Twitter</a></li>}
-                        </ul>
-                        <div class="clearfix"></div>
-
-                    </div>
                     <div class="clearfix"></div>
+
+                    <ul class="listing-links">
+                        @if (linkFacebook != "")
+                        {
+                            <li><a href="#" target="_blank" class="listing-links-fb"><i class="fa fa-facebook-square"></i> Facebook</a></li>}
+                        @if (linkYoutube != "")
+                        {
+                            <li><a href="#" target="_blank" class="listing-links-yt"><i class="fa fa-youtube-play"></i> YouTube</a></li>}
+                        @if (linkInstagram != "")
+                        {
+                            <li><a href="#" target="_blank" class="listing-links-ig"><i class="fa fa-instagram"></i> Instagram</a></li>}
+                        @if (linkInstagram != "")
+                        {
+                            <li><a href="#" target="_blank" class="listing-links-tt"><i class="fa fa-twitter"></i> Twitter</a></li>}
+                    </ul>
+                    <div class="clearfix"></div>
+
                 </div>
+                <div class="clearfix"></div>
+            </div>
 
 
-                <!-- Food Menu -->
-                <div id="listing-pricing-list" class="listing-section">
-                    <h3 class="listing-desc-headline margin-top-50 margin-bottom-10">Servicios y Precios</h3>
+            <!-- Food Menu -->
+            <div id="listing-pricing-list" class="listing-section">
+                <h3 class="listing-desc-headline margin-top-50 margin-bottom-10">Servicios y Precios</h3>
 
-                    <div class="show-more">
-                        <div class="pricing-list-container">
+                <div class="show-more">
+                    <div class="pricing-list-container">
 
-                            <!-- Food List -->
-                            <h4>Servicios Disponibles</h4>
-                            <ul>
-                                @if (Model.Tables.Count > 1)
+                        <!-- Food List -->
+                        <h4>Servicios Disponibles</h4>
+                        <ul>
+                            @foreach (DataTable table in Model.Tables)
+                            {
+                                if (table.TableName == "SPU_VistaCentro1")
                                 {
-                                    foreach (DataRow row in Model.Tables[1].Rows)
+                                    foreach (DataRow row in Model.Tables["SPU_VistaCentro1"].Rows)
                                     {
                                         <li>
                                             <h5>@row["ser_Nombre_Servicio"]</h5>
@@ -156,93 +161,96 @@
                                         </li>
                                     }
                                 }
-                            </ul>
+                            }
+                        </ul>
 
-                        </div>
                     </div>
-                    @if (Model.Tables.Count > 1 && Model.Tables[1].Rows.Count > 4)
-                    {<a href="#" class="show-more-button" data-more-title="Ver más" data-less-title="Ver menos"><i class="fa fa-angle-down"></i></a>}
                 </div>
-                <!-- Food Menu / End -->
-                <!-- Location -->
-                @if (GeoLocation != "")
-                {
+                @if (Model.Tables.Count > 1 && Model.Tables[1].Rows.Count > 4)
+                {<a href="#" class="show-more-button" data-more-title="Ver más" data-less-title="Ver menos"><i class="fa fa-angle-down"></i></a>}
+            </div>
+            <!-- Food Menu / End -->
+            <!-- Location -->
+            @if (GeoLocation != "")
+            {
 
-                    string[] location = GeoLocation.Split(',');
+                string[] location = GeoLocation.Split(',');
 
-                    <div id="listing-location" class="listing-section">
-                        <h3 class="listing-desc-headline margin-top-60 margin-bottom-30">Location</h3>
+                <div id="listing-location" class="listing-section">
+                    <h3 class="listing-desc-headline margin-top-60 margin-bottom-30">Location</h3>
 
-                        <div id="singleListingMap-container">
-                            <div id="singleListingMap" data-latitude="@location[0].ToString()" data-longitude="@location[1].ToString()" data-map-icon="fa fa-paw"></div>
-                            <a href="#" id="streetView">Street View</a>
+                    <div id="singleListingMap-container">
+                        <div id="singleListingMap" data-latitude="@location[0].ToString()" data-longitude="@location[1].ToString()" data-map-icon="fa fa-paw"></div>
+                        <a href="#" id="streetView">Street View</a>
+                    </div>
+                </div>
+            }
+
+            <!-- Reviews -->
+            <div id="listing-reviews" class="listing-section">
+                <h3 class="listing-desc-headline margin-top-75 margin-bottom-20">Opiniones <span>(@CantidadOpiniones)</span></h3>
+
+                <!-- Rating Overview -->
+                <div class="rating-overview">
+                    <div class="rating-overview-box">
+                        <span class="rating-overview-box-total">@Estrella</span>
+                        <span class="rating-overview-box-percent">de 5.0</span>
+                        <div class="star-rating" data-rating="@Estrella"></div>
+                    </div>
+
+                    <div class="rating-bars">
+                        <div class="rating-bars-item">
+                            <span class="rating-bars-name">Servicio <i class="tip" data-tip-content="Calidad y Variedad de servicios entregados"></i></span>
+                            <span class="rating-bars-inner">
+                                <span class="rating-bars-rating" data-rating="@PromedioServicio">
+                                    <span class="rating-bars-rating-inner"></span>
+                                </span>
+                                <strong>@PromedioServicio</strong>
+                            </span>
+                        </div>
+                        <div class="rating-bars-item">
+                            <span class="rating-bars-name">Costos <i class="tip" data-tip-content="Costo de los servicios"></i></span>
+                            <span class="rating-bars-inner">
+                                <span class="rating-bars-rating" data-rating="@PromedioCostos">
+                                    <span class="rating-bars-rating-inner"></span>
+                                </span>
+                                <strong>@PromedioCostos</strong>
+                            </span>
+                        </div>
+                        <div class="rating-bars-item">
+                            <span class="rating-bars-name">Higiene <i class="tip" data-tip-content="Que tan higienico es el lugar de atención"></i></span>
+                            <span class="rating-bars-inner">
+                                <span class="rating-bars-rating" data-rating="@PromedioHigiene">
+                                    <span class="rating-bars-rating-inner"></span>
+                                </span>
+                                <strong>@PromedioHigiene</strong>
+                            </span>
+                        </div>
+                        <div class="rating-bars-item">
+                            <span class="rating-bars-name">Atención <i class="tip" data-tip-content="Que tal la atención del local"></i></span>
+                            <span class="rating-bars-inner">
+                                <span class="rating-bars-rating" data-rating="@PromedioAtencion">
+                                    <span class="rating-bars-rating-inner"></span>
+                                </span>
+                                <strong>@PromedioAtencion</strong>
+                            </span>
                         </div>
                     </div>
-                }
+                </div>
+                <!-- Rating Overview / End -->
+
+
+                <div class="clearfix"></div>
+
 
                 <!-- Reviews -->
-                <div id="listing-reviews" class="listing-section">
-                    <h3 class="listing-desc-headline margin-top-75 margin-bottom-20">Opiniones <span>(@CantidadOpiniones)</span></h3>
-
-                    <!-- Rating Overview -->
-                    <div class="rating-overview">
-                        <div class="rating-overview-box">
-                            <span class="rating-overview-box-total">@Estrella</span>
-                            <span class="rating-overview-box-percent">de 5.0</span>
-                            <div class="star-rating" data-rating="@Estrella"></div>
-                        </div>
-
-                        <div class="rating-bars">
-                            <div class="rating-bars-item">
-                                <span class="rating-bars-name">Servicio <i class="tip" data-tip-content="Calidad y Variedad de servicios entregados"></i></span>
-                                <span class="rating-bars-inner">
-                                    <span class="rating-bars-rating" data-rating="@PromedioServicio">
-                                        <span class="rating-bars-rating-inner"></span>
-                                    </span>
-                                    <strong>@PromedioServicio</strong>
-                                </span>
-                            </div>
-                            <div class="rating-bars-item">
-                                <span class="rating-bars-name">Costos <i class="tip" data-tip-content="Costo de los servicios"></i></span>
-                                <span class="rating-bars-inner">
-                                    <span class="rating-bars-rating" data-rating="@PromedioCostos">
-                                        <span class="rating-bars-rating-inner"></span>
-                                    </span>
-                                    <strong>@PromedioCostos</strong>
-                                </span>
-                            </div>
-                            <div class="rating-bars-item">
-                                <span class="rating-bars-name">Higiene <i class="tip" data-tip-content="Que tan higienico es el lugar de atención"></i></span>
-                                <span class="rating-bars-inner">
-                                    <span class="rating-bars-rating" data-rating="@PromedioHigiene">
-                                        <span class="rating-bars-rating-inner"></span>
-                                    </span>
-                                    <strong>@PromedioHigiene</strong>
-                                </span>
-                            </div>
-                            <div class="rating-bars-item">
-                                <span class="rating-bars-name">Atención <i class="tip" data-tip-content="Que tal la atención del local"></i></span>
-                                <span class="rating-bars-inner">
-                                    <span class="rating-bars-rating" data-rating="@PromedioAtencion">
-                                        <span class="rating-bars-rating-inner"></span>
-                                    </span>
-                                    <strong>@PromedioAtencion</strong>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Rating Overview / End -->
-
-
-                    <div class="clearfix"></div>
-
-
-                    <!-- Reviews -->
-                    @if (Model.Tables.Count > 2)
+                @foreach (DataTable table in Model.Tables)
+                {
+                    if (table.TableName == "SPU_VistaCentro2")
                     {
                         <section class="comments listing-reviews">
                             <ul>
-                                @foreach (DataRow row in Model.Tables[2].Rows)
+                                @foreach (DataRow row in Model.Tables["SPU_VistaCentro2"].Rows)
                                 {
                                     <li>
                                         <div class="avatar"><img src="http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&amp;s=70" alt="" /></div>
@@ -260,35 +268,35 @@
                                                     <a href="images/review-image-01.jpg" class="mfp-gallery"><img src="images/review-image-01.jpg" alt=""></a>
                                                 </div>
                                             }
-                                            <a href="#" class="rate-review"><i class="sl sl-icon-like"></i> Helpful Review <span>12</span></a>
                                         </div>
                                     </li>
                                 }
                             </ul>
                         </section>
                     }
-
-                    <!-- Pagination -->
-                    <div class="clearfix"></div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <!-- Pagination -->
-                            <div class="pagination-container margin-top-30">
-                                <nav class="pagination">
-                                    <ul>
-                                        <li><a href="#" class="current-page">1</a></li>
-                                        <li><a href="#">2</a></li>
-                                        <li><a href="#"><i class="sl sl-icon-arrow-right"></i></a></li>
-                                    </ul>
-                                </nav>
-                            </div>
+                }
+                <!-- Pagination -->
+                <div class="clearfix"></div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- Pagination -->
+                        <div class="pagination-container margin-top-30">
+                            <nav class="pagination">
+                                <ul>
+                                    <li><a href="#" class="current-page">1</a></li>
+                                    <li><a href="#">2</a></li>
+                                    <li><a href="#"><i class="sl sl-icon-arrow-right"></i></a></li>
+                                </ul>
+                            </nav>
                         </div>
                     </div>
-                    <div class="clearfix"></div>
-                    <!-- Pagination / End -->
                 </div>
+                <div class="clearfix"></div>
+                <!-- Pagination / End -->
+            </div>
 
-
+            @if (usuario != null)
+            {
                 <!-- Add Review Box -->
                 <div id="add-review" class="add-review-box">
 
@@ -296,253 +304,189 @@
                     <h3 class="listing-desc-headline margin-bottom-10">Valoraciones</h3>
                     <p class="comment-notes">Deja una valoración de este centro.</p>
 
-                    <!-- Subratings Container -->
-                    <div class="sub-ratings-container">
+                    <form action="" method="post">
+                        <!-- Subratings Container -->
+                        <div class="sub-ratings-container">
 
-                        <!-- Subrating #1 -->
-                        <div class="add-sub-rating">
-                            <div class="sub-rating-title">Servicio <i class="tip" data-tip-content="Quality of customer service and attitude to work with you"></i></div>
-                            <div class="sub-rating-stars">
-                                <!-- Leave Rating -->
-                                <div class="clearfix"></div>
-                                <form class="leave-rating">
-                                    <input type="radio" name="rating" id="rating-1" value="1" />
-                                    <label for="rating-1" class="fa fa-star"></label>
-                                    <input type="radio" name="rating" id="rating-2" value="2" />
-                                    <label for="rating-2" class="fa fa-star"></label>
-                                    <input type="radio" name="rating" id="rating-3" value="3" />
-                                    <label for="rating-3" class="fa fa-star"></label>
-                                    <input type="radio" name="rating" id="rating-4" value="4" />
-                                    <label for="rating-4" class="fa fa-star"></label>
-                                    <input type="radio" name="rating" id="rating-5" value="5" />
-                                    <label for="rating-5" class="fa fa-star"></label>
-                                </form>
+                            <!-- Subrating #1 -->
+                            <div class="add-sub-rating">
+                                <div class="sub-rating-title">Servicio <i class="tip" data-tip-content="Quality of customer service and attitude to work with you"></i></div>
+                                <div class="sub-rating-stars">
+                                    <!-- Leave Rating -->
+                                    <div class="clearfix"></div>
+                                    <div class="leave-rating">
+                                        <input type="radio" name="servicio" id="rating-1" value="1" required />
+                                        <label for="rating-1" class="fa fa-star"></label>
+                                        <input type="radio" name="servicio" id="rating-2" value="2" />
+                                        <label for="rating-2" class="fa fa-star"></label>
+                                        <input type="radio" name="servicio" id="rating-3" value="3" />
+                                        <label for="rating-3" class="fa fa-star"></label>
+                                        <input type="radio" name="servicio" id="rating-4" value="4" />
+                                        <label for="rating-4" class="fa fa-star"></label>
+                                        <input type="radio" name="servicio" id="rating-5" value="5" />
+                                        <label for="rating-5" class="fa fa-star"></label>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
 
-                        <!-- Subrating #2 -->
-                        <div class="add-sub-rating">
-                            <div class="sub-rating-title">Costos <i class="tip" data-tip-content="Overall experience received for the amount spent"></i></div>
-                            <div class="sub-rating-stars">
-                                <!-- Leave Rating -->
-                                <div class="clearfix"></div>
-                                <form class="leave-rating">
-                                    <input type="radio" name="rating" id="rating-11" value="1" />
-                                    <label for="rating-11" class="fa fa-star"></label>
-                                    <input type="radio" name="rating" id="rating-12" value="2" />
-                                    <label for="rating-12" class="fa fa-star"></label>
-                                    <input type="radio" name="rating" id="rating-13" value="3" />
-                                    <label for="rating-13" class="fa fa-star"></label>
-                                    <input type="radio" name="rating" id="rating-14" value="4" />
-                                    <label for="rating-14" class="fa fa-star"></label>
-                                    <input type="radio" name="rating" id="rating-15" value="5" />
-                                    <label for="rating-15" class="fa fa-star"></label>
-                                </form>
+                            <!-- Subrating #2 -->
+                            <div class="add-sub-rating">
+                                <div class="sub-rating-title">Costos <i class="tip" data-tip-content="Overall experience received for the amount spent"></i></div>
+                                <div class="sub-rating-stars">
+                                    <!-- Leave Rating -->
+                                    <div class="clearfix"></div>
+                                    <div class="leave-rating">
+                                        <input type="radio" name="costos" id="rating-11" value="1" required />
+                                        <label for="rating-11" class="fa fa-star"></label>
+                                        <input type="radio" name="costos" id="rating-12" value="2" />
+                                        <label for="rating-12" class="fa fa-star"></label>
+                                        <input type="radio" name="costos" id="rating-13" value="3" />
+                                        <label for="rating-13" class="fa fa-star"></label>
+                                        <input type="radio" name="costos" id="rating-14" value="4" />
+                                        <label for="rating-14" class="fa fa-star"></label>
+                                        <input type="radio" name="costos" id="rating-15" value="5" />
+                                        <label for="rating-15" class="fa fa-star"></label>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
 
-                        <!-- Subrating #3 -->
-                        <div class="add-sub-rating">
-                            <div class="sub-rating-title">Higiene <i class="tip" data-tip-content="Visibility, commute or nearby parking spots"></i></div>
-                            <div class="sub-rating-stars">
-                                <!-- Leave Rating -->
-                                <div class="clearfix"></div>
-                                <form class="leave-rating">
-                                    <input type="radio" name="rating" id="rating-21" value="1" />
-                                    <label for="rating-21" class="fa fa-star"></label>
-                                    <input type="radio" name="rating" id="rating-22" value="2" />
-                                    <label for="rating-22" class="fa fa-star"></label>
-                                    <input type="radio" name="rating" id="rating-23" value="3" />
-                                    <label for="rating-23" class="fa fa-star"></label>
-                                    <input type="radio" name="rating" id="rating-24" value="4" />
-                                    <label for="rating-24" class="fa fa-star"></label>
-                                    <input type="radio" name="rating" id="rating-25" value="5" />
-                                    <label for="rating-25" class="fa fa-star"></label>
-                                </form>
+                            <!-- Subrating #3 -->
+                            <div class="add-sub-rating">
+                                <div class="sub-rating-title">Higiene <i class="tip" data-tip-content="Visibility, commute or nearby parking spots"></i></div>
+                                <div class="sub-rating-stars">
+                                    <!-- Leave Rating -->
+                                    <div class="clearfix"></div>
+                                    <div class="leave-rating">
+                                        <input type="radio" name="higiene" id="rating-21" value="1" required />
+                                        <label for="rating-21" class="fa fa-star"></label>
+                                        <input type="radio" name="higiene" id="rating-22" value="2" />
+                                        <label for="rating-22" class="fa fa-star"></label>
+                                        <input type="radio" name="higiene" id="rating-23" value="3" />
+                                        <label for="rating-23" class="fa fa-star"></label>
+                                        <input type="radio" name="higiene" id="rating-24" value="4" />
+                                        <label for="rating-24" class="fa fa-star"></label>
+                                        <input type="radio" name="higiene" id="rating-25" value="5" />
+                                        <label for="rating-25" class="fa fa-star"></label>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
 
-                        <!-- Subrating #4 -->
-                        <div class="add-sub-rating">
-                            <div class="sub-rating-title">Atención <i class="tip" data-tip-content="The physical condition of the business"></i></div>
-                            <div class="sub-rating-stars">
-                                <!-- Leave Rating -->
-                                <div class="clearfix"></div>
-                                <form class="leave-rating">
-                                    <input type="radio" name="rating" id="rating-31" value="1" />
-                                    <label for="rating-31" class="fa fa-star"></label>
-                                    <input type="radio" name="rating" id="rating-32" value="2" />
-                                    <label for="rating-32" class="fa fa-star"></label>
-                                    <input type="radio" name="rating" id="rating-33" value="3" />
-                                    <label for="rating-33" class="fa fa-star"></label>
-                                    <input type="radio" name="rating" id="rating-34" value="4" />
-                                    <label for="rating-34" class="fa fa-star"></label>
-                                    <input type="radio" name="rating" id="rating-35" value="5" />
-                                    <label for="rating-35" class="fa fa-star"></label>
-                                </form>
+                            <!-- Subrating #4 -->
+                            <div class="add-sub-rating">
+                                <div class="sub-rating-title">Atención <i class="tip" data-tip-content="The physical condition of the business"></i></div>
+                                <div class="sub-rating-stars">
+                                    <!-- Leave Rating -->
+                                    <div class="clearfix"></div>
+                                    <div class="leave-rating">
+                                        <input type="radio" name="atencion" id="rating-31" value="1" required />
+                                        <label for="rating-31" class="fa fa-star"></label>
+                                        <input type="radio" name="atencion" id="rating-32" value="2" />
+                                        <label for="rating-32" class="fa fa-star"></label>
+                                        <input type="radio" name="atencion" id="rating-33" value="3" />
+                                        <label for="rating-33" class="fa fa-star"></label>
+                                        <input type="radio" name="atencion" id="rating-34" value="4" />
+                                        <label for="rating-34" class="fa fa-star"></label>
+                                        <input type="radio" name="atencion" id="rating-35" value="5" />
+                                        <label for="rating-35" class="fa fa-star"></label>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
 
-                        <!-- Uplaod Photos -->
-                        <div class="uploadButton margin-top-15">
-                            <input class="uploadButton-input" type="file" name="attachments[]" accept="image/*" id="upload" multiple />
-                            <label class="uploadButton-button ripple-effect" for="upload">Adjuntar Fotos</label>
-                            <span class="uploadButton-file-name"></span>
                         </div>
-                        <!-- Uplaod Photos / End -->
+                        <!-- Subratings Container / End -->
+                        <!-- Review Comment -->
 
-                    </div>
-                    <!-- Subratings Container / End -->
-                    <!-- Review Comment -->
-                    <form id="add-comment" class="add-comment">
                         <fieldset>
 
                             <div class="row">
                                 <div class="col-md-6">
                                     <label>Nombre:</label>
-                                    <input type="text" value="" />
+                                    <input type="text" value="@usuario.Nombres @usuario.Apellidos" readonly="readonly" />
                                 </div>
 
                                 <div class="col-md-6">
                                     <label>Correo:</label>
-                                    <input type="text" value="" />
+                                    <input type="text" value="@usuario.Correo" readonly="readonly" />
                                 </div>
                             </div>
 
                             <div>
                                 <label>Opinion:</label>
-                                <textarea cols="40" rows="3"></textarea>
+                                <textarea cols="10" rows="1" name="opinion" required></textarea>
                             </div>
 
                         </fieldset>
 
-                        <button class="button">Enviar Comentario</button>
+                        <button type="submit" class="button">Enviar Comentario</button>
                         <div class="clearfix"></div>
                     </form>
 
                 </div>
-                <!-- Add Review Box / End -->
+            }
+            <!-- Add Review Box / End -->
 
 
-            </div>
+        </div>
 
+        <!-- Sidebar
+        ================================================== -->
+        <div class="col-4 col-lg-4 col-md-4 margin-top-75 sticky">
 
-            <!-- Sidebar
-            ================================================== -->
-            <div class="col-lg-4 col-md-4 margin-top-75 sticky">
+            <!-- Book Now -->
+            <div id="booking-widget-anchor" class="boxed-widget booking-widget margin-top-35">
+                <h3><i class="fa fa-calendar-check-o "></i> Agenda</h3>
+                <div class="row with-forms  margin-top-0">
 
-                <!-- Book Now -->
-                <div id="booking-widget-anchor" class="boxed-widget booking-widget margin-top-35">
-                    <h3><i class="fa fa-calendar-check-o "></i> Agenda</h3>
-                    <div class="row with-forms  margin-top-0">
+                    <!-- Date Range Picker - docs: http://www.daterangepicker.com/ -->
+                    <div class="col-lg-12">
+                        <input type="text" id="date-picker" placeholder="Fecha" readonly="readonly" onchange="GetHorario()">
+                    </div>
 
-                        <!-- Date Range Picker - docs: http://www.daterangepicker.com/ -->
-                        <div class="col-lg-12">
-                            <input type="text" id="date-picker" placeholder="Fecha" readonly="readonly">
-                        </div>
-
-                        <!-- Panel Dropdown -->
-                        <div class="col-lg-12">
-                            <div class="panel-dropdown time-slots-dropdown">
-                                <a href="#">Horario</a>
-                                <div class="panel-dropdown-content padding-reset">
-                                    <div class="panel-dropdown-scrollable">
-                                        <!-- Time Slot -->
-                                        <div class="time-slot">
-                                            <input type="radio" name="time-slot" id="time-slot-1">
-                                            <label for="time-slot-1">
-                                                <strong>08:30 - 09:00</strong>
-                                            </label>
-                                        </div>
-
-                                        <!-- Time Slot -->
-                                        <div class="time-slot">
-                                            <input type="radio" name="time-slot" id="time-slot-2">
-                                            <label for="time-slot-2">
-                                                <strong>09:00 - 09:30</strong>
-                                            </label>
-                                        </div>
-
-                                        <!-- Time Slot -->
-                                        <div class="time-slot">
-                                            <input type="radio" name="time-slot" id="time-slot-3">
-                                            <label for="time-slot-3">
-                                                <strong>9:30 - 10:00</strong>
-                                            </label>
-                                        </div>
-
-                                        <!-- Time Slot -->
-                                        <div class="time-slot">
-                                            <input type="radio" name="time-slot" id="time-slot-4">
-                                            <label for="time-slot-4">
-                                                <strong>10:00 - 10:30</strong>
-                                            </label>
-                                        </div>
-
-                                        <!-- Time Slot -->
-                                        <div class="time-slot">
-                                            <input type="radio" name="time-slot" id="time-slot-5">
-                                            <label for="time-slot-5">
-                                                <strong>13:00 - 13:30 </strong>
-                                            </label>
-                                        </div>
-
-                                        <!-- Time Slot -->
-                                        <div class="time-slot">
-                                            <input type="radio" name="time-slot" id="time-slot-6">
-                                            <label for="time-slot-6">
-                                                <strong>13:30 - 14:00</strong>
-                                            </label>
-                                        </div>
-
-                                    </div>
+                    <!-- Panel Dropdown -->
+                    <div class="col-lg-12">
+                        <div class="panel-dropdown time-slots-dropdown">
+                            <a href="#">Horario</a>
+                            <div class="panel-dropdown-content padding-reset" style="max-width:270px">
+                                <div class="panel-dropdown-scrollable" id="horario_disponible">
+                                
                                 </div>
                             </div>
                         </div>
-                        <!-- Panel Dropdown / End -->
-
                     </div>
+                    <!-- Panel Dropdown / End -->
 
-                    <!-- Book Now -->
-                    <a href="pages-booking.html" class="button book-now fullwidth margin-top-5">Agendar</a>
                 </div>
-                <!-- Opening Hours -->
-                <div class="boxed-widget opening-hours margin-top-35">
-                    <h3><i class="sl sl-icon-clock"></i> Horario Atención</h3>
-                    <ul>
-                        <li>Lunes <span>9 AM - 5 PM</span></li>
-                        <li>Martes <span>9 AM - 5 PM</span></li>
-                        <li>Miércoles <span>9 AM - 5 PM</span></li>
-                        <li>Jueves <span>9 AM - 5 PM</span></li>
-                        <li>Viernes <span>9 AM - 5 PM</span></li>
-                        <li>Sabado <span>Cerrado</span></li>
-                        <li>Domingo <span>Cerrado</span></li>
-                    </ul>
-                </div>
-                <!-- Opening Hours / End -->
+
+                <!-- Book Now -->
+                <button class="button book-now fullwidth margin-top-4">Agendar</button>
             </div>
-            <!-- Sidebar / End -->
 
-        </div>
+            <!-- Opening Hours -->
+            <div class="boxed-widget opening-hours margin-top-35">
+                <h3><i class="sl sl-icon-clock"></i> Horario Atención</h3>
+                <ul>
+                    @foreach (DataTable table in Model.Tables)
+                    {
+                        if (table.TableName == "SPU_VistaCentro4")
+                        {
+                            foreach (DataRow row in Model.Tables["SPU_VistaCentro4"].Rows)
+                            {
+                                <li>
+                                    @row["hor_Dia_Nombre"] @if (row["hor_Activo"].ToString() == "true")
+                                    {<span>@row["hor_HoraInicio"] - @row["hor_HoraTermino"]</span>}
+                                else
+                                { <span> Cerrado</span>}
+                                </li>
+                            }
+                        }
+                    }
+                </ul>
+            </div><!-- Opening Hours / End -->
+        </div><!-- Sidebar / End -->
     </div>
-    <div id="backtotop"><a href="#"></a></div>
-
-    <!-- Booking Sticky Footer -->
-    <div class="booking-sticky-footer">
-        <div class="container">
-            <div class="bsf-left">
-                <h4>Starting from $29</h4>
-                <div class="star-rating" data-rating="5">
-                    <div class="rating-counter"></div>
-                </div>
-            </div>
-            <div class="bsf-right">
-                <a href="#booking-widget-anchor" class="button">Book Now</a>
-            </div>
-        </div>
-    </div>
-
 </div>
+
+
 
 @section Scripts{
 
@@ -551,23 +495,55 @@
     <script>
         // Calendar Init
         $(function () {
+
+            var today = new Date();
+            var dd = String(today.getDate()).padStart(2, '0');
+            var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+            var yyyy = today.getFullYear();
+            var mm2 = String(today.getMonth() + 2).padStart(2, '0'); //January is 0!
+
+            today = mm + '/' + dd + '/' + yyyy;
+            var todayend = mm2 + '/' + dd + '/' + yyyy;
+            var today_es = dd + '/' + mm + '/' + yyyy;          
+
+            params = 'Fecha=' + today_es;
+            $.ajax
+                ({
+                    data: params,
+                    cache: true,
+                    type: 'Post',
+                    typeData: "json",
+                    url: 'GetHorarioFecha',
+                    success: function (data) {
+                        document.getElementById("horario_disponible").innerHTML = data;
+                        $(".time-slot").each(function () {
+                            var timeSlot = $(this);
+                            $(this).find('input').on('change', function () {
+                                var timeSlotVal = timeSlot.find('strong').text();
+
+                                $('.panel-dropdown.time-slots-dropdown a').html(timeSlotVal);
+                                $('.panel-dropdown').removeClass('active');
+                            });
+                        });
+                    }
+                });
+
             $('#date-picker').daterangepicker({
                 "opens": "left",
                 singleDatePicker: true,
-
+                minDate: today,
+                maxDate: todayend,
                 // Disabling Date Ranges
                 isInvalidDate: function (date) {
                     // Disabling Date Range
-                    var disabled_start = moment('09/02/2020', 'MM/DD/YYYY');
+                    var disabled_start = moment('09/05/2020', 'MM/DD/YYYY');
                     var disabled_end = moment('09/06/2020', 'MM/DD/YYYY');
-                    return date.isAfter(disabled_start) && date.isBefore(disabled_end);
-
-                    // Disabling Single Day
-                    // if (date.format('MM/DD/YYYY') == '08/08/2018') {
-                    //     return true;
-                    // }
+                    return date.isAfter(disabled_start) && date.isBefore(disabled_end);                   
                 }
+
             });
+          
+
         });
 
         // Calendar animation
@@ -582,20 +558,46 @@
             $('.daterangepicker').removeClass('calendar-visible');
             $('.daterangepicker').addClass('calendar-hidden');
         });
+
+
+        function GetHorario() {
+            var _fecha = document.getElementById("date-picker").value;
+            var today = new Date(_fecha);
+            var dd = String(today.getDate()).padStart(2, '0');
+            var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+            var yyyy = today.getFullYear();
+            var today_es = dd + '/' + mm + '/' + yyyy;     
+            params = "Fecha=" + today_es;
+
+            $.ajax
+                ({
+                    data: params,
+                    cache: true,
+                    type: 'Post',
+                    typeData: "json",
+                    url: 'GetHorarioFecha',
+                    success: function (data) {
+                        document.getElementById("horario_disponible").innerHTML = data;
+                        $(".time-slot").each(function () {
+                            var timeSlot = $(this);
+                            $(this).find('input').on('change', function () {
+                                var timeSlotVal = timeSlot.find('strong').text();
+
+                                $('.panel-dropdown.time-slots-dropdown a').html(timeSlotVal);
+                                $('.panel-dropdown').removeClass('active');
+                            });
+                        });
+                    }
+                });
+
+        }
+
     </script>
 
 
     <!-- Replacing dropdown placeholder with selected time slot -->
     <script>
-        $(".time-slot").each(function () {
-            var timeSlot = $(this);
-            $(this).find('input').on('change', function () {
-                var timeSlotVal = timeSlot.find('strong').text();
-
-                $('.panel-dropdown.time-slots-dropdown a').html(timeSlotVal);
-                $('.panel-dropdown').removeClass('active');
-            });
-        });
+        
     </script>
 
 }

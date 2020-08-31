@@ -30,6 +30,11 @@ namespace SisV.Controllers
             return View();
         }
 
+        public ActionResult Solicitudes(int tpo)
+        {
+            return View();
+        }
+
         // GET: Dashboard/Details/5
         public ActionResult Details(int id)
         {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -25,7 +26,7 @@ namespace SisV.Controllers
 
         public ActionResult Busqueda()
         {
-            return RedirectToAction("Inicio","Menu");
+            return RedirectToAction("Inicio", "Menu");
         }
 
         [HttpPost]
@@ -34,7 +35,7 @@ namespace SisV.Controllers
             ViewBag.Cant = 0;
             DataSet ds = new DataSet();
             string Mensaje = "";
-            crud.Busqueda_Centro(Texto,Ubicacion,Categoria, ref ds, ref Mensaje);
+            crud.Busqueda_Centro(Texto, Ubicacion, Categoria, ref ds, ref Mensaje);
 
             if (ds.Tables.Count > 0) { ViewBag.Cant = ds.Tables[0].Rows.Count; }
 
@@ -55,6 +56,15 @@ namespace SisV.Controllers
             if (ID_Centro != null && ID_Centro != "")
             {
                 crud.Centro(ID_Centro, ref ds, ref Mensaje);
+
+                foreach (DataTable table in ds.Tables)
+                {
+                    if (table.TableName == "SPU_VistaCentro4")
+                    {
+                        Models.ListDropdownList.Horarios_CentroADD(ds.Tables["SPU_VistaCentro4"]);
+                    }
+                }
+
                 return View(ds);
             }
             else
@@ -107,7 +117,7 @@ namespace SisV.Controllers
         }
 
         [HttpPost]
-        public ActionResult RegistroFinal(HttpPostedFileBase log_Imagen, string cli_ID_Cliente, string log_ID_Login,string Identificador, string cli_Direccion, string cli_Telefono, string log_Usuario)
+        public ActionResult RegistroFinal(HttpPostedFileBase log_Imagen, string cli_ID_Cliente, string log_ID_Login, string Identificador, string cli_Direccion, string cli_Telefono, string log_Usuario)
         {
             DataSet ds_Imegn = new DataSet();
             DataSet ds_Cliente = new DataSet();
@@ -135,7 +145,7 @@ namespace SisV.Controllers
                     log_Imagen.SaveAs(srcImagen);
 
                 }
-                crud.Actualizar_Foto(log_ID_Login, "/Content/ImagesPerfil/" + cli_ID_Cliente + ".png", ref ds_Imegn,ref Mensaje_Imagen);
+                crud.Actualizar_Foto(log_ID_Login, "/Content/ImagesPerfil/" + cli_ID_Cliente + ".png", ref ds_Imegn, ref Mensaje_Imagen);
                 srcImagen = "/Content/ImagesPerfil/" + cli_ID_Cliente + ".png";
             }
             else
@@ -146,8 +156,8 @@ namespace SisV.Controllers
             string[] dividerRut = Identificador.Split('-');
             string Rut = dividerRut[0].Replace(".", "");
             string Dv = dividerRut[1];
-            
-            crud.RegistrarCliente_Paso2(cli_ID_Cliente, Rut, Dv, cli_Telefono, cli_Direccion,log_Usuario, ref ds_Cliente,ref Mensaje_Cliente);
+
+            crud.RegistrarCliente_Paso2(cli_ID_Cliente, Rut, Dv, cli_Telefono, cli_Direccion, log_Usuario, ref ds_Cliente, ref Mensaje_Cliente);
 
             Models.Usuario usuario = new Models.Usuario
             {
@@ -163,11 +173,16 @@ namespace SisV.Controllers
             };
             Utils.GuardarUsuarioSesion(usuario);
 
-            return RedirectToAction("Inicio","Menu");
+            return RedirectToAction("Inicio", "Menu");
         }
 
 
         public ActionResult Promociones()
+        {
+            return View();
+        }
+
+        public ActionResult Opinion(string ID_Centro, string Opinion, string servicio, string costos, string higiene, string atencion)
         {
             return View();
         }
@@ -199,7 +214,8 @@ namespace SisV.Controllers
             Models.Result result = new Models.Result();
             if (ds.Tables.Count > 0 && ds.Tables[0].Columns.Count > 2)
             {
-                if (Convert.ToInt32(ds.Tables[0].Rows[0]["cli_Level"].ToString()) == 2) {
+                if (Convert.ToInt32(ds.Tables[0].Rows[0]["cli_Level"].ToString()) == 2)
+                {
                     FormsAuthentication.SetAuthCookie(ds.Tables[0].Rows[0]["cli_ID_Cliente"].ToString(), true);
 
                     Models.Usuario usuario = new Models.Usuario
@@ -240,6 +256,33 @@ namespace SisV.Controllers
             result.Mensaje = ds.Tables[0].Rows[0]["Resultado"].ToString();
             result.Codigo = Convert.ToInt32(ds.Tables[0].Rows[0]["Codigo"].ToString());
             return Json(result);
+        }
+
+        public JsonResult GetHorarioFecha(string Fecha)
+        {
+            DateTime _Fecha = Convert.ToDateTime(Fecha, new CultureInfo("es-ES"));
+            var result = Models.ListDropdownList.horario_Centros.Where(x => x.Fecha == _Fecha).ToList();
+            string div = "";
+            int i = 1;
+            if (result[0].horas != null) {
+                foreach (var hora in result[0].horas)
+                {
+                    string id = "time-slot-" + i;
+                    div += @"<div class='time-slot'>
+                        <input type='radio' name='time-slot' id='" + id + @"'>       
+                            <label for='" + id + @"'>
+                            <strong>" + hora + @"</strong>
+                            </label>
+                        </div>";
+                    i = i + 1;
+                }
+            }
+            else
+            {
+                div = @"<a href='#'>Cerrado</a>";
+            }
+
+            return Json(div);
         }
     }
 }

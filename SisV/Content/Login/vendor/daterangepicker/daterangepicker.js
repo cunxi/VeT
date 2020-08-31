@@ -76,8 +76,7 @@
             daysOfWeek: moment.weekdaysMin(),
             monthNames: moment.monthsShort(),
             firstDay: moment.localeData().firstDayOfWeek()
-        };
-
+        };        
         this.callback = function() { };
 
         //some state information

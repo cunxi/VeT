@@ -43,31 +43,33 @@
                     <div class="change-photo-btn">
                         <div class="photoUpload">
                             <span><i class="fa fa-upload"></i> Cargar Foto</span>
-                            <input type="file" class="upload" name="log_Imagen" id="log_Imagen" accept="image/*"/>
+                            <input type="file" class="upload" name="log_Imagen" id="log_Imagen" accept="image/*" />
                         </div>
                     </div>
                 </div>
 
                 <!-- Details -->
-                <div class="my-profile">
+                <form action="@Url.Action("Perfil","Dashboard")" method="post">
+                    <div class="my-profile">
 
-                    <label>Su Nombre</label>
-                    <input value="" placeholder="@Nombre" type="text">
+                        <label>Su Nombre</label>
+                        <input value="" placeholder="@Nombre" type="text" name="Nombres">
 
-                    <label>Su Apellidos</label>
-                    <input value="" placeholder="@Apellidos" type="text">
+                        <label>Su Apellidos</label>
+                        <input value="" placeholder="@Apellidos" type="text" name="Apellidos">
 
-                    <label>Telefono</label>
-                    <input value="" placeholder="@Telefono" type="text">
+                        <label>Telefono</label>
+                        <input value="" placeholder="@Telefono" type="text" name="Telefono">
 
-                    <label>Correo</label>
-                    <input value="" placeholder="@Correo" type="text">
+                        <label>Correo</label>
+                        <input value="" placeholder="@Correo" type="text" name="Correo">
 
-                    <label>Direccion</label>
-                    <input value="" placeholder="@Direccion" type="text">
-                </div>
+                        <label>Direccion</label>
+                        <input value="" placeholder="@Direccion" type="text" name="Direccion">
+                    </div>
 
-                <button class="button margin-top-15">Guardar Cambios</button>
+                    <button type="submit" class="button margin-top-15">Guardar Cambios</button>
+                </form>
 
             </div>
         </div>

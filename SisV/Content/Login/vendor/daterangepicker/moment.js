@@ -2669,7 +2669,8 @@
         doy : 6  // The week that contains Jan 1st is the first week of the year.
     };
 
-    function localeFirstDayOfWeek () {
+    function localeFirstDayOfWeek() {
+        console.log(this);
         return this._week.dow;
     }
 
@@ -2800,7 +2801,7 @@
         return this._weekdaysShort[m.day()];
     }
 
-    var defaultLocaleWeekdaysMin = 'Su_Mo_Tu_We_Th_Fr_Sa'.split('_');
+    var defaultLocaleWeekdaysMin = 'Do_Lu_Ma_Mi_Ju_Vi_Sa'.split('_');
     function localeWeekdaysMin (m) {
         return this._weekdaysMin[m.day()];
     }

@@ -28,17 +28,17 @@
 
                     <ul data-submenu-title="Principal">                      
                         <li><a href="@Url.Action("Perfil","Dashboard")"><i class="sl sl-icon-envelope-open"></i> Mensajes <span class="nav-tag messages">2</span></a></li>
-                        <li><a href="@Url.Action("Perfil","Dashboard")"><i class="fa fa-get-pocket"></i> Mis Mascotas</a></li>
-                        <li><a href="@Url.Action("Perfil","Dashboard")"><i class="sl sl-icon-wallet"></i> Historial</a></li>
+                        <li><a href="@Url.Action("Mascotas","Dashboard")"><i class="fa fa-paw"></i> Mis Mascotas</a></li>
+                        <li><a href="@Url.Action("Historial","Dashboard")"><i class="fa fa-folder-open"></i> Historial</a></li>
                     </ul>
 
                     <ul data-submenu-title="Opciones">
                         <li>
                             <a><i class="sl sl-icon-layers"></i> Mis Solicitudes</a>
                             <ul>
-                                <li><a href="@Url.Action("Perfil","Dashboard")">Aceptadas <span class="nav-tag green">6</span></a></li>
-                                <li><a href="@Url.Action("Perfil","Dashboard")">Pendientes <span class="nav-tag yellow">1</span></a></li>
-                                <li><a href="@Url.Action("Perfil","Dashboard")">Rechazadas <span class="nav-tag red">2</span></a></li>
+                                <li><a href="@Url.Action("Solicitudes","Dashboard",1)">Aceptadas <span class="nav-tag green">6</span></a></li>
+                                <li><a href="@Url.Action("Soliicitudes","Dashboard",2)">Pendientes <span class="nav-tag yellow">1</span></a></li>
+                                <li><a href="@Url.Action("Soliicitudes","Dashboard",0)">Rechazadas <span class="nav-tag red">2</span></a></li>
                             </ul>
                         </li>
                         <li><a href="@Url.Action("Documentos","Dashboard")"><i class="sl sl-icon-docs"></i>Documentos</a></li>

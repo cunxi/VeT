@@ -309,6 +309,7 @@
     <Compile Include="Models\Comuna.cs" />
     <Compile Include="Models\Crud.cs" />
     <Compile Include="App_Start\Utils.cs" />
+    <Compile Include="Models\Horario_Centro.cs" />
     <Compile Include="Models\ListDropdownList.cs" />
     <Compile Include="Models\Region.cs" />
     <Compile Include="Models\Result.cs" />
