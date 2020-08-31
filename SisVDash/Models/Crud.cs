@@ -348,7 +348,7 @@ namespace SisVDash.Models
         #endregion
         #region Centro Sociedad  
         public bool cCentroSociedad(string Accion, string cen_ID_Centro,string emp_ID_Empresa, string cen_Rut, string cen_Dv, string cen_RazonS, string cen_Giro, string cen_Direccion,
-                                     string pai_Codigo, string reg_Codigo, string com_Codigo, string cen_Telefono, string cen_Email, string est_Cod_Estado, string cen_RutContacto,
+                                     string pai_Codigo, string reg_Codigo, string com_Codigo, string cen_Telefono, string cen_Email, string est_Cod_Est_Sec, string cen_RutContacto,
                                      string cen_DvContacto,string cen_Contacto, string log_Update, string log_Maquina, ref DataSet ds, ref string sError)
         {
             Cnx.Data.cConexion data;
@@ -389,7 +389,7 @@ namespace SisVDash.Models
                 paramv.Add("com_Codigo", com_Codigo);
                 paramv.Add("cen_Telefono", cen_Telefono);
                 paramv.Add("cen_Email", cen_Email);
-                paramv.Add("est_Cod_Estado", est_Cod_Estado);
+                paramv.Add("est_Cod_Est_Sec", est_Cod_Est_Sec);
                 paramv.Add("cen_RutContacto", cen_RutContacto);
                 paramv.Add("cen_DvContacto", cen_DvContacto);
                 paramv.Add("cen_Contacto", cen_Contacto);              
@@ -398,6 +398,58 @@ namespace SisVDash.Models
 
                 param.Add(sDic, paramv);
                  if (!data.ExecSP(sNomsp, sDic, param, EoCType.TYPE_TRAN, ref sXmlErr, ref sXmlOutput))
+                    throw new Exception(sXmlErr);
+                CargaData = new System.IO.StringReader(sXmlOutput);
+                ds = new System.Data.DataSet();
+                ds.ReadXml(CargaData);
+                breturn = true;
+
+            }
+            catch (Exception ex)
+            {
+                sError = ex.Message;
+            }
+            finally
+            {
+                data = null;
+                param = null;
+
+            }
+            return breturn;
+        }
+        #endregion
+        #region Centro Sociedad  
+        public bool cEstadoSeccion(string Accion, string est_Tipo_Sec, string est_Cod_Est_Sec, string est_Descripcion, string log_Update, string log_Maquina, 
+                                   ref DataSet ds, ref string sError)
+        {
+            Cnx.Data.cConexion data;
+            Cnx.Data.cParamDictionary param;
+            Cnx.Data.cParam paramv;
+            System.IO.StringReader CargaData;
+            string sNomsp;
+            string sDic;
+            string sXmlErr = "";
+            string sXmlOutput = "";
+            bool breturn = false;
+
+            try
+
+            {
+              
+                sNomsp = "SPU_Estado_Seccion_ADD";
+                sDic = "Consulta";
+                data = new Cnx.Data.cConexion();
+                data.sCon = sconexion;
+                param = new Cnx.Data.cParamDictionary();
+                paramv = new Cnx.Data.cParam(sDb, sNomsp);
+                paramv.Add("Accion", Accion);
+                paramv.Add("est_Tipo_Sec", est_Tipo_Sec);
+                paramv.Add("est_Cod_Est_Sec", est_Cod_Est_Sec);
+                paramv.Add("est_Descripcion", est_Descripcion);           
+                paramv.Add("log_Update", log_Update);
+                paramv.Add("log_Maquina", log_Maquina);
+                param.Add(sDic, paramv);
+                if (!data.ExecSP(sNomsp, sDic, param, EoCType.TYPE_TRAN, ref sXmlErr, ref sXmlOutput))
                     throw new Exception(sXmlErr);
                 CargaData = new System.IO.StringReader(sXmlOutput);
                 ds = new System.Data.DataSet();

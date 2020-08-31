@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using Cnx.Data;
 using SisVDash.Models;
 using Newtonsoft.Json;
+using System.IO;
 
 namespace SisVDash.Controllers
 {
@@ -17,17 +18,19 @@ namespace SisVDash.Controllers
         public ActionResult Inicio()
         {
             return View();
-        }
-
+        } 
+        
         public ActionResult Maestro(string nomMaestro)
         {
             ViewBag.Title = "Mantenedor de " + nomMaestro;
+
             DataSet ds = new DataSet();
             var DataData="";
             string sError = "";
 
             switch (nomMaestro)
             {
+
                 case "Color":
                     ViewBag.message = "Lista de colores proporcionados por el centro";
                     ViewBag.Nombre = "color";                                        
@@ -122,6 +125,7 @@ namespace SisVDash.Controllers
                     ViewBag.Nombre = "centro";
                     DataSet dsPaisC = new DataSet();
                     DataSet dsEmpresa = new DataSet();
+                    DataSet dsEstado = new DataSet();
 
                     crud.cCentroSociedad("4","", "", "0", "", "", "", "", "", "", "", "", "","","0", "", "", "","", ref ds, ref sError);
                     {
@@ -145,6 +149,16 @@ namespace SisVDash.Controllers
                                 //Llena Empresas 
                                 DropDownList listDropdown = new DropDownList();
                                 listDropdown.ListaEmpresasAdd(dsEmpresa);
+                            }
+                        }
+
+                        crud.cEstadoSeccion("4", "centro","", "", "", "", ref dsEstado, ref sError);
+                        {
+                            if (dsEstado.Tables.Count > 0)
+                            {
+                                RadioButtonList radiobyttonList = new RadioButtonList();
+                                radiobyttonList.ListaEstadoAdd(dsEstado);
+
                             }
                         }
                     }
@@ -333,6 +347,7 @@ namespace SisVDash.Controllers
             if (Mantenedor == "CEN")
                 {
 
+
                     string[] DatosCentro = Regis.Split('~');
                     string CodigoCentro = DatosCentro[0];
                     string CodigoEmpresa = DatosCentro[1];
@@ -362,17 +377,44 @@ namespace SisVDash.Controllers
                     }
 
                     string NomContacto = DatosCentro[13];
-                  
+
                     crud.cCentroSociedad(Accion, CodigoCentro, CodigoEmpresa, RutC, DvC, RazonCentro, GiroCentro, DireccionCen, PaiCen, RegCen, ComCen, TelefonoCen, EmailCen, EstCentro, RutContacto, DvContacto, NomContacto, log_Update, log_Maquina, ref ds, ref Error);
                     {
                         if (ds.Tables.Count > 0)
                         {
                             resultado = ds.Tables[0].Rows[0]["Datos"].ToString();
                         }
-                        //crea carpeta o elimina carpeta
+
+                        if (Accion == "1")
+                        {
+                            string[] datosC = resultado.Split('|');
+                            if (datosC[0] == "0")
+                            { 
+                            //crea carpeta o elimina carpeta
+                                string ruta = @"C:\ImgVet\" + datosC[2];
+                                    if (!Directory.Exists(ruta))
+                                        {
+                                        Console.WriteLine("Creando el directorio: {0}", ruta);
+                                        DirectoryInfo di = Directory.CreateDirectory(ruta);
+                                        }
+                            }
+                        }
+                        if (Accion == "2")
+                        {
+                            string[] datosC = resultado.Split('|');
+                            if (datosC[0] == "0")
+                            {
+                                //guarda o actualiza img de centro
+                                string ruta = @"C:\ImgVet\" + datosC[2];
+                                if (Directory.Exists(ruta))
+                                {
+                                    //Console.WriteLine("Creando el directorio: {0}", ruta);
+                                    //DirectoryInfo di = Directory.CreateDirectory(ruta);
+                                }
+                            }
+                        }
                     }
                 }
-
             }
             catch (Exception ex)
             {
@@ -427,6 +469,38 @@ namespace SisVDash.Controllers
             return Json(resultado);
 
         }
+
+        [HttpPost]
+        public ActionResult actionacrear(IEnumerable<HttpPostedFileBase> filesImg)
+        {
+            try
+            {
+                string path = "";
+                string FileName = "";
+
+                if (filesImg != null)
+                {
+                    int numero =filesImg.Count();
+
+                    foreach (HttpPostedFileBase file in filesImg)
+                    {                      
+                        string destino = @"C:\ImgVet\" + file.FileName ;
+                        file.SaveAs(destino);
+                      
+                    }
+
+                }
+                }
+            catch (Exception ex)
+            {
+              //  Utils.MostrarSweetAlert("Error", ex.Message, Utils.SweetAlertTipo.error);
+
+            }
+
+            return RedirectToAction("Perfil", "Profesional");
+
+        }
+
     }
 }
 
